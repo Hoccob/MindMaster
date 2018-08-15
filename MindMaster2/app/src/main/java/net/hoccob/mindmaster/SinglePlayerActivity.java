@@ -38,8 +38,24 @@ public class SinglePlayerActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        singlePlayerView.draw(0);
+        //singlePlayerView.draw();
+        singlePlayerView.startGame();
+        setContentView(singlePlayerView);
+        hideSystemUI();
     }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        singlePlayerView.pause();
+    }
+
+    //@Override
+    //protected void onDestroy(){
+    //    singlePlayerView.endThread();
+    //    super.onDestroy();
+    //}
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

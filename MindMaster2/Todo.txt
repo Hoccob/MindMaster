@@ -1,4 +1,4 @@
-1. Single playerit avades ei joonista kohe korralikult ekraanile (pead midagi vajutama)
+DONE: 1. Single playerit avades ei joonista kohe korralikult ekraanile (pead midagi vajutama)
 2. Operations class, mis peaks looma tehte, mille seejärel saab kirjutada ekraanile.
 3. Sama klass tekitab ka vastuse, mida saab kontrollida vastu mängija vastust. 
 4. Õige vastuse korral increment score, vale puhul decrement (kas miinusesse saab ka minna)?

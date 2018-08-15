@@ -14,7 +14,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.SurfaceHolder;
 
-public class SinglePlayerView extends SurfaceView  {
+public class SinglePlayerView extends SurfaceView implements Runnable {
 
     Paint black_paint_fill, pink_paint_fill, answer_text;
     public int ScreenX;
@@ -34,17 +34,28 @@ public class SinglePlayerView extends SurfaceView  {
     Bitmap enter;
     long answer = 0;
     public Canvas canvas;
+    private int score = 0;
+
+    private boolean play = false;
+
+    private Thread gameThread = null;
 
     private SurfaceHolder ourHolder;
 
+    private Operation operation;
 
+    private long timer = 0;
+    private long endTime;
+    private boolean gameOver = false;
 
-
-
+    private String currentOperation;
+    //private double currentAnswer;
 
 
     public SinglePlayerView(Context context, int x, int y) {
         super(context);
+
+        play = false;
 
         //setBackgroundColor(0xFF000000);
         ourHolder = getHolder();
@@ -138,11 +149,73 @@ public class SinglePlayerView extends SurfaceView  {
         //answer_text.setColor(0xFF000000);
         //answer_text.setTextSize(50);
 
+        //gameThread = new Thread(this);
 
+        operation = new Operation();
+
+        //currentOperation = operation.getOperation();
+        //currentAnswer = operation.getAnswer();
+
+        //gameThread = new Thread(this);
+
+        startGame();
 
     }
 
-    public void draw(long answer) {
+    @Override
+    public void run(){
+        while(play) {
+            if(timer > 0) {
+                timer = endTime - System.currentTimeMillis();
+            }else{
+                gameOver = true;
+            }
+        draw();
+            try {
+                gameThread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void newEquation(){
+        currentOperation = operation.getOperation();
+    }
+
+    public void checkAnswer(){
+        if(answer == operation.getAnswer()){
+            score = score + 10;
+            endTime = endTime + 10000;
+        }else{
+            score = score - 5;
+        }
+        answer = 0;
+        newEquation();
+    }
+
+    public void startGame(){
+        answer = 0;
+        play = true;
+        gameOver = false;
+        gameThread = new Thread(this);
+        gameThread.start();
+        endTime = System.currentTimeMillis() + 6000;
+        timer = endTime - System.currentTimeMillis();
+        newEquation();
+    }
+
+    public void pause(){
+        play = false;
+        try {
+            gameThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void draw() {
 
         if(ourHolder.getSurface().isValid()) {
             String answer_str = String.valueOf(answer);
@@ -183,7 +256,15 @@ public class SinglePlayerView extends SurfaceView  {
             operation_text = new Paint();
             operation_text.setColor(0xFF000000);
             operation_text.setTextSize(90);
+            canvas.drawText(currentOperation, ScreenX / 6, ScreenY / 5, operation_text);
 
+            canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 8, answer_text);
+
+            if(gameOver){
+             canvas.drawText("Game over", ScreenX/3, ScreenY/10, answer_text);
+            }else {
+                canvas.drawText(String.valueOf(timer), ScreenX / 3, ScreenY / 10, answer_text);
+            }
             ourHolder.unlockCanvasAndPost(canvas);
             //answer++;
         }
@@ -191,7 +272,6 @@ public class SinglePlayerView extends SurfaceView  {
 
 
     }
-
 
 
     @Override
@@ -203,51 +283,53 @@ public class SinglePlayerView extends SurfaceView  {
 
                 if (motionEvent.getX() > ScreenX/40 && motionEvent.getX() < (ScreenX/4 + ScreenX/40) && motionEvent.getY() > (ScreenY/3) + (((ScreenY/3)*2) / 45) && motionEvent.getY() < ((ScreenY/3) + (((ScreenY/3)*2) / 45) + (ScreenY/3*2/45*10) )){
                     answer = answer * 10 + 1;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > (ScreenY/3) + (((ScreenY/3)*2) / 45) && motionEvent.getY() < ((ScreenY/3) + (((ScreenY/3)*2) / 45) + (ScreenY/3*2/45*10) )) {
                     answer = answer * 10 + 2;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > ScreenX /20 + ScreenX/40 + ScreenX/2 && motionEvent.getX() < (ScreenX /20 + ScreenX /2 + ScreenX/4 + ScreenX/40) && motionEvent.getY() > (ScreenY/3) + (((ScreenY/3)*2) / 45) && motionEvent.getY() < ((ScreenY/3) + (((ScreenY/3)*2) / 45) + (ScreenY/3*2/45*10) )) {
                     answer = answer * 10 + 3;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > ScreenX / 40 && motionEvent.getX() < (ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10)+ (ScreenY/3*2/45*10)) {
                     answer = answer * 10 + 4;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10)+ (ScreenY/3*2/45*10)) {
                     answer = answer * 10 + 5;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > ScreenX /20 + ScreenX/40 + ScreenX/2 && motionEvent.getX() < (ScreenX /20 + ScreenX /2 + ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10)+ (ScreenY/3*2/45*10)) {
                     answer = answer * 10 + 6;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > ScreenX / 40 && motionEvent.getX() < (ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 3)) {
                     answer = answer * 10 + 7;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 3)) {
                     answer = answer * 10 + 8;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > ScreenX /20 + ScreenX/40 + ScreenX/2 && motionEvent.getX() < (ScreenX /20 + ScreenX /2 + ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 3)) {
                     answer = answer * 10 + 9;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3) && motionEvent.getY() < ((ScreenY / 3) + ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 4))) {
                     answer = answer * 10;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > (ScreenX - ScreenX / 40 - (ScreenX / 80 * 10)) && motionEvent.getX() < ScreenX - ScreenX/40 && motionEvent.getY() > (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45))) && motionEvent.getY() < (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45)) + ScreenY / 3 * 2 / 3)) {
                     answer = 0;
-                    draw(answer);
+                    //draw();
                 }
                 else if (motionEvent.getX() > (ScreenX - ScreenX / 40 - (ScreenX / 80 * 10)) && motionEvent.getX() < ScreenX - ScreenX/40 && motionEvent.getY() > (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45 * 2)) + ScreenY / 3 * 2 / 3) && motionEvent.getY() < (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45 * 2)) + ScreenY / 3 * 2 / 3 * 2)) {
                     answer = (answer - answer % 10) / 10;
-                    draw(answer);
+                    //draw();
+                }else if(motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3)){
+                    checkAnswer();
                 }
 
 
