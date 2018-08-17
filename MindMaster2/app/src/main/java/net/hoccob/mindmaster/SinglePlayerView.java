@@ -14,6 +14,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.SurfaceHolder;
 
+import java.util.Random;
+
 public class SinglePlayerView extends SurfaceView implements Runnable {
 
     Paint black_paint_fill, pink_paint_fill, answer_text;
@@ -32,9 +34,13 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
     Bitmap cee;
     Bitmap backspace;
     Bitmap enter;
-    long answer = 0;
+    int answer = 0;
+    int correctAnswer = 0;
     public Canvas canvas;
     private int score = 0;
+    private int level = 1;
+    private int pool = 0;
+    private int progress = 0;
 
     private boolean play = false;
 
@@ -47,6 +53,8 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
     private long timer = 0;
     private long endTime;
     private boolean gameOver = false;
+
+    Random generator = new Random();
 
     private String currentOperation;
     //private double currentAnswer;
@@ -158,6 +166,8 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
 
         //gameThread = new Thread(this);
 
+        operation.createPools();
+
         startGame();
 
     }
@@ -180,17 +190,48 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
     }
 
     public void newEquation(){
-        currentOperation = operation.getOperation();
+        pool = generator.nextInt(2);
+        //if(level == 1){
+        //    currentOperation = operation.getOperation(pool);
+        //    correctAnswer = operation.getAnswer(pool);
+        //}else if (level == 2) {
+        //    currentOperation = operation.getOperation(pool + 4);
+        //    correctAnswer = operation.getAnswer(pool + 4);
+        //}else if (level == 3) {
+        //    currentOperation = operation.getOperation(pool + 8);
+        //    correctAnswer = operation.getAnswer(pool + 8);
+        //}
+
+        currentOperation = operation.getOperation(((level - 1) * 2) + pool);
+        correctAnswer = operation.getAnswer(((level - 1) * 2) + pool);
+        operation.addToPool(((level - 1) * 2) + pool);
     }
 
     public void checkAnswer(){
-        if(answer == operation.getAnswer()){
+        if(answer == correctAnswer){
             score = score + 10;
             endTime = endTime + 10000;
+            progress++;
         }else{
             score = score - 5;
+            progress = progress - 2;
         }
         answer = 0;
+
+        if(progress < 3){
+            level = 1;
+        }else if(progress < 6){
+            level = 2;
+        }else if(progress < 9){
+            level = 3;
+        }else if(progress < 12){
+            level = 4;
+        }else if(progress < 15){
+            level = 5;
+        }else{
+            level = 6;
+        }
+
         newEquation();
     }
 
