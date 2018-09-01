@@ -54,8 +54,10 @@ public class Operation {
                 break;
             case 1:
                 //1 - 1
-                first = generator.nextInt(9) + 1;
-                second = generator.nextInt(9) + 1;
+                do {
+                    first = generator.nextInt(9) + 1;
+                    second = generator.nextInt(9) + 1;
+                }while(first != second);
                 if (first < second) {
                     answerPools[1][lastEquation[pool] - 1] = second - first;
                     equationPools[1][lastEquation[pool] - 1] = second + " - " + first;
@@ -87,8 +89,10 @@ public class Operation {
                 break;
             case 5:
                 //13 - 12
-                first = generator.nextInt(90) + 10;
-                second = generator.nextInt(90) + 10;
+                do {
+                    first = generator.nextInt(90) + 10;
+                    second = generator.nextInt(90) + 10;
+                }while(first != second);
                 if(first < second){
                     answerPools[5][lastEquation[pool] - 1] = second - first;
                     equationPools[5][lastEquation[pool] - 1] = second + " - " + first;
@@ -134,8 +138,10 @@ public class Operation {
                 break;
             case 11:
                 //133 - 122
-                first = generator.nextInt(900) + 100;
-                second = generator.nextInt(900) + 100;
+                do {
+                    first = generator.nextInt(900) + 100;
+                    second = generator.nextInt(900) + 100;
+                }while(first != second);
                 if(first < second){
                 answerPools[11][lastEquation[pool] - 1] = second - first;
                 equationPools[11][lastEquation[pool] - 1] = second + " - " + first;

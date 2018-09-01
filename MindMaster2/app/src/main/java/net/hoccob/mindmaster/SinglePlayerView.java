@@ -51,6 +51,8 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
     private Operation operation;
 
     private long timer = 0;
+    private String timerSec;
+    private String timerMilli;
     private long endTime;
     private boolean gameOver = false;
 
@@ -175,8 +177,10 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
     @Override
     public void run(){
         while(play) {
-            if(timer > 0) {
+            if(timer > 130) {
                 timer = endTime - System.currentTimeMillis();
+                timerSec = String.valueOf(timer / 1000);
+                timerMilli = String.valueOf(timer / 100).substring(String.valueOf(timer /10).length() - 2);
             }else{
                 gameOver = true;
             }
@@ -259,7 +263,12 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
     public void draw() {
 
         if(ourHolder.getSurface().isValid()) {
-            String answer_str = String.valueOf(answer);
+            String answer_str;
+            if (answer != 0) {
+                answer_str = String.valueOf(answer);
+            }else{
+                answer_str = "";
+            }
             canvas = ourHolder.lockCanvas();
             canvas.drawColor(Color.argb(255,0,0,0));
             black_paint_fill = new Paint();
@@ -291,20 +300,22 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             answer_text = new Paint();
             answer_text.setColor(0xFF000000);
             answer_text.setTextSize(70);
-            canvas.drawText(answer_str, ScreenX / 6, ScreenY / 4, answer_text);
+
+            //canvas.drawText(answer_str, ScreenX / 6, ScreenY / 4, answer_text);
 
             Paint operation_text;
             operation_text = new Paint();
             operation_text.setColor(0xFF000000);
             operation_text.setTextSize(90);
-            canvas.drawText(currentOperation, ScreenX / 6, ScreenY / 5, operation_text);
+            canvas.drawText(currentOperation + " = " + answer_str, ScreenX / 6, ScreenY / 5, operation_text);
 
             canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 8, answer_text);
+
 
             if(gameOver){
              canvas.drawText("Game over", ScreenX/3, ScreenY/10, answer_text);
             }else {
-                canvas.drawText(String.valueOf(timer), ScreenX / 3, ScreenY / 10, answer_text);
+                canvas.drawText(timerSec + ":" +  timerMilli, ScreenX / 2, ScreenY / 10, answer_text);
             }
             ourHolder.unlockCanvasAndPost(canvas);
             //answer++;
