@@ -20,6 +20,8 @@ public class MainView extends View {
     int two_x, two_y;
     private Bitmap three;
     int three_x, three_y;
+    private Bitmap four;
+    int four_x, four_y;
 
 
     public MainView(Context context, int x, int y) {
@@ -33,6 +35,9 @@ public class MainView extends View {
 
         three_x = 0;
         three_y =  y/2;
+
+        four_x = 0;
+        four_y = (y/10 * 7);
 
         ScreenX = x;
         ScreenY = y;
@@ -56,6 +61,13 @@ public class MainView extends View {
                 (int) (150),
                 false);
 
+        four = BitmapFactory.decodeResource(getResources(), R.drawable.four);
+
+        four = Bitmap.createScaledBitmap(four,
+                (int) (600),
+                (int) (150),
+                false);
+
 
     }
     @Override
@@ -68,6 +80,8 @@ public class MainView extends View {
         canvas.drawBitmap(two, two_x,two_y, null);
 
         canvas.drawBitmap(three, three_x,three_y, null);
+
+        canvas.drawBitmap(four, four_x, four_y, null);
 
 
     }

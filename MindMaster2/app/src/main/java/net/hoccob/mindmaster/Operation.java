@@ -3,9 +3,6 @@ package net.hoccob.mindmaster;
 
 import java.util.Random;
 
-import net.objecthunter.exp4j.ExpressionBuilder;
-import net.objecthunter.exp4j.function.Function;
-import net.objecthunter.exp4j.operator.Operator;
 
 public class Operation {
 
