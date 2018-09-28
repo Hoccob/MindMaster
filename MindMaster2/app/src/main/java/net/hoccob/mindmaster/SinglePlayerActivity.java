@@ -1,6 +1,8 @@
 package net.hoccob.mindmaster;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,11 +52,19 @@ public class SinglePlayerActivity extends Activity {
         singlePlayerView.pause();
     }
 
-    //@Override
-    //protected void onDestroy(){
-    //    singlePlayerView.endThread();
-    //    super.onDestroy();
-    //}
+    @Override
+    protected void onDestroy(){
+        int final_score = singlePlayerView.getScore();
+
+        if (singlePlayerView.getGameOver()){
+            SharedPreferences sharedPref = getSharedPreferences(
+                    "HighScore", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("Competitive1", final_score);
+            editor.commit();
+        }
+        super.onDestroy();
+    }
 
 
     @Override
