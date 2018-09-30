@@ -1,6 +1,10 @@
-package net.hoccob.mindmaster;
+package net.hoccob.mindmaster.server;
 
 import android.os.AsyncTask;
+
+import net.hoccob.mindmaster.Equation;
+import net.hoccob.mindmaster.Player;
+import net.hoccob.mindmaster.Waitlist;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,22 +16,19 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RequestGame extends AsyncTask<String, String, String>{
     private String url;
-    private String method;
     private String body;
     private Player player;
     private Waitlist waitlist;
     private ArrayList<ArrayList<Equation>> equations;
-    //private Equation[][] equations;
 
     public interface AsyncResponse {
         void processFinish(String output);
     }
 
-    public AsyncResponse delegate = null;
+    public AsyncResponse delegate;
 
     public RequestGame(Player player, Waitlist waitlist, ArrayList<ArrayList<Equation>> equations, AsyncResponse delegate){
         this.delegate = delegate;
@@ -109,14 +110,10 @@ public class RequestGame extends AsyncTask<String, String, String>{
                 equations.add(new ArrayList<Equation>());
                 for(int j = 0; j < 25; j++){
                     System.out.println("i: " + i + " j: " + j);
-                    equations.get(i).add( new Equation(jsonEquations.getJSONObject((i * 25) + j).getInt("level"), jsonEquations.getJSONObject((i * 25) + j).getInt("operand_1"),jsonEquations.getJSONObject((i * 25) + j).getInt("operand_2")));
+                    equations.get(i).add( new Equation(jsonEquations.getJSONObject((i*25)+j).getInt("id"), jsonEquations.getJSONObject((i * 25) + j).getInt("level"), jsonEquations.getJSONObject((i * 25) + j).getInt("operand_1"),jsonEquations.getJSONObject((i * 25) + j).getInt("operand_2")));
                     equations.get(i).get(j).calcAnswer();
                 }
             }
-            //for(int i = 0; i < jsonEquations.length(); i++){
-            //    equations[i] = new Equation(jsonEquations.getJSONObject(i).getInt("level"), jsonEquations.getJSONObject(i).getInt("operand_1"),jsonEquations.getJSONObject(i).getInt("operand_2"));
-            //    equations[i].calcAnswer();
-            //}
         } catch (JSONException e) {
             e.printStackTrace();
         }

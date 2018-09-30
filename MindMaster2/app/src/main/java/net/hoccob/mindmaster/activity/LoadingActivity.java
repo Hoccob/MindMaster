@@ -15,7 +15,7 @@ import net.hoccob.mindmaster.Equation;
 import net.hoccob.mindmaster.view.LoadingView;
 import net.hoccob.mindmaster.view.MultiPlayerView;
 import net.hoccob.mindmaster.Player;
-import net.hoccob.mindmaster.RequestGame;
+import net.hoccob.mindmaster.server.RequestGame;
 import net.hoccob.mindmaster.Waitlist;
 
 import java.util.ArrayList;
@@ -28,11 +28,8 @@ public class LoadingActivity extends Activity {
     Player player;
     Waitlist waitlist;
     ArrayList<ArrayList<Equation>> equations;
-    //Equation[][] equations = new Equation[30][30];
     int ScreenX;
     int ScreenY;
-    int answer;
-    int progress = 0;
 
 
     @Override

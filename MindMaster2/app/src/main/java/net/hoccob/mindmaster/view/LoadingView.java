@@ -35,7 +35,7 @@ public class LoadingView extends SurfaceView implements Runnable {
 
     @Override
     public void run() {
-        while (1 == 1) {
+        while (true) {
             draw();
             try {
                 gameThread.sleep(100);

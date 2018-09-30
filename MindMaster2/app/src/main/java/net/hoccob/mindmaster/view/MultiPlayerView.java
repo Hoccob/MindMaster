@@ -13,11 +13,10 @@ import android.view.SurfaceView;
 import net.hoccob.mindmaster.Operation;
 import net.hoccob.mindmaster.R;
 
-import java.util.Random;
 
 public class MultiPlayerView extends SurfaceView implements Runnable {
 
-    Paint black_paint_fill, pink_paint_fill, answer_text;
+    Paint black_paint_fill;
     public int ScreenX;
     public int ScreenY;
     Bitmap yks;
@@ -34,12 +33,8 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
     Bitmap backspace;
     Bitmap enter;
     int answer = 0;
-    int correctAnswer = 0;
     public Canvas canvas;
     private int score = 0;
-    private int level = 1;
-    private int pool = 0;
-    private int progress = 0;
 
     private boolean play = false;
 
@@ -55,10 +50,8 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
     private long endTime;
     private boolean gameOver = false;
 
-    Random generator = new Random();
 
     private String currentOperation;
-    //private double currentAnswer;
 
 
     public MultiPlayerView(Context context, int x, int y) {
@@ -66,7 +59,6 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
 
         play = false;
 
-        //setBackgroundColor(0xFF000000);
         ourHolder = getHolder();
 
         ScreenX = x;
@@ -198,7 +190,6 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         gameThread.start();
         endTime = System.currentTimeMillis() + 6000;
         timer = endTime - System.currentTimeMillis();
-        //newEquation();
     }
 
     public void setAnswer(int answer){this.answer = answer;}
@@ -242,8 +233,6 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
             answer_text.setColor(0xFF000000);
             answer_text.setTextSize(70);
 
-            //canvas.drawText(answer_str, ScreenX / 6, ScreenY / 4, answer_text);
-
             Paint operation_text;
             operation_text = new Paint();
             operation_text.setColor(0xFF000000);
@@ -252,14 +241,12 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
 
             canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 8, answer_text);
 
-
             if(gameOver){
                 canvas.drawText("Game over", ScreenX/3, ScreenY/10, answer_text);
             }else {
                 canvas.drawText(timerSec + ":" +  timerMilli, ScreenX / 2, ScreenY / 10, answer_text);
             }
             ourHolder.unlockCanvasAndPost(canvas);
-            //answer++;
         }
 
     }
