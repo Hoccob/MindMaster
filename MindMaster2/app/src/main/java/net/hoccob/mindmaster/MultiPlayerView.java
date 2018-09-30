@@ -198,6 +198,9 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         //newEquation();
     }
 
+    public void setAnswer(int answer){this.answer = answer;}
+    public void setCurrentOperation(String currentOperation){this.currentOperation = currentOperation;}
+    public void setScore(int score){this.score = score;}
 
     public void draw() {
 

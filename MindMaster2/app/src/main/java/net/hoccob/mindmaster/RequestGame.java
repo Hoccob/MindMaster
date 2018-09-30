@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RequestGame extends AsyncTask<String, String, String>{
@@ -19,7 +20,8 @@ public class RequestGame extends AsyncTask<String, String, String>{
     private String body;
     private Player player;
     private Waitlist waitlist;
-    private Equation[] equations;
+    private ArrayList<ArrayList<Equation>> equations;
+    //private Equation[][] equations;
 
     public interface AsyncResponse {
         void processFinish(String output);
@@ -27,7 +29,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
 
     public AsyncResponse delegate = null;
 
-    public RequestGame(Player player, Waitlist waitlist, Equation[] equations, AsyncResponse delegate){
+    public RequestGame(Player player, Waitlist waitlist, ArrayList<ArrayList<Equation>> equations, AsyncResponse delegate){
         this.delegate = delegate;
         this.player = player;
         this.waitlist = waitlist;
@@ -103,10 +105,18 @@ public class RequestGame extends AsyncTask<String, String, String>{
         result = restTemplate.getForObject(url, String.class, waitlist.getGameId());
         try {
             JSONArray jsonEquations = new JSONArray(result);
-            for(int i = 0; i < jsonEquations.length(); i++){
-                equations[i] = new Equation(jsonEquations.getJSONObject(i).getInt("level"), jsonEquations.getJSONObject(i).getInt("operand_1"),jsonEquations.getJSONObject(i).getInt("operand_2"));
-                equations[i].calcAnswer();
+            for(int i = 0; i < 12; i ++){
+                equations.add(new ArrayList<Equation>());
+                for(int j = 0; j < 25; j++){
+                    System.out.println("i: " + i + " j: " + j);
+                    equations.get(i).add( new Equation(jsonEquations.getJSONObject((i * 25) + j).getInt("level"), jsonEquations.getJSONObject((i * 25) + j).getInt("operand_1"),jsonEquations.getJSONObject((i * 25) + j).getInt("operand_2")));
+                    equations.get(i).get(j).calcAnswer();
+                }
             }
+            //for(int i = 0; i < jsonEquations.length(); i++){
+            //    equations[i] = new Equation(jsonEquations.getJSONObject(i).getInt("level"), jsonEquations.getJSONObject(i).getInt("operand_1"),jsonEquations.getJSONObject(i).getInt("operand_2"));
+            //    equations[i].calcAnswer();
+            //}
         } catch (JSONException e) {
             e.printStackTrace();
         }

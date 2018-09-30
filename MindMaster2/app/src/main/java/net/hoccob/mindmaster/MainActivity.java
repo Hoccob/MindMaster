@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
                 }
                 else if(motionEvent.getX() > 0 && (motionEvent.getX() < 601)&& motionEvent.getY() > (y/10 * 7) && motionEvent.getY() < ((y/10 * 7) + 300))
                 {
-                    Intent intent4 = new Intent(this, MultiPlayerActivity.class);
+                    Intent intent4 = new Intent(this, LoadingActivity.class);
                     startActivity(intent4);
                 }
                 break;

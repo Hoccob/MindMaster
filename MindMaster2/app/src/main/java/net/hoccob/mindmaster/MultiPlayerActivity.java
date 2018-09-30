@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,7 +21,18 @@ public class MultiPlayerActivity extends Activity {
     LoadingView loadingView;
     Player player;
     Waitlist waitlist;
-    Equation[] equations = new Equation[310];
+    ArrayList<ArrayList<Equation>> equations;
+    //Equation[][] equations = new Equation[30][30];
+    int ScreenX;
+    int ScreenY;
+    int answer;
+    int progress;
+    int level = 1;
+    boolean gameOver = false;
+    int score;
+    String currentOperation = "";
+    int correctAnswer = 0;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,14 +48,26 @@ public class MultiPlayerActivity extends Activity {
         loadingView.setText("LOADOING!!");
         player = new Player();
         waitlist = new Waitlist();
+        equations = new ArrayList<>();
+
+
+        for(int i = 0; i < 12; i++){
+            equations.add(getIntent().<Equation>getParcelableArrayListExtra("level" + i));
+        }
+
+        ScreenX = size.x;
+        ScreenY = size.y;
+
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        setContentView(loadingView);
+        setContentView(multiPlayerView);
 
+        startGame();
+        //System.out.println(equations.get(0).get(0).getLevel() + " " + equations.get(0).get(0).getOperand1() + " " + equations.get(0).get(0).getOperand2());
 
     }
 
@@ -51,25 +76,68 @@ public class MultiPlayerActivity extends Activity {
         super.onResume();
         //setContentView(loadingView);
         hideSystemUI();
-
-        RequestGame requestGame = new RequestGame(player, waitlist, equations, new RequestGame.AsyncResponse(){
-
-            @Override
-            public void processFinish(String output){
-                //Here you will receive the result fired from async class
-                //of onPostExecute(result) method.
-                System.out.println("Joudsin siia");
-                setContentView(multiPlayerView);
-                multiPlayerView.startGame();
-            }
-        });
-        requestGame.execute("testuser1");
     }
 
     @Override
     protected void onPause(){
         super.onPause();
         //multiPlayerView.pause();
+    }
+
+    public void newEquation(){
+        currentOperation = equations.get(level-1).get(0).getStrOperation();
+        correctAnswer = equations.get(level-1).get(0).getAnswer();
+        equations.get(level-1).remove(0);
+        multiPlayerView.setCurrentOperation(currentOperation);
+    }
+
+    public void checkAnswer(){
+        if(answer == correctAnswer){
+            score = score + 10;
+            progress++;
+        }else{
+            score = score - 5;
+            progress = progress - 2;
+        }
+        multiPlayerView.setScore(score);
+        answer = 0;
+        multiPlayerView.setAnswer(0);
+
+        if(progress < 3){
+            level = 1;
+        }else if(progress < 6){
+            level = 2;
+        }else if(progress < 9){
+            level = 3;
+        }else if(progress < 12){
+            level = 4;
+        }else if(progress < 15){
+            level = 5;
+        }else if(progress < 18){
+            level = 6;
+        }else if(progress < 21){
+            level = 7;
+        }else if(progress < 24){
+            level = 8;
+        }else if(progress < 27){
+            level = 9;
+        }else if(progress < 30){
+            level = 10;
+        }else if(progress < 33){
+            level = 11;
+        }else{
+            level = 12;
+        }
+
+        newEquation();
+    }
+
+    public void startGame(){
+        answer = 0;
+        gameOver = false;
+        //endTime = System.currentTimeMillis() + 6000;
+        //timer = endTime - System.currentTimeMillis();
+        newEquation();
     }
 
     @Override
@@ -93,6 +161,71 @@ public class MultiPlayerActivity extends Activity {
         if (hasFocus) {
             hideSystemUI();
         }
+    }
+
+    @Override
+    public boolean onTouchEvent (MotionEvent motionEvent) {
+
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+
+            case MotionEvent.ACTION_DOWN:
+
+                if (motionEvent.getX() > ScreenX/40 && motionEvent.getX() < (ScreenX/4 + ScreenX/40) && motionEvent.getY() > (ScreenY/3) + (((ScreenY/3)*2) / 45) && motionEvent.getY() < ((ScreenY/3) + (((ScreenY/3)*2) / 45) + (ScreenY/3*2/45*10) )){
+                    answer = answer * 10 + 7;
+                    //draw();
+                }
+                else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > (ScreenY/3) + (((ScreenY/3)*2) / 45) && motionEvent.getY() < ((ScreenY/3) + (((ScreenY/3)*2) / 45) + (ScreenY/3*2/45*10) )) {
+                    answer = answer * 10 + 8;
+                    //draw();
+                }
+                else if (motionEvent.getX() > ScreenX /20 + ScreenX/40 + ScreenX/2 && motionEvent.getX() < (ScreenX /20 + ScreenX /2 + ScreenX/4 + ScreenX/40) && motionEvent.getY() > (ScreenY/3) + (((ScreenY/3)*2) / 45) && motionEvent.getY() < ((ScreenY/3) + (((ScreenY/3)*2) / 45) + (ScreenY/3*2/45*10) )) {
+                    answer = answer * 10 + 9;
+                    //draw();
+                }
+                else if (motionEvent.getX() > ScreenX / 40 && motionEvent.getX() < (ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10)+ (ScreenY/3*2/45*10)) {
+                    answer = answer * 10 + 4;
+                    //draw();
+                }
+                else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10)+ (ScreenY/3*2/45*10)) {
+                    answer = answer * 10 + 5;
+                    //draw();
+                }
+                else if (motionEvent.getX() > ScreenX /20 + ScreenX/40 + ScreenX/2 && motionEvent.getX() < (ScreenX /20 + ScreenX /2 + ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10)+ (ScreenY/3*2/45*10)) {
+                    answer = answer * 10 + 6;
+                    //draw();
+                }
+                else if (motionEvent.getX() > ScreenX / 40 && motionEvent.getX() < (ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 3)) {
+                    answer = answer * 10 + 1;
+                    //draw();
+                }
+                else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 3)) {
+                    answer = answer * 10 + 2;
+                    //draw();
+                }
+                else if (motionEvent.getX() > ScreenX /20 + ScreenX/40 + ScreenX/2 && motionEvent.getX() < (ScreenX /20 + ScreenX /2 + ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 3)) {
+                    answer = answer * 10 + 3;
+                    //draw();
+                }
+                else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3) && motionEvent.getY() < ((ScreenY / 3) + ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 4))) {
+                    answer = answer * 10;
+                    //draw();
+                }
+                else if (motionEvent.getX() > (ScreenX - ScreenX / 40 - (ScreenX / 80 * 10)) && motionEvent.getX() < ScreenX - ScreenX/40 && motionEvent.getY() > (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45))) && motionEvent.getY() < (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45)) + ScreenY / 3 * 2 / 3)) {
+                    answer = 0;
+                    //draw();
+                }
+                else if (motionEvent.getX() > (ScreenX - ScreenX / 40 - (ScreenX / 80 * 10)) && motionEvent.getX() < ScreenX - ScreenX/40 && motionEvent.getY() > (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45 * 2)) + ScreenY / 3 * 2 / 3) && motionEvent.getY() < (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45 * 2)) + ScreenY / 3 * 2 / 3 * 2)) {
+                    answer = (answer - answer % 10) / 10;
+                    //draw();
+                }else if(motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3)){
+                    checkAnswer();
+                }
+
+                multiPlayerView.setAnswer(answer);
+
+                break;
+        }
+        return true;
     }
 
 
