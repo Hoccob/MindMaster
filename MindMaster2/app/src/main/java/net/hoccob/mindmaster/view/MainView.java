@@ -1,4 +1,4 @@
-package net.hoccob.mindmaster;
+package net.hoccob.mindmaster.view;
 
 
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
+
+import net.hoccob.mindmaster.R;
 
 
 public class MainView extends View {

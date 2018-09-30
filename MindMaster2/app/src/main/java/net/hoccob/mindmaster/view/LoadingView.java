@@ -1,4 +1,4 @@
-package net.hoccob.mindmaster;
+package net.hoccob.mindmaster.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

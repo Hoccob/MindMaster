@@ -1,13 +1,14 @@
-package net.hoccob.mindmaster;
+package net.hoccob.mindmaster.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+
+import net.hoccob.mindmaster.view.MainView;
 
 public class MainActivity extends Activity {
 

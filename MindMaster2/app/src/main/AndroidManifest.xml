@@ -10,25 +10,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HighScoreActivity">
+        <activity android:name=".activity.HighScoreActivity">
 
 
         </activity>
-        <activity android:name=".SinglePlayerActivity">
+        <activity android:name=".activity.SinglePlayerActivity">
         </activity>
 
-        <activity android:name=".PracticeActivity">
+        <activity android:name=".activity.PracticeActivity">
 
         </activity>
-        <activity android:name=".MultiPlayerActivity"></activity>
-        <activity android:name=".LoadingActivity"></activity>
+        <activity android:name=".activity.MultiPlayerActivity"></activity>
+        <activity android:name=".activity.LoadingActivity"></activity>
     </application>
 
 </manifest>

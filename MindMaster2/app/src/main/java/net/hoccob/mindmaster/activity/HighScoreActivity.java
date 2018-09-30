@@ -1,4 +1,4 @@
-package net.hoccob.mindmaster;
+package net.hoccob.mindmaster.activity;
 
 import android.app.Activity;
 import android.graphics.Point;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Display;
 import android.view.View;
+
+import net.hoccob.mindmaster.view.HighScoreView;
 
 
 public class HighScoreActivity extends Activity {

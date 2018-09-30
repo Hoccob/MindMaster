@@ -1,4 +1,4 @@
-package net.hoccob.mindmaster;
+package net.hoccob.mindmaster.view;
 
 
 import android.content.Context;
@@ -13,6 +13,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.SurfaceHolder;
+
+import net.hoccob.mindmaster.Operation;
+import net.hoccob.mindmaster.R;
 
 import java.util.Random;
 

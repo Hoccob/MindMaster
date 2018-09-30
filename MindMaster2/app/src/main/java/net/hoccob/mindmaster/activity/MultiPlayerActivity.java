@@ -1,4 +1,4 @@
-package net.hoccob.mindmaster;
+package net.hoccob.mindmaster.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,8 +11,13 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 
+import net.hoccob.mindmaster.Equation;
+import net.hoccob.mindmaster.view.LoadingView;
+import net.hoccob.mindmaster.view.MultiPlayerView;
+import net.hoccob.mindmaster.Player;
+import net.hoccob.mindmaster.Waitlist;
+
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MultiPlayerActivity extends Activity {

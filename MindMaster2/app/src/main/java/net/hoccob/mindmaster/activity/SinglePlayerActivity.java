@@ -1,100 +1,63 @@
-package net.hoccob.mindmaster;
+package net.hoccob.mindmaster.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.hoccob.mindmaster.view.SinglePlayerView;
 
 
-public class LoadingActivity extends Activity {
+public class SinglePlayerActivity extends Activity {
 
-    MultiPlayerView multiPlayerView;
-    LoadingView loadingView;
-    Player player;
-    Waitlist waitlist;
-    ArrayList<ArrayList<Equation>> equations;
-    //Equation[][] equations = new Equation[30][30];
-    int ScreenX;
-    int ScreenY;
-    int answer;
-    int progress = 0;
+    SinglePlayerView singlePlayerView;
+    String answer;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        StrictMode.enableDefaults();
+
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        multiPlayerView = new MultiPlayerView(this, size.x, size.y);
-        loadingView = new LoadingView(this, size.x, size.y);
-        loadingView.setText("LOADOING!!");
-        player = new Player();
-        waitlist = new Waitlist();
-        equations = new ArrayList<>();
-
-        ScreenX = size.x;
-        ScreenY = size.y;
-
+        singlePlayerView = new SinglePlayerView(this, size.x, size.y);
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        setContentView(loadingView);
-
-        final Intent intent = new Intent(this, MultiPlayerActivity.class);
-
-        RequestGame requestGame = new RequestGame(player, waitlist, equations, new RequestGame.AsyncResponse(){
-
-            @Override
-            public void processFinish(String output){
-                //Here you will receive the result fired from async class
-                //of onPostExecute(result) method.
-                System.out.println("Joudsin siia");
-                for(int i = 0; i < 12; i++) {
-                    intent.putParcelableArrayListExtra("level" + i, equations.get(i));
-                }
-                startActivity(intent);
-                finish();
-            }
-        });
-        requestGame.execute("testuser1");
+        setContentView(singlePlayerView);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //setContentView(loadingView);
+        //singlePlayerView.draw();
+        singlePlayerView.startGame();
+        setContentView(singlePlayerView);
         hideSystemUI();
     }
 
     @Override
     protected void onPause(){
         super.onPause();
-        //multiPlayerView.pause();
+        singlePlayerView.pause();
     }
 
     @Override
     protected void onDestroy(){
-        int final_score = multiPlayerView.getScore();
+        int final_score = singlePlayerView.getScore();
 
-        if (multiPlayerView.getGameOver()){
+        if (singlePlayerView.getGameOver()){
             SharedPreferences sharedPref = getSharedPreferences(
                     "HighScore", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -112,7 +75,6 @@ public class LoadingActivity extends Activity {
             hideSystemUI();
         }
     }
-
 
     private void hideSystemUI() {
         // Enables regular immersive mode.
@@ -140,4 +102,7 @@ public class LoadingActivity extends Activity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
+
+
+
 }
