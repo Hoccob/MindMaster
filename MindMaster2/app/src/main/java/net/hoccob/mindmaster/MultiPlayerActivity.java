@@ -10,22 +10,16 @@ import android.support.annotation.Nullable;
 import android.view.Display;
 import android.view.View;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.ObjectToStringHttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import java.util.List;
+
 
 public class MultiPlayerActivity extends Activity {
 
     MultiPlayerView multiPlayerView;
+    LoadingView loadingView;
     Player player;
     Waitlist waitlist;
+    Equation[] equations = new Equation[310];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +31,8 @@ public class MultiPlayerActivity extends Activity {
         Point size = new Point();
         display.getSize(size);
         multiPlayerView = new MultiPlayerView(this, size.x, size.y);
+        loadingView = new LoadingView(this, size.x, size.y);
+        loadingView.setText("LOADOING!!");
         player = new Player();
         waitlist = new Waitlist();
 
@@ -45,19 +41,29 @@ public class MultiPlayerActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        setContentView(multiPlayerView);
+        setContentView(loadingView);
+
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //singlePlayerView.draw();
-        multiPlayerView.startGame();
-        setContentView(multiPlayerView);
+        //setContentView(loadingView);
         hideSystemUI();
 
-        logIn();
+        RequestGame requestGame = new RequestGame(player, waitlist, equations, new RequestGame.AsyncResponse(){
+
+            @Override
+            public void processFinish(String output){
+                //Here you will receive the result fired from async class
+                //of onPostExecute(result) method.
+                System.out.println("Joudsin siia");
+                setContentView(multiPlayerView);
+                multiPlayerView.startGame();
+            }
+        });
+        requestGame.execute("testuser1");
     }
 
     @Override
@@ -80,79 +86,6 @@ public class MultiPlayerActivity extends Activity {
         super.onDestroy();
     }
 
-
-    private void logIn(){
-        String url = "http://mindmaster.ee:8080/api/users/{userName}";
-
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
-        player.setUserName("testUser3");
-        String output = restTemplate.getForObject(url, String.class, player.getUserName());
-
-        System.out.println(output);
-        try {
-            JSONObject jsonPlayer = new JSONObject(output);
-            player.setId(jsonPlayer.getInt("id"));
-            player.setUserName(jsonPlayer.getString("userName"));
-            player.setPoints(jsonPlayer.getInt("points"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-
-        if(player.getId() > 0){
-            requestGame();
-        }
-
-    }
-
-    private void requestGame(){
-
-        Boolean gotGame = false;
-        String output;
-
-        String url = "http://mindmaster.ee:8080/api/waitlist";
-
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        JSONObject jsonWaitlist = new JSONObject();
-
-        try {
-            jsonWaitlist.put("userId", player.getId());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        HttpEntity<String> entity = new HttpEntity<>(jsonWaitlist.toString(),headers);
-
-        restTemplate.postForObject(url, entity, String.class);
-
-        url = url + "/" + player.getId();
-
-        while(!gotGame){
-            try {
-                Thread.sleep(2000);
-                output = restTemplate.getForObject(url, String.class);
-                jsonWaitlist = new JSONObject(output);
-                waitlist.setGameId(jsonWaitlist.getInt("gameId"));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            if(waitlist.getGameId() > 0){
-                gotGame = true;
-            }
-        }
-
-        multiPlayerView.setPlay(true);
-
-    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

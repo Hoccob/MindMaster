@@ -151,18 +151,8 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
                 (int) (ScreenX/80 * 35),
                 (int) (ScreenY/3*2/45*15),
                 false);
-        //Paint answer_text = new Paint();
-        //answer_text.setColor(0xFF000000);
-        //answer_text.setTextSize(50);
-
-        //gameThread = new Thread(this);
 
         operation = new Operation();
-
-        //currentOperation = operation.getOperation();
-        //currentAnswer = operation.getAnswer();
-
-        //gameThread = new Thread(this);
 
         operation.createPools();
 
@@ -173,9 +163,6 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
 
     @Override
     public void run(){
-        while(!play){
-            drawLoading();
-        }
         while(play) {
             if(timer > 130) {
                 timer = endTime - System.currentTimeMillis();
@@ -184,7 +171,7 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
             }else{
                 gameOver = true;
             }
-            drawGame();
+            draw();
             try {
                 gameThread.sleep(10);
             } catch (InterruptedException e) {
@@ -211,27 +198,8 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         //newEquation();
     }
 
-    public void drawLoading() {
 
-        canvas = ourHolder.lockCanvas();
-
-        canvas.drawColor(Color.argb(255,0,0,0));
-        black_paint_fill = new Paint();
-        black_paint_fill.setColor(0xFF9F9FB5);
-        black_paint_fill.setStyle(Paint.Style.FILL);
-
-        Paint loadingText;
-        loadingText = new Paint();
-        loadingText.setColor(0xFF000000);
-        loadingText.setTextSize(160);
-
-        canvas.drawText("LOADOING!!", ScreenX / 3, ScreenY / 2, loadingText);
-
-        ourHolder.unlockCanvasAndPost(canvas);
-
-    }
-
-    public void drawGame() {
+    public void draw() {
 
         if(ourHolder.getSurface().isValid()) {
             String answer_str;
@@ -245,10 +213,6 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
             black_paint_fill = new Paint();
             black_paint_fill.setColor(0xFF9F9FB5);
             black_paint_fill.setStyle(Paint.Style.FILL);
-
-            pink_paint_fill = new Paint();
-            pink_paint_fill.setColor(0xFFFF00FF);
-            pink_paint_fill.setStyle(Paint.Style.FILL);
 
             Rect rectangle1 = new Rect();
             rectangle1.set(0, 0, ScreenX, ScreenY / 3);
@@ -291,8 +255,6 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
             ourHolder.unlockCanvasAndPost(canvas);
             //answer++;
         }
-
-
 
     }
 
