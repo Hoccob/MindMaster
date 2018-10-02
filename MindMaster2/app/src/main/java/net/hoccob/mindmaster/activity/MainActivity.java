@@ -7,13 +7,19 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
+import net.hoccob.mindmaster.Player;
+import net.hoccob.mindmaster.server.LogIn;
 import net.hoccob.mindmaster.view.MainView;
 
 public class MainActivity extends Activity {
 
     public int y;
     MainView mainView;
+    Player player;
+
+    Intent intent4;
 
 
     @Override
@@ -25,19 +31,32 @@ public class MainActivity extends Activity {
         display.getSize(size);
         mainView = new MainView(this, size.x, size.y);
         y = size.y;
-
-
+        player = new Player();
+        intent4 = new Intent(this, LoadingActivity.class);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         setContentView(mainView);
+
+        LogIn logIn= new LogIn(player, new LogIn.AsyncResponse(){
+
+            @Override
+            public void processFinish(String output){
+                //Here you will receive the result fired from async class
+                //of onPostExecute(result) method.
+                System.out.println("player id:" + player.getId());
+                intent4.putExtra("player", player);
+            }
+        });
+        logIn.execute("testuser1");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        intent4 = new Intent(this, LoadingActivity.class);
     }
 
     @Override
@@ -69,8 +88,13 @@ public class MainActivity extends Activity {
                 }
                 else if(motionEvent.getX() > 0 && (motionEvent.getX() < 601)&& motionEvent.getY() > (y/10 * 7) && motionEvent.getY() < ((y/10 * 7) + 300))
                 {
-                    Intent intent4 = new Intent(this, LoadingActivity.class);
-                    startActivity(intent4);
+                    if(player.getId() > 0) {
+                        //Intent intent4 = new Intent(this, LoadingActivity.class);
+                        System.gc();
+                        startActivity(intent4);
+                    }else{
+                        Toast.makeText(this, "Not logged in!", Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
         }

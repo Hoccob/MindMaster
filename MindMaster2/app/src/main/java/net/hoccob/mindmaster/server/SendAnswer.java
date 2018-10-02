@@ -10,11 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-public class SendAnswer extends AsyncTask<String, String, String> {
+public class SendAnswer extends AsyncTask<Integer, String, String> {
 
 
     @Override
-    protected String doInBackground(String... params){
+    protected String doInBackground(Integer... params){
         String result = "";
         String url =  "http://mindmaster.ee:8080/api/gameplay";
 

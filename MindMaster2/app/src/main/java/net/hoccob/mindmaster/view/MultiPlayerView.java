@@ -188,7 +188,7 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         gameOver = false;
         gameThread = new Thread(this);
         gameThread.start();
-        endTime = System.currentTimeMillis() + 6000;
+        endTime = System.currentTimeMillis() + 15000;
         timer = endTime - System.currentTimeMillis();
     }
 

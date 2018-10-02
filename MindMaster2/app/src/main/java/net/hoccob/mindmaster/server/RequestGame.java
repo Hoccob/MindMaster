@@ -39,8 +39,8 @@ public class RequestGame extends AsyncTask<String, String, String>{
 
     @Override
     protected String doInBackground(String... params){
-        this.body = params[0];
-        url =  "http://mindmaster.ee:8080/api/users/{userId}";
+        //this.body = params[0];
+        //url =  "http://mindmaster.ee:8080/api/users/{userId}";
         String result;
         Boolean gotGame = false;
         String output;
@@ -49,18 +49,18 @@ public class RequestGame extends AsyncTask<String, String, String>{
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-        //GET player by userName
-        result = restTemplate.getForObject(url, String.class, body);
-
-        //Update player object
-        try {
-            JSONObject jsonPlayer = new JSONObject(result);
-            player.setId(jsonPlayer.getInt("id"));
-            player.setUserName(jsonPlayer.getString("userName"));
-            player.setPoints(jsonPlayer.getInt("points"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        ////GET player by userName
+        //result = restTemplate.getForObject(url, String.class, body);
+//
+        ////Update player object
+        //try {
+        //    JSONObject jsonPlayer = new JSONObject(result);
+        //    player.setId(jsonPlayer.getInt("id"));
+        //    player.setUserName(jsonPlayer.getString("userName"));
+        //    player.setPoints(jsonPlayer.getInt("points"));
+        //} catch (JSONException e) {
+        //    e.printStackTrace();
+        //}
 
         JSONObject jsonWaitlist = new JSONObject();
         try {
@@ -110,7 +110,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
                 equations.add(new ArrayList<Equation>());
                 for(int j = 0; j < 25; j++){
                     System.out.println("i: " + i + " j: " + j);
-                    equations.get(i).add( new Equation(jsonEquations.getJSONObject((i*25)+j).getInt("id"), jsonEquations.getJSONObject((i * 25) + j).getInt("level"), jsonEquations.getJSONObject((i * 25) + j).getInt("operand_1"),jsonEquations.getJSONObject((i * 25) + j).getInt("operand_2")));
+                    equations.get(i).add( new Equation(jsonEquations.getJSONObject((i*25)+j).getInt("equationId"), jsonEquations.getJSONObject((i * 25) + j).getInt("level"), jsonEquations.getJSONObject((i * 25) + j).getInt("operand_1"),jsonEquations.getJSONObject((i * 25) + j).getInt("operand_2")));
                     equations.get(i).get(j).calcAnswer();
                 }
             }

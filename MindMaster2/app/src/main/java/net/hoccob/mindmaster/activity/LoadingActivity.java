@@ -30,6 +30,7 @@ public class LoadingActivity extends Activity {
     ArrayList<ArrayList<Equation>> equations;
     int ScreenX;
     int ScreenY;
+    RequestGame requestGame;
 
 
     @Override
@@ -44,7 +45,7 @@ public class LoadingActivity extends Activity {
         multiPlayerView = new MultiPlayerView(this, size.x, size.y);
         loadingView = new LoadingView(this, size.x, size.y);
         loadingView.setText("LOADOING!!");
-        player = new Player();
+
         waitlist = new Waitlist();
         equations = new ArrayList<>();
 
@@ -59,15 +60,19 @@ public class LoadingActivity extends Activity {
         super.onStart();
         setContentView(loadingView);
 
+        player = getIntent().getParcelableExtra("player");
+
         final Intent intent = new Intent(this, MultiPlayerActivity.class);
 
-        RequestGame requestGame = new RequestGame(player, waitlist, equations, new RequestGame.AsyncResponse(){
+        requestGame = new RequestGame(player, waitlist, equations, new RequestGame.AsyncResponse(){
 
             @Override
             public void processFinish(String output){
                 //Here you will receive the result fired from async class
                 //of onPostExecute(result) method.
                 System.out.println("Joudsin siia");
+                intent.putExtra("player", player);
+                intent.putExtra("gameId", waitlist.getGameId());
                 for(int i = 0; i < 12; i++) {
                     intent.putParcelableArrayListExtra("level" + i, equations.get(i));
                 }
@@ -75,7 +80,7 @@ public class LoadingActivity extends Activity {
                 finish();
             }
         });
-        requestGame.execute("testuser1");
+        requestGame.execute("testuser2");
 
     }
 
@@ -90,20 +95,24 @@ public class LoadingActivity extends Activity {
     protected void onPause(){
         super.onPause();
         //multiPlayerView.pause();
+        requestGame.cancel(true);
+        finish();
     }
 
     @Override
     protected void onDestroy(){
-        int final_score = multiPlayerView.getScore();
-
-        if (multiPlayerView.getGameOver()){
-            SharedPreferences sharedPref = getSharedPreferences(
-                    "HighScore", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("Competitive1", final_score);
-            editor.commit();
-        }
+        //int final_score = multiPlayerView.getScore();
+//
+        //if (multiPlayerView.getGameOver()){
+        //    SharedPreferences sharedPref = getSharedPreferences(
+        //            "HighScore", Context.MODE_PRIVATE);
+        //    SharedPreferences.Editor editor = sharedPref.edit();
+        //    editor.putInt("Competitive1", final_score);
+        //    editor.commit();
+        //}
         super.onDestroy();
+        requestGame.cancel(true);
+        finish();
     }
 
 
@@ -112,6 +121,9 @@ public class LoadingActivity extends Activity {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
             hideSystemUI();
+        }else{
+            requestGame.cancel(true);
+            finish();
         }
     }
 
