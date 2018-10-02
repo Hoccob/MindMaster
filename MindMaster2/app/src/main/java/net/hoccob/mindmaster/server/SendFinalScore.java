@@ -10,29 +10,26 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-public class SendAnswer extends AsyncTask<Integer, String, String> {
-
+public class SendFinalScore extends AsyncTask<Integer, String, String> {
 
     @Override
     protected String doInBackground(Integer... params){
         String result = "";
-        String url =  "http://mindmaster.ee:8080/api/gameplay";
+        String url =  "http://mindmaster.ee:8080/api/score";
 
         try {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-            JSONObject jsonAnswer = new JSONObject();
-                jsonAnswer.put("equationId", params[0]);
-                jsonAnswer.put("userId", params[1]);
-                jsonAnswer.put("gameId", params[2]);
-                jsonAnswer.put("givenAnswer", params[3]);
-                jsonAnswer.put("calcTimeMillis", params[4]);
+            JSONObject jsonScore = new JSONObject();
+            jsonScore.put("gameId", params[0]);
+            jsonScore.put("userId", params[1]);
+            jsonScore.put("score", params[2]);
 
             //Configure for POST request
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<String> entity = new HttpEntity<>(jsonAnswer.toString(), headers);
+            HttpEntity<String> entity = new HttpEntity<>(jsonScore.toString(), headers);
 
             restTemplate.postForEntity(url, entity, String.class);
         } catch (JSONException e) {
@@ -47,6 +44,6 @@ public class SendAnswer extends AsyncTask<Integer, String, String> {
     @Override
     protected void onPostExecute(String result){
         super.onPostExecute(result);
-        System.out.println("Answer sent!");
+        System.out.println("Final score sent!");
     }
 }

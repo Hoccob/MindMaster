@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.view.Display;
@@ -13,12 +14,15 @@ import android.view.View;
 
 import net.hoccob.mindmaster.Equation;
 import net.hoccob.mindmaster.server.SendAnswer;
+import net.hoccob.mindmaster.server.SendFinalScore;
 import net.hoccob.mindmaster.view.LoadingView;
 import net.hoccob.mindmaster.view.MultiPlayerView;
 import net.hoccob.mindmaster.Player;
 import net.hoccob.mindmaster.Waitlist;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MultiPlayerActivity extends Activity {
@@ -28,6 +32,9 @@ public class MultiPlayerActivity extends Activity {
     Player player;
     Waitlist waitlist;
     ArrayList<ArrayList<Equation>> equations;
+    Handler handler = new Handler();
+    Timer timer;
+    TimerTask checkGameTime;
     int ScreenX;
     int ScreenY;
     int answer;
@@ -92,6 +99,29 @@ public class MultiPlayerActivity extends Activity {
     protected void onPause(){
         super.onPause();
         //multiPlayerView.pause();
+        finish();
+    }
+
+    private void startTimer(){
+        timer = new Timer();
+        checkTime();
+
+        timer.schedule(checkGameTime, 0, 1000);
+    }
+
+    private void checkTime(){
+        checkGameTime = new TimerTask() {
+            public void run() {
+                handler.post(new Runnable(){
+                    public void run(){
+                        if(multiPlayerView.getGameOver() && !gameOver){
+                            new SendFinalScore().execute(gameId, player.getId(), score);
+                            gameOver = true;
+                        }
+                    }
+                });
+            }
+        };
     }
 
     public void newEquation(){
@@ -153,6 +183,7 @@ public class MultiPlayerActivity extends Activity {
         gameOver = false;
         answerTime = System.currentTimeMillis();
         newEquation();
+        startTimer();
     }
 
     @Override
@@ -167,6 +198,7 @@ public class MultiPlayerActivity extends Activity {
             editor.commit();
         }
         super.onDestroy();
+        finish();
     }
 
 

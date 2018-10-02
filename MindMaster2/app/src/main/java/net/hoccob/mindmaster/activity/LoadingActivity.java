@@ -70,7 +70,7 @@ public class LoadingActivity extends Activity {
             public void processFinish(String output){
                 //Here you will receive the result fired from async class
                 //of onPostExecute(result) method.
-                System.out.println("Joudsin siia");
+                //System.out.println("Joudsin siia");
                 intent.putExtra("player", player);
                 intent.putExtra("gameId", waitlist.getGameId());
                 for(int i = 0; i < 12; i++) {
@@ -101,15 +101,6 @@ public class LoadingActivity extends Activity {
 
     @Override
     protected void onDestroy(){
-        //int final_score = multiPlayerView.getScore();
-//
-        //if (multiPlayerView.getGameOver()){
-        //    SharedPreferences sharedPref = getSharedPreferences(
-        //            "HighScore", Context.MODE_PRIVATE);
-        //    SharedPreferences.Editor editor = sharedPref.edit();
-        //    editor.putInt("Competitive1", final_score);
-        //    editor.commit();
-        //}
         super.onDestroy();
         requestGame.cancel(true);
         finish();

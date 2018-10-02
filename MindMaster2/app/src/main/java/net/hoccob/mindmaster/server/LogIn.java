@@ -48,13 +48,13 @@ public class LogIn extends AsyncTask<String, String, String> {
             e.printStackTrace();
         }
 
-        System.out.println("BG DONE");
+        System.out.println("LOGIN DONE!!");
         return result;
     }
 
     @Override
     protected void onPostExecute(String result){
         delegate.processFinish(result);
-        System.out.println("ONPOSTEXEC");
+        //System.out.println("ONPOSTEXEC");
     }
 }
