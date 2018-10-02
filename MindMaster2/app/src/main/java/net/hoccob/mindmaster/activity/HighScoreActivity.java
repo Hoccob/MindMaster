@@ -1,6 +1,8 @@
 package net.hoccob.mindmaster.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +23,14 @@ public class HighScoreActivity extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        highScoreView = new HighScoreView(this, size.x, size.y);
+        SharedPreferences sharedPref = getSharedPreferences("HighScore",
+                Context.MODE_PRIVATE);
+        int highScore1 = sharedPref.getInt("1", 0);
+        int highScore2 = sharedPref.getInt("2", 0);
+        int highScore3 = sharedPref.getInt("3", 0);
+        int highScore4 = sharedPref.getInt("4", 0);
+        int highScore5 = sharedPref.getInt("5", 0);
+        highScoreView = new HighScoreView(this, size.x, size.y, highScore1, highScore2, highScore3, highScore4, highScore5);
 
     }
 

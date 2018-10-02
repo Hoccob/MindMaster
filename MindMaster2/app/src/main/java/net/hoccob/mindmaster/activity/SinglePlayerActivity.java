@@ -55,16 +55,85 @@ public class SinglePlayerActivity extends Activity {
 
     @Override
     protected void onDestroy(){
-        int final_score = singlePlayerView.getScore();
+        super.onDestroy();
+        //int final_score = singlePlayerView.getScore();
+        //SharedPreferences sharedPref = getSharedPreferences("HighScore",
+        //Context.MODE_PRIVATE);
 
-        if (singlePlayerView.getGameOver()){
+        //if
+        //String [] highScores =  new String[]{null, null, null, null, null};
+        // Set<String> mySet = new HashSet<String>(Arrays.asList(highScores));
+        int x;
+        int y;
+        int z = singlePlayerView.getScore();
+
+
+        if (singlePlayerView.getGameOver()) {
             SharedPreferences sharedPref = getSharedPreferences(
                     "HighScore", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("Competitive1", final_score);
+            if (sharedPref.contains("1")) {
+                if(sharedPref.getInt("5", 0) < z){
+                    if(sharedPref.getInt("4", 0) < z){
+                        if(sharedPref.getInt("3", 0) < z){
+                            if(sharedPref.getInt("2", 0) < z){
+                                if(sharedPref.getInt("1", 0) < z){
+                                    x = sharedPref.getInt("1", 0);
+                                    editor.putInt("1", z);
+                                    y = sharedPref.getInt("2", 0);
+                                    editor.putInt("2", x);
+                                    x = sharedPref.getInt("3", 0);
+                                    editor.putInt("3", y);
+                                    y = sharedPref.getInt("4", y);
+                                    editor.putInt("4", x);
+                                    editor.putInt("5", y);
+
+                                }
+                                else {
+                                    x = sharedPref.getInt("2", 0);
+                                    editor.putInt("2", singlePlayerView.getScore());
+                                    y = sharedPref.getInt("3", 0);
+                                    editor.putInt("3", x);
+                                    x = sharedPref.getInt("4", 0);
+                                    editor.putInt("4", y);
+                                    editor.putInt("5", x);
+                                }
+                            }
+                            else {
+                                x = sharedPref.getInt("3", 0);
+                                editor.putInt("3", singlePlayerView.getScore());
+                                y = sharedPref.getInt("4", 0);
+                                editor.putInt("4", x);
+                                editor.putInt("5", y);
+                            }
+                        }
+                        else {
+                            x = sharedPref.getInt("4", 0);
+                            editor.putInt("4", singlePlayerView.getScore());
+                            editor.putInt("5", x);
+                        }
+                    }else{
+                    editor.putInt("5", singlePlayerView.getScore());}
+
+                }
+            }
+
+
+                else{
+                    if (singlePlayerView.getScore() > 0){
+                        editor.putInt("1", singlePlayerView.getScore());}
+                    else {
+                        editor.putInt("1", 0);
+                    }
+                        editor.putInt("2", 0);
+                        editor.putInt("3", 0);
+                        editor.putInt("4", 0);
+                        editor.putInt("5", 0);
+
+
+                    }
             editor.commit();
         }
-        super.onDestroy();
     }
 
 
