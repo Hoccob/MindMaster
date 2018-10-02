@@ -82,6 +82,9 @@ public class RequestGame extends AsyncTask<String, String, String>{
 
         url = "http://mindmaster.ee:8080/api/waitlist/{userId}";
         while(!gotGame){
+            if(isCancelled()){
+                return null;
+            }
             try {
                 Thread.sleep(4000);
                 output = restTemplate.getForObject(url, String.class, player.getId());
