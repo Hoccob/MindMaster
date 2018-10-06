@@ -83,7 +83,7 @@ public class MainActivity extends Activity {
                 }
                 else if(motionEvent.getX() > 0 && (motionEvent.getX() < 601)&& motionEvent.getY() > y/2 &&motionEvent.getY() < (y/2 + 300))
                 {
-                    Intent intent3 = new Intent(this, HighScoreActivity.class);
+                    Intent intent3 = new Intent(this, HighScoreActivity2.class);
                     startActivity(intent3);
                 }
                 else if(motionEvent.getX() > 0 && (motionEvent.getX() < 601)&& motionEvent.getY() > (y/10 * 7) && motionEvent.getY() < ((y/10 * 7) + 300))

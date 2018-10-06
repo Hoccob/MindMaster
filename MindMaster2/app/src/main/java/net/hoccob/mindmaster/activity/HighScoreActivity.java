@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Display;
 import android.view.View;
+import android.widget.TextView;
 
+import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.view.HighScoreView;
 
 
@@ -30,8 +32,9 @@ public class HighScoreActivity extends Activity {
         int highScore3 = sharedPref.getInt("3", 0);
         int highScore4 = sharedPref.getInt("4", 0);
         int highScore5 = sharedPref.getInt("5", 0);
+        String goo = "1." + String.valueOf(highScore1) + "\n2." + String.valueOf(highScore2) + "\n3." + String.valueOf(highScore3) + "\n4." + String.valueOf(highScore4) +"\n5." +String.valueOf(highScore5);
         highScoreView = new HighScoreView(this, size.x, size.y, highScore1, highScore2, highScore3, highScore4, highScore5);
-
+        TextView b1 = (TextView)findViewById(R.id.textView3);
     }
 
     @Override

@@ -24,6 +24,10 @@
         <activity android:name=".activity.SinglePlayerActivity">
         </activity>
 
+
+    <activity android:name=".activity.HighScoreActivity2">
+    </activity>
+
         <activity android:name=".activity.PracticeActivity">
 
         </activity>
