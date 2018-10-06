@@ -35,6 +35,18 @@ public class SendAnswer extends AsyncTask<Integer, String, String> {
             HttpEntity<String> entity = new HttpEntity<>(jsonAnswer.toString(), headers);
 
             restTemplate.postForEntity(url, entity, String.class);
+
+            url = "http://mindmaster.ee:8080/api/lastScore";
+
+            JSONObject jsonLastScore = new JSONObject();
+            jsonLastScore.put("gameId", params[2]);
+            jsonLastScore.put("userId", params[1]);
+            jsonLastScore.put("score", params[5]);
+
+            entity = new HttpEntity<>(jsonLastScore.toString(), headers);
+
+            restTemplate.postForEntity(url, entity, String.class);
+
         } catch (JSONException e) {
             e.printStackTrace();
         } catch(RuntimeException e) {

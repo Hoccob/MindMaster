@@ -73,7 +73,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
                     return null;
                 }
                     try {
-                        Thread.sleep(4000);
+                        Thread.sleep(2000);
                         output = restTemplate.getForObject(url, String.class, player.getId());
                         jsonWaitlist = new JSONObject(output);
                         waitlist.setGameId(jsonWaitlist.getInt("gameId"));
@@ -114,6 +114,5 @@ public class RequestGame extends AsyncTask<String, String, String>{
     @Override
     protected void onPostExecute(String result){
         delegate.processFinish(result);
-        //System.out.println("ONPOSTEXEC");
     }
 }

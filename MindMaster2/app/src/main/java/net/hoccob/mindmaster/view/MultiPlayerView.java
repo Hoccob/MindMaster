@@ -35,6 +35,7 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
     int answer = 0;
     public Canvas canvas;
     private int score = 0;
+    private int opponentScore = 0;
 
     private boolean play = false;
 
@@ -195,6 +196,7 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
     public void setAnswer(int answer){this.answer = answer;}
     public void setCurrentOperation(String currentOperation){this.currentOperation = currentOperation;}
     public void setScore(int score){this.score = score;}
+    public void setOpponentScore(int opponentScore){this.opponentScore = opponentScore;}
 
     public void draw() {
 
@@ -237,14 +239,15 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
             operation_text = new Paint();
             operation_text.setColor(0xFF000000);
             operation_text.setTextSize(90);
-            canvas.drawText(currentOperation + " = " + answer_str, ScreenX / 6, ScreenY / 5, operation_text);
+            canvas.drawText(currentOperation + " = " + answer_str, ScreenX / 6, ScreenY / 3 - (ScreenY / 30), operation_text);
 
-            canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 8, answer_text);
+            canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 7, answer_text);
+            canvas.drawText(String.valueOf(opponentScore), ScreenX - (ScreenX / 6), ScreenY / 7, answer_text);
 
             if(gameOver){
-                canvas.drawText("Game over", ScreenX/3, ScreenY/10, answer_text);
+                canvas.drawText("Game over", ScreenX/4, ScreenY/10, answer_text);
             }else {
-                canvas.drawText(timerSec + ":" +  timerMilli, ScreenX / 2, ScreenY / 10, answer_text);
+                canvas.drawText(timerSec + ":" +  timerMilli, ScreenX / 3, ScreenY / 10, answer_text);
             }
             ourHolder.unlockCanvasAndPost(canvas);
         }
