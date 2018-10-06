@@ -11,12 +11,12 @@ import android.support.v4.view.ViewPager;
 
 import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.view.FirstFragment;
+import net.hoccob.mindmaster.view.MultiPlayerView;
 import net.hoccob.mindmaster.view.SecondFragment;
 
 import android.support.v4.app.FragmentManager;
 import android.view.View;
-import android.widget.ScrollView;
-import android.widget.TextView;
+
 
 public class HighScoreActivity2 extends FragmentActivity {
     /**
@@ -35,7 +35,8 @@ public class HighScoreActivity2 extends FragmentActivity {
      */
     private PagerAdapter mPagerAdapter;
 
-    String goo;
+    String SinglePlayerScore;
+    String MultiPlayerScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +50,16 @@ public class HighScoreActivity2 extends FragmentActivity {
         int highScore3 = sharedPref.getInt("3", 0);
         int highScore4 = sharedPref.getInt("4", 0);
         int highScore5 = sharedPref.getInt("5", 0);
-        goo = "1." + String.valueOf(highScore1) + "\n2." + String.valueOf(highScore2) + "\n3." + String.valueOf(highScore3) + "\n4." + String.valueOf(highScore4) +"\n5." +String.valueOf(highScore5);
-        //ScrollView b1 = (ScrollView) findViewById(R.id.ONE);
-        //TextView c1 =  (TextView)b1.getChildAt(0);
-        //b1.setText(goo);
-        //c1.setText(goo);
+        SinglePlayerScore = "1." + String.valueOf(highScore1) + "\n2." + String.valueOf(highScore2) + "\n3." + String.valueOf(highScore3) + "\n4." + String.valueOf(highScore4) +"\n5." +String.valueOf(highScore5);
+
+        SharedPreferences sharedPref2 = getSharedPreferences("HighScoreMultiplayer",
+                Context.MODE_PRIVATE);
+        int highScore1a = sharedPref2.getInt("1", 0);
+        int highScore2a = sharedPref2.getInt("2", 0);
+        int highScore3a = sharedPref2.getInt("3", 0);
+        int highScore4a = sharedPref2.getInt("4", 0);
+        int highScore5a = sharedPref2.getInt("5", 0);
+        MultiPlayerScore = "1." + String.valueOf(highScore1a) + "\n2." + String.valueOf(highScore2a) + "\n3." + String.valueOf(highScore3a) + "\n4." + String.valueOf(highScore4a) +"\n5." +String.valueOf(highScore5a);
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -85,10 +91,10 @@ public class HighScoreActivity2 extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
             if(position == 0){
-                return new FirstFragment(goo);
+                return new FirstFragment(SinglePlayerScore);
             }
             else{
-                return new SecondFragment();
+                return new SecondFragment(MultiPlayerScore);
             }
 
         }

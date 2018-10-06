@@ -53,6 +53,78 @@ public class MultiPlayerActivity extends Activity {
     long answerTime;
     int opponentScore = 0;
 
+    private void SaveScore(){
+
+        int x;
+        int y;
+        SharedPreferences sharedPref = getSharedPreferences(
+                "HighScoreMultiplayer", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        if (sharedPref.contains("1")) {
+            if(sharedPref.getInt("5", 0) < score){
+                if(sharedPref.getInt("4", 0) < score){
+                    if(sharedPref.getInt("3", 0) < score){
+                        if(sharedPref.getInt("2", 0) < score){
+                            if(sharedPref.getInt("1", 0) < score){
+                                x = sharedPref.getInt("1", 0);
+                                editor.putInt("1", score);
+                                y = sharedPref.getInt("2", 0);
+                                editor.putInt("2", x);
+                                x = sharedPref.getInt("3", 0);
+                                editor.putInt("3", y);
+                                y = sharedPref.getInt("4", y);
+                                editor.putInt("4", x);
+                                editor.putInt("5", y);
+
+                            }
+                            else {
+                                x = sharedPref.getInt("2", 0);
+                                editor.putInt("2", score);
+                                y = sharedPref.getInt("3", 0);
+                                editor.putInt("3", x);
+                                x = sharedPref.getInt("4", 0);
+                                editor.putInt("4", y);
+                                editor.putInt("5", x);
+                            }
+                        }
+                        else {
+                            x = sharedPref.getInt("3", 0);
+                            editor.putInt("3", score);
+                            y = sharedPref.getInt("4", 0);
+                            editor.putInt("4", x);
+                            editor.putInt("5", y);
+                        }
+                    }
+                    else {
+                        x = sharedPref.getInt("4", 0);
+                        editor.putInt("4", score);
+                        editor.putInt("5", x);
+                    }
+                }else{
+                    editor.putInt("5", score);}
+
+            }
+        }
+
+
+        else{
+            if (score > 0){
+                editor.putInt("1", score);}
+            else {
+                editor.putInt("1", 0);
+            }
+            editor.putInt("2", 0);
+            editor.putInt("3", 0);
+            editor.putInt("4", 0);
+            editor.putInt("5", 0);
+
+
+        }
+        editor.commit();
+    }
+
+
+
     public MultiPlayerActivity(){
     }
 
@@ -122,6 +194,7 @@ public class MultiPlayerActivity extends Activity {
                 gameTimeHandler.post(new Runnable(){
                     public void run(){
                         if(multiPlayerView.getGameOver() && !gameOver){
+                            SaveScore();
                             new SendFinalScore().execute(gameId, player.getId(), score);
                             gameOver = true;
                             getOpponentScoreTimer.cancel();
@@ -229,15 +302,7 @@ public class MultiPlayerActivity extends Activity {
 
     @Override
     protected void onDestroy(){
-        int final_score = multiPlayerView.getScore();
 
-        if (multiPlayerView.getGameOver()){
-            SharedPreferences sharedPref = getSharedPreferences(
-                    "HighScore", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("Competitive1", final_score);
-            editor.commit();
-        }
         multiPlayerView.setPlay(false);
         super.onDestroy();
         finish();

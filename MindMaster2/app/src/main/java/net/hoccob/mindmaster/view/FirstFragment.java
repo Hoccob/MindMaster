@@ -19,10 +19,10 @@ import net.hoccob.mindmaster.R;
 @SuppressLint("ValidFragment")
 public class FirstFragment extends Fragment {
 
-    String goo;
+    String SingleplayerScore;
 
-    public FirstFragment(String goo){
-        this.goo = goo;
+    public FirstFragment(String SinglePlayerScore){
+        this.SingleplayerScore = SinglePlayerScore;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class FirstFragment extends Fragment {
                 R.layout.first_fragment, container, false);
         TextView b1 = (TextView) rootView.findViewById(R.id.textView3);
         //TextView c1 =  (TextView)b1.getChildAt(0);
-        b1.setText(goo);
+        b1.setText(SingleplayerScore);
         return rootView;
         }
 

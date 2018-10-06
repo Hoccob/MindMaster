@@ -5,10 +5,12 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/textView4"
         style="?android:textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.2"
         android:padding="16dp"
-        android:text="Kill me pels" />
+        android:textSize="50sp"
+        android:text="" />
 </ScrollView>
