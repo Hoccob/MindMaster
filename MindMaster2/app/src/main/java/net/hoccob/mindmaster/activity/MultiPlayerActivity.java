@@ -200,6 +200,7 @@ public class MultiPlayerActivity extends Activity {
                     public void run(){
                         if(multiPlayerView.getGameOver() && !gameOver){
                             SaveScore();
+                            new SendAnswer().execute(equations.get(level-1).get(0).getId(), player.getId(), gameId, answer, Math.round(System.currentTimeMillis() - answerTime), score, multiPlayerView.getTimer());
                             new SendFinalScore().execute(gameId, player.getId(), score);
                             gameOver = true;
                             getOpponentScoreTimer.cancel();
