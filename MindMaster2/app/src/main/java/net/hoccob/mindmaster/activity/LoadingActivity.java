@@ -62,6 +62,12 @@ public class LoadingActivity extends Activity {
         setContentView(loadingView);
 
         player = getIntent().getParcelableExtra("player");
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println(player.getNickname());
+        System.out.println("\n");
+        System.out.println("\n");
+
 
         final Intent intent = new Intent(this, MultiPlayerActivity.class);
 
