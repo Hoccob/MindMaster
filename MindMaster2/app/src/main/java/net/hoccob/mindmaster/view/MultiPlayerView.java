@@ -6,6 +6,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -19,6 +23,12 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
     public int ScreenX;
     public int ScreenY;
     Bitmap background;
+    Bitmap playerBar;
+    Bitmap opponentBar;
+    Bitmap playerBarCover;
+    Bitmap opponentBarCover;
+    private int playerBarX;
+    private int opponentBarX;
     int answer = 0;
     public Canvas canvas;
     private int score = 0;
@@ -30,12 +40,12 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
 
     private SurfaceHolder ourHolder;
 
-    private Operation operation;
+    //private Operation operation;
 
     private long timer = 0;
-    private String timerSec;
-    private String timerMilli;
+    private long opponentTimer = 0;
     private long endTime;
+    private long opponentEndTime;
     private boolean gameOver = false;
 
 
@@ -59,9 +69,37 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
                 ScreenY,
                 false);
 
-        operation = new Operation();
+        playerBar = BitmapFactory.decodeResource(getResources(), R.drawable.playertimerbar);
 
-        operation.createPools();
+        playerBar = Bitmap.createScaledBitmap(playerBar,
+                ScreenX / 3,
+                ScreenY / 21,
+                false);
+
+        opponentBar = BitmapFactory.decodeResource(getResources(), R.drawable.opponenttimerbar);
+
+        opponentBar = Bitmap.createScaledBitmap(opponentBar,
+                ScreenX / 3,
+                ScreenY / 21,
+                false);
+
+        playerBarCover = BitmapFactory.decodeResource(getResources(), R.drawable.playerbarcover);
+
+        playerBarCover = Bitmap.createScaledBitmap(playerBarCover,
+                ScreenX / 3,
+                ScreenY / 21,
+                false);
+
+        opponentBarCover = BitmapFactory.decodeResource(getResources(), R.drawable.opponentbarcover);
+
+        opponentBarCover = Bitmap.createScaledBitmap(opponentBarCover,
+                ScreenX / 3,
+                ScreenY / 21,
+                false);
+
+        //operation = new Operation();
+
+        //operation.createPools();
 
         startGame();
 
@@ -73,8 +111,17 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         while(play) {
             if(timer > 130) {
                 timer = endTime - System.currentTimeMillis();
-                timerSec = String.valueOf(timer / 1000);
-                timerMilli = String.valueOf(timer / 100).substring(String.valueOf(timer /10).length() - 2);
+                opponentTimer = opponentEndTime - System.currentTimeMillis();
+                if(opponentTimer < 0){
+                    opponentTimer = 0;
+                }
+                if(timer < 0){
+                    timer = 0;
+                }
+                playerBarX = ScreenX/2 - playerBar.getWidth() - ((int) timer * playerBar.getWidth() / 15000);
+                opponentBarX = ScreenX/2 + opponentBar.getWidth() - (opponentBar.getWidth() - (int) opponentTimer * opponentBar.getWidth() / 15000);
+                //timerSec = String.valueOf(timer / 1000);
+                //timerMilli = String.valueOf(timer / 100).substring(String.valueOf(timer /10).length() - 2);
             }else{
                 gameOver = true;
             }
@@ -93,6 +140,10 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         return(score);
     }
     public void setPlay(boolean play){this.play = play;}
+    public void setOpponentTimer(long opponentTimer){
+        this.opponentTimer = opponentTimer;
+        opponentEndTime = System.currentTimeMillis() + opponentTimer;
+    }
 
     public void startGame(){
         answer = 0;
@@ -102,12 +153,16 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         gameThread.start();
         endTime = System.currentTimeMillis() + 15000;
         timer = endTime - System.currentTimeMillis();
+        opponentTimer = endTime - System.currentTimeMillis();
+        opponentEndTime = endTime;
     }
 
     public void setAnswer(int answer){this.answer = answer;}
     public void setCurrentOperation(String currentOperation){this.currentOperation = currentOperation;}
     public void setScore(int score){this.score = score;}
     public void setOpponentScore(int opponentScore){this.opponentScore = opponentScore;}
+    public void timerPlus(long add){this.endTime += add;}
+    public void timerMinus(long take){this.endTime -= take;}
 
     public void draw() {
 
@@ -125,6 +180,11 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
             black_paint_fill.setStyle(Paint.Style.FILL);
 
             canvas.drawBitmap(background,0,0,null);
+            canvas.drawBitmap(playerBar, ScreenX/2 - playerBar.getWidth(), ScreenY / 21 ,null);
+            canvas.drawBitmap(opponentBar, ScreenX/2, ScreenY / 21, null);
+            canvas.drawBitmap(playerBarCover, playerBarX, ScreenY / 21, null);
+            canvas.drawBitmap(opponentBarCover, opponentBarX, ScreenY / 21, null);
+
             Paint answer_text;
             answer_text = new Paint();
             answer_text.setColor(0xFF000000);
@@ -139,11 +199,17 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
             canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 7, answer_text);
             canvas.drawText(String.valueOf(opponentScore), ScreenX - (ScreenX / 6), ScreenY / 7, answer_text);
 
-            if(gameOver){
-                canvas.drawText("Game over", ScreenX/4, ScreenY/10, answer_text);
-            }else {
-                canvas.drawText(timerSec + ":" +  timerMilli, ScreenX / 3, ScreenY / 10, answer_text);
-            }
+            //if(gameOver){
+            //    canvas.drawText("Game over", ScreenX/4, ScreenY/10, answer_text);
+            //}else {
+            //    canvas.drawText(timerSec + ":" +  timerMilli, ScreenX / 3, ScreenY / 10, answer_text);
+            //}
+
+
+            Rect rect = new Rect(ScreenX / 2 - (ScreenX / 72), ScreenY / 21, ScreenX / 2 + (ScreenX / 72), ScreenY / 21 + playerBar.getHeight());
+            canvas.drawRect(rect, operation_text);
+
+
             ourHolder.unlockCanvasAndPost(canvas);
         }
 
