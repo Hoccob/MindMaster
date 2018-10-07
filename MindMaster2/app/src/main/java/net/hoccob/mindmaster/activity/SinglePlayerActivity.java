@@ -56,13 +56,7 @@ public class SinglePlayerActivity extends Activity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        //int final_score = singlePlayerView.getScore();
-        //SharedPreferences sharedPref = getSharedPreferences("HighScore",
-        //Context.MODE_PRIVATE);
 
-        //if
-        //String [] highScores =  new String[]{null, null, null, null, null};
-        // Set<String> mySet = new HashSet<String>(Arrays.asList(highScores));
         int x;
         int y;
         int z = singlePlayerView.getScore();
