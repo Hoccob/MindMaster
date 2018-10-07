@@ -119,8 +119,8 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
                 if(timer < 0){
                     timer = 0;
                 }
-                playerBarX = ScreenX/2 - playerBar.getWidth() - ((int) timer * playerBar.getWidth() / 15000);
-                opponentBarX = ScreenX/2 + opponentBar.getWidth() - (opponentBar.getWidth() - (int) opponentTimer * opponentBar.getWidth() / 15000);
+                playerBarX = ScreenX/2 - playerBar.getWidth() - ((int) timer * playerBar.getWidth() / 30000);
+                opponentBarX = ScreenX/2 + opponentBar.getWidth() - (opponentBar.getWidth() - (int) opponentTimer * opponentBar.getWidth() / 30000);
                 //timerSec = String.valueOf(timer / 1000);
                 //timerMilli = String.valueOf(timer / 100).substring(String.valueOf(timer /10).length() - 2);
             }else{
@@ -197,11 +197,17 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
             operation_text = new Paint();
             operation_text.setColor(0xFF000000);
             operation_text.setTextSize(90);
+
+            Paint opponent_text;
+            opponent_text = new Paint();
+            opponent_text.setColor(Color.BLACK);
+            opponent_text.setTextSize(30);
+
             canvas.drawText(currentOperation + " = " + answer_str, ScreenX / 24, ScreenY / 3 - (ScreenY / 20), operation_text);
 
             canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 7, answer_text);
             canvas.drawText(String.valueOf(opponentScore), ScreenX - (ScreenX / 6), ScreenY / 7, answer_text);
-            canvas.drawText(String.valueOf(opponentNickname), ScreenX / 2, ScreenY / 14, answer_text);
+            canvas.drawText(String.valueOf(opponentNickname), ScreenX / 2, ScreenY / 14, opponent_text);
 
 
             Rect rect = new Rect(ScreenX / 2 - (ScreenX / 72), ScreenY / 21, ScreenX / 2 + (ScreenX / 72), ScreenY / 21 + playerBar.getHeight());
