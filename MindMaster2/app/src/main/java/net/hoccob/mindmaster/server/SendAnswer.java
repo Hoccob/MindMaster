@@ -42,6 +42,7 @@ public class SendAnswer extends AsyncTask<Integer, String, String> {
             jsonLastScore.put("gameId", params[2]);
             jsonLastScore.put("userId", params[1]);
             jsonLastScore.put("score", params[5]);
+            jsonLastScore.put("timer", params[6]);
 
             entity = new HttpEntity<>(jsonLastScore.toString(), headers);
 

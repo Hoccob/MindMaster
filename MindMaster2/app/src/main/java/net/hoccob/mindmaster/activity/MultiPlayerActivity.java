@@ -273,7 +273,7 @@ public class MultiPlayerActivity extends Activity {
             progress = progress - 2;
             multiPlayerView.timerMinus(1500);
         }
-        new SendAnswer().execute(equations.get(level-1).get(0).getId(), player.getId(), gameId, answer, Math.round(System.currentTimeMillis() - answerTime), score);
+        new SendAnswer().execute(equations.get(level-1).get(0).getId(), player.getId(), gameId, answer, Math.round(System.currentTimeMillis() - answerTime), score, multiPlayerView.getTimer());
         answerTime = System.currentTimeMillis();
         multiPlayerView.setScore(score);
         answer = 0;
