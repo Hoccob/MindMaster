@@ -47,7 +47,6 @@ public class MainActivity extends Activity {
         }
         if (sharedPref.getString("nickname", null) == null){
             pickNickname();
-
         }
         else{
             player.setNickname(sharedPref.getString("nickname", null));
@@ -61,8 +60,8 @@ public class MainActivity extends Activity {
                 //of onPostExecute(result) method.
                 System.out.println("player id:" + player.getId());
                 System.out.println(player.getUserName());
-                intent4.removeExtra("player");
-                intent4.putExtra("player", player);
+                //intent4.removeExtra("player");
+                //intent4.putExtra("player", player);
             }
         });
         sendNickname.execute();
@@ -106,7 +105,7 @@ public class MainActivity extends Activity {
                 //of onPostExecute(result) method.
                 System.out.println("player id:" + player.getId());
                 System.out.println(player.getUserName());
-                intent4.putExtra("player", player);
+                //intent4.putExtra("player", player);
             }
         });
         logIn.execute(sharedPrefStart.getString("acc", null));
@@ -147,9 +146,10 @@ public class MainActivity extends Activity {
                 }
                 else if(motionEvent.getX() > 0 && (motionEvent.getX() < 601)&& motionEvent.getY() > (y/10 * 7) && motionEvent.getY() < ((y/10 * 7) + 300))
                 {
-                    if(player.getId() > 0) {
+                    if(player.getId() > 0 && player.getNickname() != null) {
                         //Intent intent4 = new Intent(this, LoadingActivity.class);
                         System.gc();
+                        intent4.putExtra("player", player);
                         startActivity(intent4);
                     }else{
                         Toast.makeText(this, "Not logged in!", Toast.LENGTH_LONG).show();

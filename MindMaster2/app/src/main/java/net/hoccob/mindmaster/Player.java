@@ -26,12 +26,13 @@ public class Player implements Parcelable {
     public void setNickname(String nickname){this.nickname = nickname;}
 
     public Player(Parcel in){
-        String[] data = new String[3];
+        String[] data = new String[4];
 
         in.readStringArray(data);
         this.id = Integer.parseInt(data[0]);
         this.userName = data[1];
         this.points = Integer.parseInt(data[2]);
+        this.nickname = data[3];
     }
 
     @Override
@@ -41,7 +42,7 @@ public class Player implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags){
-        dest.writeStringArray(new String[]{String.valueOf(this.id), this.userName, String.valueOf(this.points)});
+        dest.writeStringArray(new String[]{String.valueOf(this.id), this.userName, String.valueOf(this.points), this.nickname});
     }
 
     public static final Parcelable.Creator<Player> CREATOR = new Parcelable.Creator<Player>(){

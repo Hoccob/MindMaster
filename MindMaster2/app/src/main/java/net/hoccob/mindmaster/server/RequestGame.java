@@ -57,6 +57,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
 
             JSONObject jsonWaitlist = new JSONObject();
             jsonWaitlist.put("userId", player.getId());
+            jsonWaitlist.put("nickname", player.getNickname());
 
             //Configure for POST request
             HttpHeaders headers = new HttpHeaders();
@@ -67,7 +68,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
             url = "http://mindmaster.ee:8080/api/waitlist";
             restTemplate.postForEntity(url, entity, String.class);
 
-            game.setId(0);
+            //game.setId(0);
 
             url = "http://mindmaster.ee:8080/api/waitlist/{userId}";
             while (!gotGame) {
@@ -85,15 +86,19 @@ public class RequestGame extends AsyncTask<String, String, String>{
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                if (game.getId() > 0) {
+                if (game.getId() != null) {
                     gotGame = true;
                 }
             }
 
             url = "http://mindmaster.ee:8080/api/waitlist/{gameId}/{userId}";
-            output = restTemplate.getForObject(url, String.class, game.getId(), player.getId());
-            JSONObject jsonOpponent = new JSONObject(output);
-            game.setOpponentNickname(jsonOpponent.getString("nickname"));
+            try {
+                output = restTemplate.getForObject(url, String.class, game.getId(), player.getId());
+                JSONObject jsonOpponent = new JSONObject(output);
+                game.setOpponentNickname(jsonOpponent.getString("nickname"));
+            }catch (RuntimeException e){
+                e.printStackTrace();
+            }
 
             url = "http://mindmaster.ee:8080/api/equations/{gameId}";
 
