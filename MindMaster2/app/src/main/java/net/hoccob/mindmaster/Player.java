@@ -8,6 +8,7 @@ public class Player implements Parcelable {
     private Integer id;
     private String userName;
     private int points;
+    private String nickname;
 
     public Player(){
         this.id = 0;
@@ -17,10 +18,12 @@ public class Player implements Parcelable {
     public Integer getId(){return id;}
     public String getUserName(){return userName;}
     public int getPoints(){return points;}
+    public String getNickname(){return nickname;}
 
     public void setId(int id){this.id = id;}
     public void setUserName(String userName){this.userName = userName;}
     public void setPoints(int points){this.points = points;}
+    public void setNickname(String nickname){this.nickname = nickname;}
 
     public Player(Parcel in){
         String[] data = new String[3];
