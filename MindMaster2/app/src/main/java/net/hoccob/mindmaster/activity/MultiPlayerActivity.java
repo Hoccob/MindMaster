@@ -21,6 +21,9 @@ import net.hoccob.mindmaster.view.MultiPlayerView;
 import net.hoccob.mindmaster.Player;
 import net.hoccob.mindmaster.Waitlist;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -51,7 +54,7 @@ public class MultiPlayerActivity extends Activity {
     int correctAnswer = 0;
     int gameId;
     long answerTime;
-    int opponentScore = 0;
+    JSONObject jsonOpponent;
 
     private void SaveScore(){
 
@@ -154,6 +157,8 @@ public class MultiPlayerActivity extends Activity {
         ScreenX = size.x;
         ScreenY = size.y;
 
+        jsonOpponent = new JSONObject();
+
 
     }
 
@@ -199,8 +204,7 @@ public class MultiPlayerActivity extends Activity {
                             gameOver = true;
                             getOpponentScoreTimer.cancel();
                             try {
-                                opponentScore =  new GetOpponentScore().execute(gameId, player.getId()).get();
-                                multiPlayerView.setOpponentScore(opponentScore);
+                                setOpponent(new GetOpponentScore().execute(gameId, player.getId()).get());
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             } catch (ExecutionException e) {
@@ -211,6 +215,18 @@ public class MultiPlayerActivity extends Activity {
                 });
             }
         };
+    }
+
+    private void setOpponent(String output){
+        try {
+            jsonOpponent = new JSONObject(output);
+            multiPlayerView.setOpponentScore(jsonOpponent.getInt("score"));
+            multiPlayerView.setOpponentTimer((long) jsonOpponent.getInt("timer"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
     private void startGetOpponentScoreTimer(){
@@ -226,8 +242,7 @@ public class MultiPlayerActivity extends Activity {
                 getOpponentScoreHandler.post(new Runnable(){
                     public void run() {
                         try {
-                            opponentScore =  new GetOpponentScore().execute(gameId, player.getId()).get();
-                            multiPlayerView.setOpponentScore(opponentScore);
+                            setOpponent(new GetOpponentScore().execute(gameId, player.getId()).get());
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         } catch (ExecutionException e) {
@@ -252,9 +267,11 @@ public class MultiPlayerActivity extends Activity {
         if(answer == correctAnswer){
             score = score + 10;
             progress++;
+            multiPlayerView.timerPlus(1000);
         }else{
             score = score - 5;
             progress = progress - 2;
+            multiPlayerView.timerMinus(1500);
         }
         new SendAnswer().execute(equations.get(level-1).get(0).getId(), player.getId(), gameId, answer, Math.round(System.currentTimeMillis() - answerTime), score);
         answerTime = System.currentTimeMillis();
