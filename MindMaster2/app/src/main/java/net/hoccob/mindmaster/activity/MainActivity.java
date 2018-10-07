@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
                 intent4.putExtra("player", player);
             }
         });
-        logIn.execute("testuser2");
+        logIn.execute("testuser1");
     }
 
     @Override
