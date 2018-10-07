@@ -3,7 +3,9 @@ package net.hoccob.mindmaster.activity;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import net.hoccob.mindmaster.Player;
@@ -42,6 +45,30 @@ public class MainActivity extends Activity {
                 Intent intent = AccountManager.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
                 startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
         }
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Pick a nickname");
+        //alert.setMessage("Message");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
         mainView = new MainView(this, size.x, size.y);
         y = size.y;
         player = new Player();
