@@ -37,8 +37,9 @@ public class SendNickname extends AsyncTask<String, String, String> {
         //GET player by userName
         try {
             JSONObject jsonPlayer = new JSONObject();
+            jsonPlayer.put("userName",player.getUserName());
             jsonPlayer.put("nickname", player.getNickname());
-            restTemplate.put(url, jsonPlayer, player.getId());
+            restTemplate.put(url, jsonPlayer.toString(), player.getId());
             //result = restTemplate.getForObject(url, String.class, player.getUserName());
         }catch(RuntimeException e){
             e.printStackTrace();
