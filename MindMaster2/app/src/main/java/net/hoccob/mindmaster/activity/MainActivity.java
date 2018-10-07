@@ -1,6 +1,6 @@
 package net.hoccob.mindmaster.activity;
 
-import android.accounts.Account;
+
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,17 +9,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import net.hoccob.mindmaster.Player;
-import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.server.LogIn;
 import net.hoccob.mindmaster.server.SendNickname;
 import net.hoccob.mindmaster.view.MainView;
@@ -31,7 +27,6 @@ public class MainActivity extends Activity {
     Player player;
 
     Intent intent4;
-    int i;
     static final int REQUEST_CODE_PICK_ACCOUNT = 1;
 
     @Override

@@ -268,7 +268,7 @@ public class MultiPlayerActivity extends Activity {
     public void checkAnswer(){
 
         if(answer == correctAnswer){
-            score = score + 10;
+            score = score + 10 * level;
             progress++;
             multiPlayerView.timerPlus(1000);
         }else{
