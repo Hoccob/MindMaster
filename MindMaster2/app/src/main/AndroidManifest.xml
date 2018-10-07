@@ -36,5 +36,5 @@
             android:noHistory="true">
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 </manifest>

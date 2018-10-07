@@ -1,5 +1,6 @@
 package net.hoccob.mindmaster.activity;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -60,7 +61,6 @@ public class HighScoreActivity2 extends FragmentActivity {
         int highScore4a = sharedPref2.getInt("4", 0);
         int highScore5a = sharedPref2.getInt("5", 0);
         MultiPlayerScore = "1." + String.valueOf(highScore1a) + "\n2." + String.valueOf(highScore2a) + "\n3." + String.valueOf(highScore3a) + "\n4." + String.valueOf(highScore4a) +"\n5." +String.valueOf(highScore5a);
-
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());

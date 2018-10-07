@@ -1,6 +1,7 @@
 package net.hoccob.mindmaster.view;
 
 
+import android.accounts.Account;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

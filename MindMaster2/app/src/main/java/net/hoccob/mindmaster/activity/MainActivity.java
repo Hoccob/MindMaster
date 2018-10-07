@@ -1,6 +1,9 @@
 package net.hoccob.mindmaster.activity;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -20,6 +23,7 @@ public class MainActivity extends Activity {
     Player player;
 
     Intent intent4;
+    int i;
 
 
     @Override
@@ -29,10 +33,19 @@ public class MainActivity extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
+        Account[] accounts = GetAccount();
+        System.out.print("TESTINGTESTING");
+        System.out.print(accounts.length);
+        System.out.print("\n");
         mainView = new MainView(this, size.x, size.y);
         y = size.y;
         player = new Player();
         intent4 = new Intent(this, LoadingActivity.class);
+    }
+    private Account[] GetAccount(){
+        AccountManager manager = AccountManager.get(this);
+        Account[] accounts = manager.getAccounts();
+        return(accounts);
     }
 
     @Override
