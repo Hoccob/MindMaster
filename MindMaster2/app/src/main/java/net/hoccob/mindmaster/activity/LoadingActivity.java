@@ -10,6 +10,7 @@ import android.view.Display;
 import android.view.View;
 
 import net.hoccob.mindmaster.Equation;
+import net.hoccob.mindmaster.Game;
 import net.hoccob.mindmaster.view.LoadingView;
 import net.hoccob.mindmaster.view.MultiPlayerView;
 import net.hoccob.mindmaster.Player;
@@ -29,6 +30,7 @@ public class LoadingActivity extends Activity {
     int ScreenX;
     int ScreenY;
     RequestGame requestGame;
+    Game game;
 
 
     @Override
@@ -46,6 +48,7 @@ public class LoadingActivity extends Activity {
 
         waitlist = new Waitlist();
         equations = new ArrayList<>();
+        game = new Game();
 
         ScreenX = size.x;
         ScreenY = size.y;
@@ -62,7 +65,7 @@ public class LoadingActivity extends Activity {
 
         final Intent intent = new Intent(this, MultiPlayerActivity.class);
 
-        requestGame = new RequestGame(player, waitlist, equations, new RequestGame.AsyncResponse(){
+        requestGame = new RequestGame(player, waitlist, equations, game, new RequestGame.AsyncResponse(){
 
             @Override
             public void processFinish(String output){
@@ -70,7 +73,8 @@ public class LoadingActivity extends Activity {
                 //of onPostExecute(result) method.
                 //System.out.println("Joudsin siia");
                 intent.putExtra("player", player);
-                intent.putExtra("gameId", waitlist.getGameId());
+                //intent.putExtra("gameId", waitlist.getGameId());
+                intent.putExtra("game", game);
                 for(int i = 0; i < 12; i++) {
                     intent.putParcelableArrayListExtra("level" + i, equations.get(i));
                 }
@@ -78,7 +82,7 @@ public class LoadingActivity extends Activity {
                 finish();
             }
         });
-        requestGame.execute("testuser2");
+        requestGame.execute();
 
     }
 
