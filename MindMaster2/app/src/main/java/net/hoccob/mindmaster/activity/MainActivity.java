@@ -132,7 +132,7 @@ public class MainActivity extends Activity {
 
                 if (motionEvent.getX() > 0 && (motionEvent.getX() < 601) && motionEvent.getY() > y/10  && motionEvent.getY() < (y/10 + 300))
                 {
-                    Intent intent = new Intent(this, SinglePlayerActivity.class);
+                    Intent intent = new Intent(this, SinglePlayerActivity2.class);
                     startActivity(intent);
                 }
                 else if (motionEvent.getX() > 0 && (motionEvent.getX() < 601)&& motionEvent.getY() > y/10 * 3 && motionEvent.getY() < (y/10 * 3 + 300))
