@@ -9,7 +9,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,44 +36,29 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        player = new Player();
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         SharedPreferences sharedPrefStart = getSharedPreferences("AccountName",
+                Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("Nickname",
                 Context.MODE_PRIVATE);
         String Acc = sharedPrefStart.getString("acc", null);
         if (Acc == null) {
                 Intent intent = AccountManager.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
                 startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
         }
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        if (sharedPref.getString("nickname", null) == null){
+            pickNickname();
 
-        alert.setTitle("Pick a nickname");
-        //alert.setMessage("Message");
-
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
-
-                // Do something with value!
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
+        }
+        else{
+            player.setNickname(sharedPref.getString("nickname", null));
+        }
         mainView = new MainView(this, size.x, size.y);
         y = size.y;
-        player = new Player();
+
         intent4 = new Intent(this, LoadingActivity.class);
 
     }
@@ -167,6 +154,39 @@ public class MainActivity extends Activity {
         if (hasFocus) {
             hideSystemUI();
         }
+    }
+
+    private void pickNickname(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Pick a nickname");
+        //alert.setMessage("Message");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+       final SharedPreferences sharedPref = getSharedPreferences("Nickname", Context.MODE_PRIVATE);
+        String nickname = sharedPref.getString("nickname", null);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String nickname = input.getText().toString();
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("nickname", nickname);
+                editor.commit();
+                player.setNickname(sharedPref.getString("nickname", null));
+
+                // Do something with value!
+            }
+        });
+
+       /* alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });*/
+
+        alert.show();
     }
 
     private void hideSystemUI() {
