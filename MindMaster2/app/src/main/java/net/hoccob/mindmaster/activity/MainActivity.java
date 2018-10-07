@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import net.hoccob.mindmaster.Player;
+import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.server.LogIn;
 import net.hoccob.mindmaster.view.MainView;
 
@@ -24,7 +26,7 @@ public class MainActivity extends Activity {
 
     Intent intent4;
     int i;
-
+    static final int REQUEST_CODE_PICK_ACCOUNT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,25 +35,43 @@ public class MainActivity extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        Account[] accounts = GetAccount();
-        System.out.print("TESTINGTESTING");
-        System.out.print(accounts.length);
-        System.out.print("\n");
+        SharedPreferences sharedPrefStart = getSharedPreferences("AccountName",
+                Context.MODE_PRIVATE);
+        String Acc = sharedPrefStart.getString("acc", null);
+        if (Acc == null) {
+                Intent intent = AccountManager.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
+                startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
+        }
         mainView = new MainView(this, size.x, size.y);
         y = size.y;
         player = new Player();
         intent4 = new Intent(this, LoadingActivity.class);
+
     }
-    private Account[] GetAccount(){
-        AccountManager manager = AccountManager.get(this);
-        Account[] accounts = manager.getAccounts();
-        return(accounts);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
+            // Receiving a result from the AccountPicker
+            if (resultCode == RESULT_OK) {
+                System.out.println(data.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE));
+                SharedPreferences sharedPrefStart = getSharedPreferences("AccountName",
+                        Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPrefStart.edit();
+                editor.putString("acc", data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME));
+                editor.commit();
+                System.out.println(sharedPrefStart.getString("acc", null));
+            } else if (resultCode == RESULT_CANCELED) {
+                //Toast.makeText(this, R.string.pick_account, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         setContentView(mainView);
+        SharedPreferences sharedPrefStart = getSharedPreferences("AccountName",
+                Context.MODE_PRIVATE);
 
         LogIn logIn= new LogIn(player, new LogIn.AsyncResponse(){
 
@@ -60,10 +80,11 @@ public class MainActivity extends Activity {
                 //Here you will receive the result fired from async class
                 //of onPostExecute(result) method.
                 System.out.println("player id:" + player.getId());
+                System.out.println(player.getUserName());
                 intent4.putExtra("player", player);
             }
         });
-        logIn.execute("testuser1");
+        logIn.execute(sharedPrefStart.getString("acc", null));
     }
 
     @Override
