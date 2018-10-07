@@ -21,6 +21,7 @@ import android.widget.Toast;
 import net.hoccob.mindmaster.Player;
 import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.server.LogIn;
+import net.hoccob.mindmaster.server.SendNickname;
 import net.hoccob.mindmaster.view.MainView;
 
 public class MainActivity extends Activity {
@@ -56,6 +57,21 @@ public class MainActivity extends Activity {
         else{
             player.setNickname(sharedPref.getString("nickname", null));
         }
+
+        SendNickname sendNickname = new SendNickname(player, new SendNickname.AsyncResponse(){
+
+            @Override
+            public void processFinish(String output){
+                //Here you will receive the result fired from async class
+                //of onPostExecute(result) method.
+                System.out.println("player id:" + player.getId());
+                System.out.println(player.getUserName());
+                intent4.removeExtra("player");
+                intent4.putExtra("player", player);
+            }
+        });
+        sendNickname.execute();
+
         mainView = new MainView(this, size.x, size.y);
         y = size.y;
 
