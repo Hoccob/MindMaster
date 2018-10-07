@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import net.hoccob.mindmaster.Equation;
+import net.hoccob.mindmaster.Game;
 import net.hoccob.mindmaster.server.GetOpponentScore;
 import net.hoccob.mindmaster.server.SendAnswer;
 import net.hoccob.mindmaster.server.SendFinalScore;
@@ -36,6 +37,7 @@ public class MultiPlayerActivity extends Activity {
     LoadingView loadingView;
     Player player;
     Waitlist waitlist;
+    Game game;
     ArrayList<ArrayList<Equation>> equations;
     Handler gameTimeHandler = new Handler();
     Timer gameTimeTimer;
@@ -52,9 +54,9 @@ public class MultiPlayerActivity extends Activity {
     int score;
     String currentOperation = "";
     int correctAnswer = 0;
-    int gameId;
     long answerTime;
     JSONObject jsonOpponent;
+    String opponentNickname;
 
     private void SaveScore(){
 
@@ -149,7 +151,7 @@ public class MultiPlayerActivity extends Activity {
         equations = new ArrayList<>();
 
         player = getIntent().getParcelableExtra("player");
-        gameId = getIntent().getIntExtra("gameId", 0);
+        game = getIntent().getParcelableExtra("game");
         for(int i = 0; i < 12; i++){
             equations.add(getIntent().<Equation>getParcelableArrayListExtra("level" + i));
         }
@@ -200,12 +202,12 @@ public class MultiPlayerActivity extends Activity {
                     public void run(){
                         if(multiPlayerView.getGameOver() && !gameOver){
                             SaveScore();
-                            new SendAnswer().execute(equations.get(level-1).get(0).getId(), player.getId(), gameId, answer, Math.round(System.currentTimeMillis() - answerTime), score, multiPlayerView.getTimer());
-                            new SendFinalScore().execute(gameId, player.getId(), score);
+                            new SendAnswer().execute(equations.get(level-1).get(0).getId(), player.getId(), game.getId(), answer, Math.round(System.currentTimeMillis() - answerTime), score, multiPlayerView.getTimer());
+                            new SendFinalScore().execute(game.getId(), player.getId(), score);
                             gameOver = true;
                             getOpponentScoreTimer.cancel();
                             try {
-                                setOpponent(new GetOpponentScore().execute(gameId, player.getId()).get());
+                                setOpponent(new GetOpponentScore().execute(game.getId(), player.getId()).get());
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             } catch (ExecutionException e) {
@@ -243,7 +245,7 @@ public class MultiPlayerActivity extends Activity {
                 getOpponentScoreHandler.post(new Runnable(){
                     public void run() {
                         try {
-                            setOpponent(new GetOpponentScore().execute(gameId, player.getId()).get());
+                            setOpponent(new GetOpponentScore().execute(game.getId(), player.getId()).get());
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         } catch (ExecutionException e) {
@@ -274,7 +276,7 @@ public class MultiPlayerActivity extends Activity {
             progress = progress - 2;
             multiPlayerView.timerMinus(1500);
         }
-        new SendAnswer().execute(equations.get(level-1).get(0).getId(), player.getId(), gameId, answer, Math.round(System.currentTimeMillis() - answerTime), score, multiPlayerView.getTimer());
+        new SendAnswer().execute(equations.get(level-1).get(0).getId(), player.getId(), game.getId(), answer, Math.round(System.currentTimeMillis() - answerTime), score, multiPlayerView.getTimer());
         answerTime = System.currentTimeMillis();
         multiPlayerView.setScore(score);
         answer = 0;
@@ -312,6 +314,7 @@ public class MultiPlayerActivity extends Activity {
     public void startGame(){
         answer = 0;
         gameOver = false;
+        multiPlayerView.setOpponentNickname(game.getOpponentNickname());
         answerTime = System.currentTimeMillis();
         newEquation();
         startGameTimeTimer();
