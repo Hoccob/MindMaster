@@ -206,6 +206,7 @@ public class MultiPlayerActivity extends Activity {
                             new SendFinalScore().execute(game.getId(), player.getId(), score);
                             gameOver = true;
                             getOpponentScoreTimer.cancel();
+                            gameTimeTimer.cancel();
                             try {
                                 setOpponent(new GetOpponentScore().execute(game.getId(), player.getId()).get());
                             } catch (InterruptedException e) {

@@ -3,6 +3,7 @@ package net.hoccob.mindmaster.view;
 
 import android.accounts.Account;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,7 +11,7 @@ import android.graphics.Paint;
 import android.view.View;
 
 import net.hoccob.mindmaster.R;
-
+import net.hoccob.mindmaster.ChangeColor;
 
 public class MainView extends View {
 
@@ -45,6 +46,10 @@ public class MainView extends View {
         ScreenX = x;
         ScreenY = y;
 
+        SharedPreferences sharedPrefColor = context.getSharedPreferences("ColorCode",
+                Context.MODE_PRIVATE);
+        int colorCode = sharedPrefColor.getInt("code", 0);
+
         one = BitmapFactory.decodeResource(getResources(), R.drawable.one);
 
         one = Bitmap.createScaledBitmap(one,
@@ -70,6 +75,11 @@ public class MainView extends View {
                 (int) (600),
                 (int) (150),
                 false);
+
+        one = ChangeColor.makeTransparent(colorCode, one);
+        two = ChangeColor.makeTransparent(colorCode, two);
+        three = ChangeColor.makeTransparent(colorCode, three);
+        four = ChangeColor.makeTransparent(colorCode, four);
 
 
     }
