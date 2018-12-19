@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
@@ -18,30 +19,33 @@ public class MainView extends View {
     Paint black_paint_fill, pink_paint_fill;
     public int ScreenX;
     public int ScreenY;
-    private Bitmap one;
-    int one_x, one_y;
-    private  Bitmap two;
-    int two_x, two_y;
-    private Bitmap three;
-    int three_x, three_y;
-    private Bitmap four;
-    int four_x, four_y;
+    private Bitmap start;
+    private  Bitmap practice;
+    private Bitmap high_score;
+    private Bitmap settings;
+
+    int positionX;
+    int sizeX;
+    int sizeY;
+    int start_y;
+    int practice_y;
+    int high_y;
+    int settings_y;
 
 
     public MainView(Context context, int x, int y) {
         super(context);
-        setBackgroundColor(0xFF000000);
-        one_x = 0;
-        one_y = y/10;
+        setBackgroundColor(Color.parseColor("#0C0032"));
 
-        two_x = 0;
-        two_y = y/10 * 3;
+        positionX = x / 12;
 
-        three_x = 0;
-        three_y =  y/2;
+        sizeX = x - (x / 6);
+        sizeY = y / 12;
 
-        four_x = 0;
-        four_y = (y/10 * 7);
+        start_y = (y / 12) * 2;
+        practice_y = (y / 12) * 4;
+        high_y = (y / 12) * 6;
+        settings_y = (y / 12) * 8;
 
         ScreenX = x;
         ScreenY = y;
@@ -50,51 +54,55 @@ public class MainView extends View {
                 Context.MODE_PRIVATE);
         int colorCode = sharedPrefColor.getInt("code", 0);
 
-        one = BitmapFactory.decodeResource(getResources(), R.drawable.one);
+        start = BitmapFactory.decodeResource(getResources(), R.drawable.start_game);
 
-        one = Bitmap.createScaledBitmap(one,
-                (int) (600),
-                (int) (150),
+        start = Bitmap.createScaledBitmap(start,
+                sizeX,
+                sizeY,
                 false);
-        two = BitmapFactory.decodeResource(getResources(), R.drawable.two);
+        practice = BitmapFactory.decodeResource(getResources(), R.drawable.practice);
 
-        two = Bitmap.createScaledBitmap(two,
-                (int) (600),
-                (int) (150),
+        practice = Bitmap.createScaledBitmap(practice,
+                sizeX,
+                sizeY,
                 false);
-        three = BitmapFactory.decodeResource(getResources(), R.drawable.three);
+        high_score = BitmapFactory.decodeResource(getResources(), R.drawable.high_score);
 
-        three = Bitmap.createScaledBitmap(three,
-                (int) (600),
-                (int) (150),
-                false);
-
-        four = BitmapFactory.decodeResource(getResources(), R.drawable.four);
-
-        four = Bitmap.createScaledBitmap(four,
-                (int) (600),
-                (int) (150),
+        high_score = Bitmap.createScaledBitmap(high_score,
+                sizeX,
+                sizeY,
                 false);
 
-        one = ChangeColor.makeTransparent(colorCode, one);
-        two = ChangeColor.makeTransparent(colorCode, two);
-        three = ChangeColor.makeTransparent(colorCode, three);
-        four = ChangeColor.makeTransparent(colorCode, four);
+        settings = BitmapFactory.decodeResource(getResources(), R.drawable.settings);
+
+        settings = Bitmap.createScaledBitmap(settings,
+                sizeX,
+                sizeY,
+                false);
+
+        start = ChangeColor.makeTransparent(colorCode, start);
+        practice = ChangeColor.makeTransparent(colorCode, practice);
+        high_score = ChangeColor.makeTransparent(colorCode, high_score);
+        settings = ChangeColor.makeTransparent(colorCode, settings);
 
 
     }
+
+
+
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
 
-        canvas.drawBitmap(one, one_x,one_y, null);
+        canvas.drawBitmap(start, positionX,start_y, null);
 
-        canvas.drawBitmap(two, two_x,two_y, null);
+        canvas.drawBitmap(practice, positionX,practice_y, null);
 
-        canvas.drawBitmap(three, three_x,three_y, null);
+        canvas.drawBitmap(high_score, positionX,high_y, null);
 
-        canvas.drawBitmap(four, four_x, four_y, null);
+        canvas.drawBitmap(settings, positionX, settings_y, null);
 
 
     }
