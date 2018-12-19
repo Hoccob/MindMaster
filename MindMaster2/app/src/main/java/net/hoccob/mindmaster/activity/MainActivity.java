@@ -133,12 +133,12 @@ public class MainActivity extends Activity {
 
             case MotionEvent.ACTION_DOWN:
 
-                if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 4  && motionEvent.getY() < (y/12 + (y / 10) * 4))
+                if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 4  && motionEvent.getY() < (y/10 + (y / 12) * 4))
                 {
                     Intent intent = new Intent(this, SinglePlayerActivity.class);
                     startActivity(intent);
                 }
-                //else if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 2  && motionEvent.getY() < (y/10 + (y / 12) * 2))
+                //else if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 8  && motionEvent.getY() < (y/10 + (y / 12) * 8))
                 //{
                 //    Intent intent2 = new Intent(this, PracticeActivity.class);
                  //   startActivity(intent2);
