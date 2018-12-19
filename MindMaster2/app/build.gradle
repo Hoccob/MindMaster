@@ -31,5 +31,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
     //noinspection GradleCompatible,GradleCompatible
-    compile 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
 }

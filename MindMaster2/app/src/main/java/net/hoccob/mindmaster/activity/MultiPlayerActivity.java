@@ -221,14 +221,18 @@ public class MultiPlayerActivity extends Activity {
     }
 
     private void setOpponent(String output){
-        try {
-            jsonOpponent = new JSONObject(output);
-            multiPlayerView.setOpponentScore(jsonOpponent.getInt("score"));
-            multiPlayerView.setOpponentTimer((long) jsonOpponent.getInt("timer"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e){
-            e.printStackTrace();
+        if(output == "0"){
+         multiPlayerView.setOpponentScore(0);
+        }else {
+            try {
+                jsonOpponent = new JSONObject(output);
+                multiPlayerView.setOpponentScore(jsonOpponent.getInt("score"));
+                multiPlayerView.setOpponentTimer((long) jsonOpponent.getInt("timer"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
     }
 

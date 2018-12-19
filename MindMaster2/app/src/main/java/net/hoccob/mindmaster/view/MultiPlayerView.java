@@ -63,7 +63,7 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         ScreenX = x;
         ScreenY = y;
 
-        background = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        background = BitmapFactory.decodeResource(getResources(), R.drawable.gameplay);
 
         background = Bitmap.createScaledBitmap(background,
                 ScreenX,
@@ -203,11 +203,11 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
             opponent_text.setColor(Color.BLACK);
             opponent_text.setTextSize(30);
 
-            canvas.drawText(currentOperation + " = " + answer_str, ScreenX / 24, ScreenY / 3 - (ScreenY / 20), operation_text);
+            canvas.drawText(currentOperation + " = " + answer_str, ScreenX / 24, ScreenY / 3 - (ScreenY / 100), operation_text);
 
-            canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 7, answer_text);
-            canvas.drawText(String.valueOf(opponentScore), ScreenX - (ScreenX / 6), ScreenY / 7, answer_text);
-            canvas.drawText(String.valueOf(opponentNickname), ScreenX / 2, ScreenY / 14, opponent_text);
+            canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 6, answer_text);
+            canvas.drawText(String.valueOf(opponentScore), ScreenX - (ScreenX / 6), ScreenY / 6, answer_text);
+            canvas.drawText(String.valueOf(opponentNickname), ScreenX / 2 + ScreenX / 8, ScreenY / 14, opponent_text);
 
 
             Rect rect = new Rect(ScreenX / 2 - (ScreenX / 72), ScreenY / 21, ScreenX / 2 + (ScreenX / 72), ScreenY / 21 + playerBar.getHeight());

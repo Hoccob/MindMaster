@@ -35,6 +35,9 @@ public class GetOpponentScore extends AsyncTask<Integer, String, String> {
 
             output = restTemplate.getForObject(url, String.class, params[0], params[1]);
             //JSONObject jsonOpponentScore = new JSONObject(output);
+            if(output == null || output.isEmpty()){
+                output = "0";
+            }
             return(output);
         } catch (RuntimeException e) {
             e.printStackTrace();
