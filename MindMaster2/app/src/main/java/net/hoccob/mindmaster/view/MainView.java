@@ -40,7 +40,7 @@ public class MainView extends View {
 
     public MainView(Context context, int x, int y, int colorCode) {
         super(context);
-        setBackgroundColor(Color.parseColor("#0C0032"));
+        setBackgroundColor(Color.parseColor("#272727"));
 
         positionX = x / 12;
 

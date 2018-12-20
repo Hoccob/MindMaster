@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.SurfaceHolder;
 
+import net.hoccob.mindmaster.Button;
 import net.hoccob.mindmaster.Operation;
 import net.hoccob.mindmaster.R;
 
@@ -24,19 +25,7 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
     Paint black_paint_fill, pink_paint_fill, answer_text;
     public int ScreenX;
     public int ScreenY;
-    Bitmap a1;
-    Bitmap a2;
-    Bitmap a3;
-    Bitmap a4;
-    Bitmap a5;
-    Bitmap a6;
-    Bitmap a7;
-    Bitmap a8;
-    Bitmap a9;
-    Bitmap a0;
-    Bitmap c;
-    Bitmap backspace_x;
-    Bitmap ent;
+
     int answer = 0;
     int correctAnswer = 0;
     public Canvas canvas;
@@ -63,114 +52,46 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
 
     private String currentOperation;
     //private double currentAnswer;
+    private Button button_1;
+    private Button button_2;
+    private Button button_3;
+    private Button button_4;
+    private Button button_5;
+    private Button button_6;
+    private Button button_7;
+    private Button button_8;
+    private Button button_9;
+    private Button button_0;
+    private Button button_ent;
+    private Button button_c;
+    private Button button_backspace;
+
 
 
     public SinglePlayerView(Context context, int x, int y) {
         super(context);
 
-        play = false;
-
-        //setBackgroundColor(0xFF000000);
-        ourHolder = getHolder();
-
         ScreenX = x;
         ScreenY = y;
 
+        button_1 = new Button(context, R.drawable.a1, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 60), 0);
+        button_2 = new Button(context, R.drawable.a2, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 60), 0);
+        button_3 = new Button(context, R.drawable.a3, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 60), 0);
+        button_4 = new Button(context, R.drawable.a4, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 45), 0);
+        button_5 = new Button(context, R.drawable.a5, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 45), 0);
+        button_6 = new Button(context, R.drawable.a6, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 45), 0);
+        button_7 = new Button(context, R.drawable.a7, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 30), 0);
+        button_8 = new Button(context, R.drawable.a8, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 30), 0);
+        button_9 = new Button(context, R.drawable.a9, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 30), 0);
+        button_0 = new Button(context, R.drawable.a0, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 15), 0);
+        button_ent = new Button(context, R.drawable.ent, ScreenX/4, ScreenY/100*15, (ScreenX/100 * 73), (ScreenY - ScreenY / 100 * 15), 0);
+        button_c = new Button(context, R.drawable.c, ScreenX/4 + ScreenX/6, ScreenY/100 * 10, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 70), 0);
+        button_backspace = new Button(context, R.drawable.backspace_x, ScreenX/4 + ScreenX/6, ScreenY/100*10, (ScreenX/4 + ScreenX/6 + ScreenX/11), (ScreenY - ScreenY / 100 * 70), 0);
+        play = false;
 
-
-        a1 = BitmapFactory.decodeResource(getResources(), R.drawable.a1);
-
-        a1 = Bitmap.createScaledBitmap(a1,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-        a2 = BitmapFactory.decodeResource(getResources(), R.drawable.a2);
-
-        a2 = Bitmap.createScaledBitmap(a2,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-        a3 = BitmapFactory.decodeResource(getResources(), R.drawable.a3);
-
-        a3 = Bitmap.createScaledBitmap(a3,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-
-
-        a4 = BitmapFactory.decodeResource(getResources(), R.drawable.a4);
-
-        a4 = Bitmap.createScaledBitmap(a4,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-        a5 = BitmapFactory.decodeResource(getResources(), R.drawable.a5);
-
-        a5 = Bitmap.createScaledBitmap(a5,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-        a6 = BitmapFactory.decodeResource(getResources(), R.drawable.a6);
-
-        a6 = Bitmap.createScaledBitmap(a6,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-        a7 = BitmapFactory.decodeResource(getResources(), R.drawable.a7);
-
-        a7 = Bitmap.createScaledBitmap(a7,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-        a8 = BitmapFactory.decodeResource(getResources(), R.drawable.a8);
-
-        a8 = Bitmap.createScaledBitmap(a8,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-        a9 = BitmapFactory.decodeResource(getResources(), R.drawable.a9);
-
-        a9 = Bitmap.createScaledBitmap(a9,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-        a0 = BitmapFactory.decodeResource(getResources(), R.drawable.a0);
-
-        a0 = Bitmap.createScaledBitmap(a0,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-        c = BitmapFactory.decodeResource(getResources(), R.drawable.c);
-
-        c = Bitmap.createScaledBitmap(c,
-                (int) (ScreenX/4 + ScreenX/6),
-                (int) (ScreenY/100 * 10),
-                false);
-        backspace_x = BitmapFactory.decodeResource(getResources(), R.drawable.backspace_x);
-
-        backspace_x = Bitmap.createScaledBitmap(backspace_x,
-                (int) (ScreenX/4 + ScreenX/6),
-                (int) (ScreenY/100 * 10),
-                false);
-        ent = BitmapFactory.decodeResource(getResources(), R.drawable.ent);
-
-        ent = Bitmap.createScaledBitmap(ent,
-                (int) (ScreenX/4),
-                (int) (ScreenY/100 * 15),
-                false);
-        //Paint answer_text = new Paint();
-        //answer_text.setColor(0xFF000000);
-        //answer_text.setTextSize(50);
-
-        //gameThread = new Thread(this);
+        ourHolder = getHolder();
 
         operation = new Operation();
-
-        //currentOperation = operation.getOperation();
-        //currentAnswer = operation.getAnswer();
-
-        //gameThread = new Thread(this);
-
         operation.createPools();
 
         startGame();
@@ -279,8 +200,10 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             }else{
                 answer_str = "";
             }
+
+            //Color.parseColor("#0C0032")
             canvas = ourHolder.lockCanvas();
-            canvas.drawColor(Color.argb(255,0,255,0));
+            canvas.drawColor(Color.parseColor("#272727"));
             black_paint_fill = new Paint();
             black_paint_fill.setColor(0xFF9F9FB5);
             black_paint_fill.setStyle(Paint.Style.FILL);
@@ -289,36 +212,33 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             pink_paint_fill.setColor(0xFFFF00FF);
             pink_paint_fill.setStyle(Paint.Style.FILL);
 
-
-            canvas.drawBitmap(a7, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 30), null);
-            canvas.drawBitmap(a8, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 30), null);
-            canvas.drawBitmap(a9, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 30), null);
-            canvas.drawBitmap(a4, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 45), null);
-            canvas.drawBitmap(a5, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 45), null);
-            canvas.drawBitmap(a6, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 45), null);
-            canvas.drawBitmap(a1, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 60), null);
-            canvas.drawBitmap(a2, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 60), null);
-            canvas.drawBitmap(a3, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 60), null);
-            canvas.drawBitmap(c, (float)ScreenX / 20, (float)(ScreenY - ScreenY / 100 * 70), null);
-            canvas.drawBitmap(backspace_x, (float)(ScreenX/4 + ScreenX/6 + ScreenX/11.35), (float)(ScreenY - ScreenY / 100 * 70), null);
-            canvas.drawBitmap(a0, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 15), null);
-            canvas.drawBitmap(ent, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 15), null);
+            canvas.drawBitmap(button_1.getBitmap(), button_1.getPosX(),button_1.getPosY(), null);
+            canvas.drawBitmap(button_2.getBitmap(), button_2.getPosX(),button_2.getPosY(), null);
+            canvas.drawBitmap(button_3.getBitmap(), button_3.getPosX(),button_3.getPosY(), null);
+            canvas.drawBitmap(button_4.getBitmap(), button_4.getPosX(),button_4.getPosY(), null);
+            canvas.drawBitmap(button_5.getBitmap(), button_5.getPosX(),button_5.getPosY(), null);
+            canvas.drawBitmap(button_6.getBitmap(), button_6.getPosX(),button_6.getPosY(), null);
+            canvas.drawBitmap(button_7.getBitmap(), button_7.getPosX(),button_7.getPosY(), null);
+            canvas.drawBitmap(button_8.getBitmap(), button_8.getPosX(),button_8.getPosY(), null);
+            canvas.drawBitmap(button_9.getBitmap(), button_9.getPosX(),button_9.getPosY(), null);
+            canvas.drawBitmap(button_0.getBitmap(), button_0.getPosX(),button_0.getPosY(), null);
+            canvas.drawBitmap(button_ent.getBitmap(), button_ent.getPosX(),button_ent.getPosY(), null);
+            canvas.drawBitmap(button_c.getBitmap(), button_c.getPosX(),button_c.getPosY(), null);
+            canvas.drawBitmap(button_backspace.getBitmap(), button_backspace.getPosX(),button_backspace.getPosY(), null);
 
             Paint answer_text;
             answer_text = new Paint();
-            answer_text.setColor(0xFF000000);
+            answer_text.setColor(Color.parseColor("#FF652F"));
             answer_text.setTextSize(70);
-
-            //canvas.drawText(answer_str, ScreenX / 6, ScreenY / 4, answer_text);
 
             Paint operation_text;
             operation_text = new Paint();
-            operation_text.setColor(0xFF000000);
+            operation_text.setColor(Color.parseColor("#FF652F"));
             operation_text.setTextSize(130);
             canvas.drawText(currentOperation + " = ", 0, ScreenY / 4, operation_text);
             canvas.drawText(answer_str, 0, ScreenY/4 + 130, operation_text);
 
-            canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 8, answer_text);
+            canvas.drawText("Score: " + String.valueOf(score), 0, 70, answer_text);
 
 
             if(gameOver){
@@ -341,55 +261,43 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
 
             case MotionEvent.ACTION_DOWN:
-
-                if (motionEvent.getX() > (float)ScreenX / 100 * 5 && motionEvent.getX() < (float)ScreenX / 100 * 5 + ScreenX/4 && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 30) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 45)){
+                if (button_7.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = answer * 10 + 7;
-                    //draw();
                 }
-                else if (motionEvent.getX() > (float) (ScreenX/100 * 40) && motionEvent.getX() < (float) (ScreenX/100 * 40 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 30) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 45)) {
+                else if (button_8.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = answer * 10 + 8;
-                    //draw();
                 }
-                else if (motionEvent.getX() > (float)(ScreenX/100 * 72.5) && motionEvent.getX() < (float)(ScreenX/100 * 72.5 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 30) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 45)) {
+                else if (button_9.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = answer * 10 + 9;
-                    //draw();
                 }
-                else if (motionEvent.getX() > (float) (ScreenX/100 * 40) && motionEvent.getX() < (float) (ScreenX/100 * 40 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 45) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 60)) {
+                else if (button_4.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = answer * 10 + 4;
-                    //draw();
                 }
-                else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 45) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 60)) {
+                else if (button_5.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = answer * 10 + 5;
-                    //draw();
                 }
-                else if (motionEvent.getX() > (float)(ScreenX/100 * 72.5) && motionEvent.getX() < (float)(ScreenX/100 * 72.5 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 45) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 60)) {
+                else if (button_6.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = answer * 10 + 6;
-                    //draw();
                 }
-                else if (motionEvent.getX() > (float)ScreenX / 100 * 5 && motionEvent.getX() < (float)ScreenX / 100 * 5 + ScreenX/4 && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 60) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 75)) {
+                else if (button_1.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = answer * 10 + 1;
-                    //draw();
                 }
-                else if (motionEvent.getX() > (float) (ScreenX/100 * 40) && motionEvent.getX() < (float) (ScreenX/100 * 40 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 60) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 75)) {
+                else if (button_2.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = answer * 10 + 2;
-                    //draw();
                 }
-                else if (motionEvent.getX() > (float)(ScreenX/100 * 72.5) && motionEvent.getX() < (float)(ScreenX/100 * 72.5 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 75) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 60)) {
+                else if (button_3.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = answer * 10 + 3;
-                    //draw();
                 }
-                else if (motionEvent.getX() > (float) (ScreenX/100 * 40) && motionEvent.getX() < (float) (ScreenX/100 * 40 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 15) && motionEvent.getY() < (float)(ScreenY)) {
+                else if (button_0.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = answer * 10;
-                    //draw();
                 }
-                else if (motionEvent.getX() > (ScreenX - ScreenX / 40 - (ScreenX / 80 * 10)) && motionEvent.getX() < ScreenX - ScreenX/40 && motionEvent.getY() > (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45))) && motionEvent.getY() < (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45)) + ScreenY / 3 * 2 / 3)) {
+                else if (button_c.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = 0;
-                    //draw();
                 }
-                else if (motionEvent.getX() > (ScreenX - ScreenX / 40 - (ScreenX / 80 * 10)) && motionEvent.getX() < ScreenX - ScreenX/40 && motionEvent.getY() > (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45 * 2)) + ScreenY / 3 * 2 / 3) && motionEvent.getY() < (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45 * 2)) + ScreenY / 3 * 2 / 3 * 2)) {
+                else if (button_backspace.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     answer = (answer - answer % 10) / 10;
-                    //draw();
-                }else if(motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3)){
+                }
+                 else if (button_ent.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                     checkAnswer();
                 }
 
