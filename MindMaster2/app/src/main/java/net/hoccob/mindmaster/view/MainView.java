@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
 
+import net.hoccob.mindmaster.Button;
 import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.ChangeColor;
 
@@ -35,7 +36,9 @@ public class MainView extends View {
     int settings_y;
 
     private RectF startRect;
-    private RectF practiceRect;
+    //private RectF practiceRect;
+
+    private Button practiceButton;
 
 
     public MainView(Context context, int x, int y) {
@@ -59,12 +62,14 @@ public class MainView extends View {
         startRect.left = positionX;
         startRect.right = positionX + sizeX;
 
-        practiceRect = new RectF();
+       /* practiceRect = new RectF();
 
         practiceRect.top = practice_y;
         practiceRect.bottom = practice_y + sizeY;
         practiceRect.left = positionX;
-        practiceRect.right = positionX + sizeX;
+        practiceRect.right = positionX + sizeX;*/
+
+       //practiceButton = new Button(context, R.drawable.practice_ver_2, positionX, practice_y, 0);
 
         ScreenX = x;
         ScreenY = y;
@@ -100,17 +105,23 @@ public class MainView extends View {
                 false);
 
         start = ChangeColor.makeTransparent(start);
-        practice = ChangeColor.makeTransparent(practice);
+        //practice = ChangeColor.makeTransparent(practice);
         high_score = ChangeColor.makeTransparent(high_score);
         settings = ChangeColor.makeTransparent(settings);
 
         start = ChangeColor.colorByCode(colorCode, start);
-        practice = ChangeColor.colorByCode(colorCode, practice);
+        //practice = ChangeColor.colorByCode(colorCode, practice);
         high_score = ChangeColor.colorByCode(colorCode, high_score);
         settings = ChangeColor.colorByCode(colorCode, settings);
 
 
     }
+
+    //public RectF getPracticeRect(){return practiceRect;}
+
+    public void invertStart(){start = ChangeColor.invertColors(start); }
+    //public void invertPractice(){practice = ChangeColor.invertColors(practice);}
+    //public void resetPractice(){practice = ChangeColor.colorByCode(0, practice);}
 
 
     @Override
@@ -118,13 +129,13 @@ public class MainView extends View {
         super.onDraw(canvas);
 
         canvas.drawBitmap(start, positionX,start_y, null);
-        canvas.drawBitmap(practice, positionX,practice_y, null);
+        //canvas.drawBitmap(practice, positionX,practice_y, null);
         canvas.drawBitmap(high_score, positionX,high_y, null);
         canvas.drawBitmap(settings, positionX, settings_y, null);
 
     }
 
-    @Override
+   /* @Override
     public boolean onTouchEvent(MotionEvent motionEvent){
 
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
@@ -138,6 +149,6 @@ public class MainView extends View {
         }
 
         return true;
-    }
+    }*/
 
 }

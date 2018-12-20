@@ -134,9 +134,10 @@ public class MainActivity extends Activity {
             case MotionEvent.ACTION_DOWN:
 
                 if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 4  && motionEvent.getY() < (y/10 + (y / 12) * 4))
+                //if (mainView.getPracticeRect().contains(motionEvent.getX(), motionEvent.getY()))
                 {
-                    Intent intent = new Intent(this, SinglePlayerActivity.class);
-                    startActivity(intent);
+                  //  mainView.invertPractice();
+                    mainView.invalidate();
                 }
                 //else if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 8  && motionEvent.getY() < (y/10 + (y / 12) * 8))
                 //{
@@ -160,6 +161,17 @@ public class MainActivity extends Activity {
                     }
                 }
                 break;
+
+            case MotionEvent.ACTION_UP:
+
+               // if (mainView.getPracticeRect().contains(motionEvent.getX(), motionEvent.getY()))
+                if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 4  && motionEvent.getY() < (y/10 + (y / 12) * 4))
+            {
+                    Intent intent = new Intent(this, SinglePlayerActivity.class);
+                    startActivity(intent);
+                }
+                break;
+
         }
         return true;
     }

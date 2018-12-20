@@ -7,8 +7,6 @@ import android.graphics.Color;
 import android.graphics.RectF;
 
 
-
-
 public class Buttonz {
 
     RectF rect;
