@@ -87,14 +87,11 @@ public class ChangeColor {
                 break;
             default:
                 for (int i = 0; i < myBitmap.getHeight() * myBitmap.getWidth(); i++) {
-                    if(allpixels[i] != Color.alpha(Color.TRANSPARENT)) {
-                        if (Color.rgb(Color.red(allpixels[i]), Color.green(allpixels[i]), Color.blue(allpixels[i])) == Color.rgb(Color.red(framePixel), Color.green(framePixel), Color.blue(framePixel))) {
-                            allpixels[i] = Color.rgb(50, 12, 0);
-                        } else {
-                            allpixels[i] = Color.rgb(211, 80, 53);
-                        }
+                    if (allpixels[i] == Color.rgb(255, 255, 255)) {
+                        allpixels[i] = Color.parseColor("#272727");
+                    } else if (allpixels[i] != Color.rgb(255, 255, 255) && allpixels[i] != Color.alpha(Color.TRANSPARENT)) {
+                        allpixels[i] = Color.parseColor("#FF652F");
                     }
-                }
                 break;
 
         }
