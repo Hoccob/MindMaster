@@ -38,7 +38,7 @@ public class MainView extends View {
     private RectF startRect;
     //private RectF practiceRect;
 
-    private Button practiceButton;
+    public Button practiceButton;
 
 
     public MainView(Context context, int x, int y) {
@@ -69,7 +69,7 @@ public class MainView extends View {
         practiceRect.left = positionX;
         practiceRect.right = positionX + sizeX;*/
 
-       //practiceButton = new Button(context, R.drawable.practice_ver_2, positionX, practice_y, 0);
+        practiceButton = new Button(context, R.drawable.practice_ver_2, sizeX, sizeY, positionX, practice_y, 0);
 
         ScreenX = x;
         ScreenY = y;
@@ -84,12 +84,12 @@ public class MainView extends View {
                 sizeX,
                 sizeY,
                 false);
-        practice = BitmapFactory.decodeResource(getResources(), R.drawable.practice_ver_2);
+        /*practice = BitmapFactory.decodeResource(getResources(), R.drawable.practice_ver_2);
 
         practice = Bitmap.createScaledBitmap(practice,
                 sizeX,
                 sizeY,
-                false);
+                false);*/
         high_score = BitmapFactory.decodeResource(getResources(), R.drawable.high_score_ver_2);
 
         high_score = Bitmap.createScaledBitmap(high_score,
@@ -119,7 +119,7 @@ public class MainView extends View {
 
     //public RectF getPracticeRect(){return practiceRect;}
 
-    public void invertStart(){start = ChangeColor.invertColors(start); }
+    //public void invertStart(){start = ChangeColor.invertColors(start); }
     //public void invertPractice(){practice = ChangeColor.invertColors(practice);}
     //public void resetPractice(){practice = ChangeColor.colorByCode(0, practice);}
 
@@ -129,7 +129,7 @@ public class MainView extends View {
         super.onDraw(canvas);
 
         canvas.drawBitmap(start, positionX,start_y, null);
-        //canvas.drawBitmap(practice, positionX,practice_y, null);
+        canvas.drawBitmap(practiceButton.getBitmap(), practiceButton.getPosX(),practiceButton.getPosY(), null);
         canvas.drawBitmap(high_score, positionX,high_y, null);
         canvas.drawBitmap(settings, positionX, settings_y, null);
 

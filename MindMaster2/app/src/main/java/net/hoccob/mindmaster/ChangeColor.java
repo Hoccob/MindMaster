@@ -38,9 +38,11 @@ public class ChangeColor {
         for (int i = 0; i < myBitmap.getHeight() * myBitmap.getWidth(); i++) {
             if(allpixels[i] != Color.alpha(Color.TRANSPARENT)) {
                 if (Color.rgb(Color.red(allpixels[i]), Color.green(allpixels[i]), Color.blue(allpixels[i])) == Color.rgb(Color.red(framePixel), Color.green(framePixel), Color.blue(framePixel))) {
-                    allpixels[i] = bgPixel;
+                   allpixels[i] = bgPixel;
+                    //allpixels[i] = Color.alpha(Color.WHITE);
                 } else {
-                    allpixels[i] = framePixel;
+                   allpixels[i] = framePixel;
+                  // allpixels[i] = Color.alpha(Color.BLACK);
                 }
             }
         }

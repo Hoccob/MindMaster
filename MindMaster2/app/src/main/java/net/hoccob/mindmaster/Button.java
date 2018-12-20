@@ -16,7 +16,7 @@ public class Button extends View {
     private int posY;
     private int value;
     private RectF rectF;
-    private int inverted = 0;
+    private boolean inverted;
 
     public Button (Context context, int fileName, int sizeX, int sizeY, int posX, int posY, int value){
         super(context);
@@ -26,6 +26,8 @@ public class Button extends View {
         this.posX = posX;
         this.posY = posY;
         this.value = value;
+
+        inverted = false;
 
         bitmap = BitmapFactory.decodeResource(getResources(), fileName);
 
@@ -37,23 +39,33 @@ public class Button extends View {
         rectF = new RectF();
 
         rectF.top = posY;
-        rectF.bottom = posY + bitmap.getHeight();
+        rectF.bottom = posY + sizeY;
         rectF.left = posX;
-        rectF.left = posX + bitmap.getWidth();
+        rectF.right = posX + sizeX;
 
+        bitmap = ChangeColor.makeTransparent(bitmap);
         bitmap = ChangeColor.colorByCode(0,bitmap);
     }
 
     public Bitmap getBitmap(){return bitmap;}
-    public RectF getRectF(){return rectF;}
+    public RectF getRectF(){ return rectF;}
     public int getValue(){return value;}
 
-    public void invertBitmap(){ChangeColor.invertColors(bitmap); inverted = 1;}
+    public int getPosX(){return posX;}
+    public int getPosY(){return posY;}
+
+
+    public void invertBitmap(){
+        if(!inverted){
+            bitmap = ChangeColor.invertColors(bitmap);
+            inverted = true;
+        }
+    }
 
     public void resetBitmap(){
-        if(inverted == 1) {
-            ChangeColor.invertColors(bitmap);
-            inverted = 0;
+        if(inverted) {
+            bitmap = ChangeColor.invertColors(bitmap);
+            inverted = false;
         }
     }
 }
