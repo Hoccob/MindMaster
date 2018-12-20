@@ -40,7 +40,7 @@ public class MainView extends View {
         positionX = x / 12;
 
         sizeX = x - (x / 6);
-        sizeY = y / 12;
+        sizeY = y / 10;
 
         start_y = (y / 12) * 2;
         practice_y = (y / 12) * 4;
