@@ -82,19 +82,19 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
 
         a1 = Bitmap.createScaledBitmap(a1,
                 (int) (ScreenX/4),
-                (int) (ScreenY/3*2/45*10),
+                (int) (ScreenY/100 * 15),
                 false);
         a2 = BitmapFactory.decodeResource(getResources(), R.drawable.a2);
 
         a2 = Bitmap.createScaledBitmap(a2,
                 (int) (ScreenX/4),
-                (int) (ScreenY/3*2/45*10),
+                (int) (ScreenY/100 * 15),
                 false);
         a3 = BitmapFactory.decodeResource(getResources(), R.drawable.a3);
 
         a3 = Bitmap.createScaledBitmap(a3,
                 (int) (ScreenX/4),
-                (int) (ScreenY/3*2/45*10),
+                (int) (ScreenY/100 * 15),
                 false);
 
 
@@ -102,61 +102,61 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
 
         a4 = Bitmap.createScaledBitmap(a4,
                 (int) (ScreenX/4),
-                (int) (ScreenY/3*2/45*10),
+                (int) (ScreenY/100 * 15),
                 false);
         a5 = BitmapFactory.decodeResource(getResources(), R.drawable.a5);
 
         a5 = Bitmap.createScaledBitmap(a5,
                 (int) (ScreenX/4),
-                (int) (ScreenY/3*2/45*10),
+                (int) (ScreenY/100 * 15),
                 false);
         a6 = BitmapFactory.decodeResource(getResources(), R.drawable.a6);
 
         a6 = Bitmap.createScaledBitmap(a6,
                 (int) (ScreenX/4),
-                (int) (ScreenY/3*2/45*10),
+                (int) (ScreenY/100 * 15),
                 false);
         a7 = BitmapFactory.decodeResource(getResources(), R.drawable.a7);
 
         a7 = Bitmap.createScaledBitmap(a7,
                 (int) (ScreenX/4),
-                (int) (ScreenY/3*2/45*10),
+                (int) (ScreenY/100 * 15),
                 false);
         a8 = BitmapFactory.decodeResource(getResources(), R.drawable.a8);
 
         a8 = Bitmap.createScaledBitmap(a8,
                 (int) (ScreenX/4),
-                (int) (ScreenY/3*2/45*10),
+                (int) (ScreenY/100 * 15),
                 false);
         a9 = BitmapFactory.decodeResource(getResources(), R.drawable.a9);
 
         a9 = Bitmap.createScaledBitmap(a9,
                 (int) (ScreenX/4),
-                (int) (ScreenY/3*2/45*10),
+                (int) (ScreenY/100 * 15),
                 false);
         a0 = BitmapFactory.decodeResource(getResources(), R.drawable.a0);
 
         a0 = Bitmap.createScaledBitmap(a0,
                 (int) (ScreenX/4),
-                (int) (ScreenY/3*2/45*10),
+                (int) (ScreenY/100 * 15),
                 false);
         c = BitmapFactory.decodeResource(getResources(), R.drawable.c);
 
         c = Bitmap.createScaledBitmap(c,
-                (int) (ScreenX/80 * 10),
-                (int) (ScreenY/3*2/3),
+                (int) (ScreenX/4 + ScreenX/6),
+                (int) (ScreenY/100 * 10),
                 false);
         backspace_x = BitmapFactory.decodeResource(getResources(), R.drawable.backspace_x);
 
         backspace_x = Bitmap.createScaledBitmap(backspace_x,
-                (int) (ScreenX/80 * 10),
-                (int) (ScreenY/3*2/3),
+                (int) (ScreenX/4 + ScreenX/6),
+                (int) (ScreenY/100 * 10),
                 false);
         ent = BitmapFactory.decodeResource(getResources(), R.drawable.ent);
 
         ent = Bitmap.createScaledBitmap(ent,
-                (int) (ScreenX/80 * 35),
-                (int) (ScreenY/3*2/45*15),
+                (int) (ScreenX/4),
+                (int) (ScreenY/100 * 15),
                 false);
         //Paint answer_text = new Paint();
         //answer_text.setColor(0xFF000000);
@@ -249,7 +249,7 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
         gameOver = false;
         gameThread = new Thread(this);
         gameThread.start();
-        endTime = System.currentTimeMillis() + 6000;
+        endTime = System.currentTimeMillis() + 20000;
         timer = endTime - System.currentTimeMillis();
         newEquation();
     }
@@ -280,7 +280,7 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
                 answer_str = "";
             }
             canvas = ourHolder.lockCanvas();
-            canvas.drawColor(Color.argb(255,0,0,0));
+            canvas.drawColor(Color.argb(255,0,255,0));
             black_paint_fill = new Paint();
             black_paint_fill.setColor(0xFF9F9FB5);
             black_paint_fill.setStyle(Paint.Style.FILL);
@@ -293,19 +293,22 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             rectangle1.set(0, 0, ScreenX, ScreenY / 3);
             canvas.drawRect(rectangle1, black_paint_fill);
 
-            canvas.drawBitmap(a7, ScreenX / 40, (ScreenY / 3) + (((ScreenY / 3) * 2) / 45), null);
-            canvas.drawBitmap(a8, ScreenX / 20 + ScreenX / 80 * 20, (ScreenY / 3) + (((ScreenY / 3) * 2) / 45), null);
-            canvas.drawBitmap(a9, (ScreenX / 40 * 3) + (ScreenX / 80 * 20) * 2, (ScreenY / 3) + (((ScreenY / 3) * 2) / 45), null);
-            canvas.drawBitmap(a4, ScreenX / 40, ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10), null);
-            canvas.drawBitmap(a5, ScreenX / 20 + ScreenX / 80 * 20, (ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10, null);
-            canvas.drawBitmap(a6, (ScreenX / 40 * 3) + (ScreenX / 80 * 20) * 2, (ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10, null);
-            canvas.drawBitmap(a1, ScreenX / 40, ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2), null);
-            canvas.drawBitmap(a2, ScreenX / 20 + ScreenX / 80 * 20, ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2), null);
-            canvas.drawBitmap(a3, (ScreenX / 40 * 3) + (ScreenX / 80 * 20) * 2, ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2), null);
-            canvas.drawBitmap(a0, ScreenX / 20 + ScreenX / 80 * 20, ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3), null);
-            canvas.drawBitmap(c, (ScreenX - ScreenX / 40 - (ScreenX / 80 * 10)), (ScreenY / 3) + (((ScreenY / 3) * 2) / 45), null);
-            canvas.drawBitmap(backspace_x, (ScreenX - ScreenX / 40 - (ScreenX / 80 * 10)), (((ScreenY / 3) + (((ScreenY / 3) * 2) / 45 * 2)) + ScreenY / 3 * 2 / 3), null);
-            canvas.drawBitmap(ent, (ScreenX / 40 * 3) + (ScreenX / 80 * 20) * 2, ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3), null);
+            canvas.drawBitmap(a7, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 22.5), null);
+            canvas.drawBitmap(a8, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 22.5), null);
+            canvas.drawBitmap(a9, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 22.5), null);
+            canvas.drawBitmap(a4, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 37.5), null);
+            canvas.drawBitmap(a5, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 37.5), null);
+            canvas.drawBitmap(a6, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 37.5), null);
+            canvas.drawBitmap(a1, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 52.5), null);
+            canvas.drawBitmap(a2, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 52.5), null);
+            canvas.drawBitmap(a3, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 52.5), null);
+            //canvas.drawBitmap(a0, ScreenX / 20 + ScreenX / 80 * 20, ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3), null);
+            canvas.drawBitmap(c, (float)ScreenX / 20, (float)(ScreenY - ScreenY / 100 * 62.5), null);
+            canvas.drawBitmap(backspace_x, (float)(ScreenX/4 + ScreenX/6 + ScreenX/11.35), (float)(ScreenY - ScreenY / 100 * 62.5), null);
+            //canvas.drawBitmap(ent, (ScreenX / 40 * 3) + (ScreenX / 80 * 20) * 2, ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3), null);
+            canvas.drawBitmap(a0, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 7.5), null);
+            canvas.drawBitmap(ent, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 7.5), null);
+
             Paint answer_text;
             answer_text = new Paint();
             answer_text.setColor(0xFF000000);
@@ -317,7 +320,7 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             operation_text = new Paint();
             operation_text.setColor(0xFF000000);
             operation_text.setTextSize(170);
-            canvas.drawText(currentOperation + " = " + answer_str, ScreenX / 6, ScreenY / 5, operation_text);
+            canvas.drawText(currentOperation + " = " + answer_str, 0, ScreenY / 5, operation_text);
 
             canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 8, answer_text);
 
