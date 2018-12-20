@@ -18,7 +18,7 @@ public class Button extends View {
     private RectF rectF;
     private boolean inverted;
 
-    public Button (Context context, int fileName, int sizeX, int sizeY, int posX, int posY, int value){
+    public Button (Context context, int fileName, int sizeX, int sizeY, int posX, int posY, int value, int colorCode){
         super(context);
         this.fileName = fileName;
         this.sizeX = sizeX;
@@ -44,7 +44,7 @@ public class Button extends View {
         rectF.right = posX + sizeX;
 
         bitmap = ChangeColor.makeTransparent(bitmap);
-        bitmap = ChangeColor.colorByCode(0,bitmap);
+        bitmap = ChangeColor.colorByCode(colorCode,bitmap);
     }
 
     public Bitmap getBitmap(){return bitmap;}
@@ -53,6 +53,10 @@ public class Button extends View {
 
     public int getPosX(){return posX;}
     public int getPosY(){return posY;}
+
+    public boolean getInverted(){return inverted;}
+
+    public void changeColor(int code){bitmap = ChangeColor.colorByCode(code, bitmap);}
 
 
     public void invertBitmap(){

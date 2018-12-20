@@ -10,15 +10,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import net.hoccob.mindmaster.DetectSwipeGestureListener;
 import net.hoccob.mindmaster.Player;
 import net.hoccob.mindmaster.server.LogIn;
 import net.hoccob.mindmaster.server.SendNickname;
 import net.hoccob.mindmaster.view.MainView;
+import android.view.GestureDetector;
 
 public class MainActivity extends Activity {
 
@@ -27,9 +31,17 @@ public class MainActivity extends Activity {
     MainView mainView;
     Player player;
 
+    private int colorCode = 0;
+
+    SharedPreferences sharedPrefColor;
+    SharedPreferences.Editor colorEditor;
 
     Intent intent4;
     static final int REQUEST_CODE_PICK_ACCOUNT = 1;
+
+
+    private GestureDetectorCompat gestureDetectorCompat = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +66,14 @@ public class MainActivity extends Activity {
             player.setNickname(sharedPref.getString("nickname", null));
         }
 
+        sharedPrefColor = getSharedPreferences("ColorCode",
+                Context.MODE_PRIVATE);
+        colorCode = sharedPrefColor.getInt("code", 0);
+        colorEditor = sharedPrefColor.edit();
+
+
+        colorEditor.apply();
+
         SendNickname sendNickname = new SendNickname(player, new SendNickname.AsyncResponse(){
 
             @Override
@@ -68,12 +88,27 @@ public class MainActivity extends Activity {
         });
         sendNickname.execute();
 
-        mainView = new MainView(this, size.x, size.y);
+        mainView = new MainView(this, size.x, size.y, colorCode);
         y = size.y;
         x = size.x;
 
 
         intent4 = new Intent(this, LoadingActivity.class);
+
+
+
+        // Create a common gesture listener object.
+        DetectSwipeGestureListener gestureListener = new DetectSwipeGestureListener();
+
+        // Set activity in the listener.
+        gestureListener.setActivity(this);
+
+        // Create the gesture detector with the gesture listener.
+        gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
+
+
+
+
 
     }
     @Override
@@ -126,31 +161,58 @@ public class MainActivity extends Activity {
         super.onPause();
     }
 
+    public void setColor(int colorCode){this.colorCode = colorCode;}
+
+    public void swipeLeft(){
+        colorCode = 1;
+        colorEditor.putInt("code",1);
+        mainView.settingsButton.changeColor(1);
+        colorEditor.commit();
+    }
+
+    public void swipeRight(){
+        colorCode = 2;
+        colorEditor.putInt("code",2);
+        mainView.settingsButton.changeColor(2);
+        colorEditor.commit();
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
+
+        gestureDetectorCompat.onTouchEvent(motionEvent);
 
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
 
             case MotionEvent.ACTION_DOWN:
 
-                //if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 4  && motionEvent.getY() < (y/10 + (y / 12) * 4))
-                //if (mainView.getPracticeRect().contains(motionEvent.getX(), motionEvent.getY()))
-                if (mainView.practiceButton.getRectF().contains(motionEvent.getX(), motionEvent.getY()))
-                    {
-                    mainView.practiceButton.invertBitmap();
-                    mainView.invalidate();
-                }
-                //else if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 8  && motionEvent.getY() < (y/10 + (y / 12) * 8))
-                //{
-                //    Intent intent2 = new Intent(this, PracticeActivity.class);
-                 //   startActivity(intent2);
-                //}
-                else if(motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6)))&& motionEvent.getY() > y/2 &&motionEvent.getY() < (y/10 + (y / 12) * 6))
+                if(mainView.startButton.getRectF().contains(motionEvent.getX(),motionEvent.getY()))
                 {
-                    Intent intent3 = new Intent(this, HighScoreActivity2.class);
-                    startActivity(intent3);
+                    mainView.startButton.invertBitmap();
+                }else if (mainView.practiceButton.getRectF().contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    mainView.practiceButton.invertBitmap();
                 }
-                else if((motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 2  && motionEvent.getY() < (y/10 + (y / 12) * 2)))
+                else if(mainView.highScoreButton.getRectF().contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    mainView.highScoreButton.invertBitmap();
+                }
+                else if(mainView.settingsButton.getRectF().contains(motionEvent.getX(),motionEvent.getY()))
+                {
+                    mainView.settingsButton.invertBitmap();
+                }
+                mainView.invalidate();
+                break;
+
+            case MotionEvent.ACTION_UP:
+
+                mainView.practiceButton.resetBitmap();
+                mainView.startButton.resetBitmap();
+                mainView.highScoreButton.resetBitmap();
+                mainView.settingsButton.resetBitmap();
+                mainView.invalidate();
+
+                if(mainView.startButton.getRectF().contains(motionEvent.getX(),motionEvent.getY()))
                 {
                     if(player.getId() > 0 && player.getNickname() != null) {
                         //Intent intent4 = new Intent(this, LoadingActivity.class);
@@ -160,26 +222,27 @@ public class MainActivity extends Activity {
                     }else{
                         Toast.makeText(this, "Not logged in!", Toast.LENGTH_LONG).show();
                     }
-                }
-                break;
-
-            case MotionEvent.ACTION_UP:
-
-                mainView.practiceButton.resetBitmap();
-                mainView.invalidate();
-
-               // if (mainView.getPracticeRect().contains(motionEvent.getX(), motionEvent.getY()))
-                //if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 4  && motionEvent.getY() < (y/10 + (y / 12) * 4))
-                if(mainView.practiceButton.getRectF().contains(motionEvent.getX(), motionEvent.getY()))
+                }else if(mainView.practiceButton.getRectF().contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     Intent intent = new Intent(this, SinglePlayerActivity.class);
                     startActivity(intent);
+                }else if(mainView.highScoreButton.getRectF().contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    Intent intent3 = new Intent(this, HighScoreActivity2.class);
+                    startActivity(intent3);
+                }else if(mainView.settingsButton.getRectF().contains(motionEvent.getX(),motionEvent.getY()))
+                {
+                    Intent intent2 = new Intent(this, SettingsActivity.class);
+                    startActivity(intent2);
                 }
                 break;
 
         }
         return true;
     }
+
+
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
