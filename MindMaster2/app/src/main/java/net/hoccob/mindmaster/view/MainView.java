@@ -54,26 +54,26 @@ public class MainView extends View {
                 Context.MODE_PRIVATE);
         int colorCode = sharedPrefColor.getInt("code", 0);
 
-        start = BitmapFactory.decodeResource(getResources(), R.drawable.start_game);
+        start = BitmapFactory.decodeResource(getResources(), R.drawable.start_game_ver_2);
 
         start = Bitmap.createScaledBitmap(start,
                 sizeX,
                 sizeY,
                 false);
-        practice = BitmapFactory.decodeResource(getResources(), R.drawable.practice);
+        practice = BitmapFactory.decodeResource(getResources(), R.drawable.practice_ver_2);
 
         practice = Bitmap.createScaledBitmap(practice,
                 sizeX,
                 sizeY,
                 false);
-        high_score = BitmapFactory.decodeResource(getResources(), R.drawable.high_score);
+        high_score = BitmapFactory.decodeResource(getResources(), R.drawable.high_score_ver_2);
 
         high_score = Bitmap.createScaledBitmap(high_score,
                 sizeX,
                 sizeY,
                 false);
 
-        settings = BitmapFactory.decodeResource(getResources(), R.drawable.settings);
+        settings = BitmapFactory.decodeResource(getResources(), R.drawable.settings_ver_2);
 
         settings = Bitmap.createScaledBitmap(settings,
                 sizeX,
@@ -103,6 +103,7 @@ public class MainView extends View {
         canvas.drawBitmap(high_score, positionX,high_y, null);
 
         canvas.drawBitmap(settings, positionX, settings_y, null);
+
 
 
     }

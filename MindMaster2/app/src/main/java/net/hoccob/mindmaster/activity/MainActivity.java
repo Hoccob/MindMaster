@@ -23,8 +23,10 @@ import net.hoccob.mindmaster.view.MainView;
 public class MainActivity extends Activity {
 
     public int y;
+    public int x;
     MainView mainView;
     Player player;
+
 
     Intent intent4;
     static final int REQUEST_CODE_PICK_ACCOUNT = 1;
@@ -68,6 +70,8 @@ public class MainActivity extends Activity {
 
         mainView = new MainView(this, size.x, size.y);
         y = size.y;
+        x = size.x;
+
 
         intent4 = new Intent(this, LoadingActivity.class);
 
@@ -129,22 +133,22 @@ public class MainActivity extends Activity {
 
             case MotionEvent.ACTION_DOWN:
 
-                if (motionEvent.getX() > 0 && (motionEvent.getX() < 601) && motionEvent.getY() > y/10  && motionEvent.getY() < (y/10 + 300))
+                if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 4  && motionEvent.getY() < (y/10 + (y / 12) * 4))
                 {
-                    Intent intent = new Intent(this, SinglePlayerActivity2.class);
+                    Intent intent = new Intent(this, SinglePlayerActivity.class);
                     startActivity(intent);
                 }
-                else if (motionEvent.getX() > 0 && (motionEvent.getX() < 601)&& motionEvent.getY() > y/10 * 3 && motionEvent.getY() < (y/10 * 3 + 300))
-                {
-                    Intent intent2 = new Intent(this, PracticeActivity.class);
-                    startActivity(intent2);
-                }
-                else if(motionEvent.getX() > 0 && (motionEvent.getX() < 601)&& motionEvent.getY() > y/2 &&motionEvent.getY() < (y/2 + 300))
+                //else if (motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 8  && motionEvent.getY() < (y/10 + (y / 12) * 8))
+                //{
+                //    Intent intent2 = new Intent(this, PracticeActivity.class);
+                 //   startActivity(intent2);
+                //}
+                else if(motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6)))&& motionEvent.getY() > y/2 &&motionEvent.getY() < (y/10 + (y / 12) * 6))
                 {
                     Intent intent3 = new Intent(this, HighScoreActivity2.class);
                     startActivity(intent3);
                 }
-                else if(motionEvent.getX() > 0 && (motionEvent.getX() < 601)&& motionEvent.getY() > (y/10 * 7) && motionEvent.getY() < ((y/10 * 7) + 300))
+                else if((motionEvent.getX() > x/12 && (motionEvent.getX() < x/12 + (x - (x / 6))) && motionEvent.getY() > (y / 12) * 2  && motionEvent.getY() < (y/10 + (y / 12) * 2)))
                 {
                     if(player.getId() > 0 && player.getNickname() != null) {
                         //Intent intent4 = new Intent(this, LoadingActivity.class);
