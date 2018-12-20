@@ -289,25 +289,20 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             pink_paint_fill.setColor(0xFFFF00FF);
             pink_paint_fill.setStyle(Paint.Style.FILL);
 
-            Rect rectangle1 = new Rect();
-            rectangle1.set(0, 0, ScreenX, ScreenY / 3);
-            canvas.drawRect(rectangle1, black_paint_fill);
 
-            canvas.drawBitmap(a7, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 22.5), null);
-            canvas.drawBitmap(a8, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 22.5), null);
-            canvas.drawBitmap(a9, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 22.5), null);
-            canvas.drawBitmap(a4, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 37.5), null);
-            canvas.drawBitmap(a5, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 37.5), null);
-            canvas.drawBitmap(a6, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 37.5), null);
-            canvas.drawBitmap(a1, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 52.5), null);
-            canvas.drawBitmap(a2, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 52.5), null);
-            canvas.drawBitmap(a3, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 52.5), null);
-            //canvas.drawBitmap(a0, ScreenX / 20 + ScreenX / 80 * 20, ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3), null);
-            canvas.drawBitmap(c, (float)ScreenX / 20, (float)(ScreenY - ScreenY / 100 * 62.5), null);
-            canvas.drawBitmap(backspace_x, (float)(ScreenX/4 + ScreenX/6 + ScreenX/11.35), (float)(ScreenY - ScreenY / 100 * 62.5), null);
-            //canvas.drawBitmap(ent, (ScreenX / 40 * 3) + (ScreenX / 80 * 20) * 2, ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3), null);
-            canvas.drawBitmap(a0, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 7.5), null);
-            canvas.drawBitmap(ent, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 7.5), null);
+            canvas.drawBitmap(a7, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 30), null);
+            canvas.drawBitmap(a8, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 30), null);
+            canvas.drawBitmap(a9, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 30), null);
+            canvas.drawBitmap(a4, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 45), null);
+            canvas.drawBitmap(a5, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 45), null);
+            canvas.drawBitmap(a6, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 45), null);
+            canvas.drawBitmap(a1, (float)ScreenX / 100 * 5, (float)(ScreenY - ScreenY / 100 * 60), null);
+            canvas.drawBitmap(a2, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 60), null);
+            canvas.drawBitmap(a3, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 60), null);
+            canvas.drawBitmap(c, (float)ScreenX / 20, (float)(ScreenY - ScreenY / 100 * 70), null);
+            canvas.drawBitmap(backspace_x, (float)(ScreenX/4 + ScreenX/6 + ScreenX/11.35), (float)(ScreenY - ScreenY / 100 * 70), null);
+            canvas.drawBitmap(a0, (float) (ScreenX/100 * 40), (float)(ScreenY - ScreenY / 100 * 15), null);
+            canvas.drawBitmap(ent, (float)(ScreenX/100 * 72.5), (float)(ScreenY - ScreenY / 100 * 15), null);
 
             Paint answer_text;
             answer_text = new Paint();
@@ -319,8 +314,9 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             Paint operation_text;
             operation_text = new Paint();
             operation_text.setColor(0xFF000000);
-            operation_text.setTextSize(170);
-            canvas.drawText(currentOperation + " = " + answer_str, 0, ScreenY / 5, operation_text);
+            operation_text.setTextSize(130);
+            canvas.drawText(currentOperation + " = ", 0, ScreenY / 4, operation_text);
+            canvas.drawText(answer_str, 0, ScreenY/4 + 130, operation_text);
 
             canvas.drawText(String.valueOf(score), ScreenX / 8, ScreenY / 8, answer_text);
 
@@ -346,43 +342,43 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
 
             case MotionEvent.ACTION_DOWN:
 
-                if (motionEvent.getX() > ScreenX/40 && motionEvent.getX() < (ScreenX/4 + ScreenX/40) && motionEvent.getY() > (ScreenY/3) + (((ScreenY/3)*2) / 45) && motionEvent.getY() < ((ScreenY/3) + (((ScreenY/3)*2) / 45) + (ScreenY/3*2/45*10) )){
+                if (motionEvent.getX() > (float)ScreenX / 100 * 5 && motionEvent.getX() < (float)ScreenX / 100 * 5 + ScreenX/4 && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 30) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 45)){
                     answer = answer * 10 + 7;
                     //draw();
                 }
-                else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > (ScreenY/3) + (((ScreenY/3)*2) / 45) && motionEvent.getY() < ((ScreenY/3) + (((ScreenY/3)*2) / 45) + (ScreenY/3*2/45*10) )) {
+                else if (motionEvent.getX() > (float) (ScreenX/100 * 40) && motionEvent.getX() < (float) (ScreenX/100 * 40 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 30) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 45)) {
                     answer = answer * 10 + 8;
                     //draw();
                 }
-                else if (motionEvent.getX() > ScreenX /20 + ScreenX/40 + ScreenX/2 && motionEvent.getX() < (ScreenX /20 + ScreenX /2 + ScreenX/4 + ScreenX/40) && motionEvent.getY() > (ScreenY/3) + (((ScreenY/3)*2) / 45) && motionEvent.getY() < ((ScreenY/3) + (((ScreenY/3)*2) / 45) + (ScreenY/3*2/45*10) )) {
+                else if (motionEvent.getX() > (float)(ScreenX/100 * 72.5) && motionEvent.getX() < (float)(ScreenX/100 * 72.5 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 30) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 45)) {
                     answer = answer * 10 + 9;
                     //draw();
                 }
-                else if (motionEvent.getX() > ScreenX / 40 && motionEvent.getX() < (ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10)+ (ScreenY/3*2/45*10)) {
+                else if (motionEvent.getX() > (float) (ScreenX/100 * 40) && motionEvent.getX() < (float) (ScreenX/100 * 40 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 45) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 60)) {
                     answer = answer * 10 + 4;
                     //draw();
                 }
-                else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10)+ (ScreenY/3*2/45*10)) {
+                else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 45) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 60)) {
                     answer = answer * 10 + 5;
                     //draw();
                 }
-                else if (motionEvent.getX() > ScreenX /20 + ScreenX/40 + ScreenX/2 && motionEvent.getX() < (ScreenX /20 + ScreenX /2 + ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 2) + ScreenY / 3 * 2 / 45 * 10)+ (ScreenY/3*2/45*10)) {
+                else if (motionEvent.getX() > (float)(ScreenX/100 * 72.5) && motionEvent.getX() < (float)(ScreenX/100 * 72.5 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 45) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 60)) {
                     answer = answer * 10 + 6;
                     //draw();
                 }
-                else if (motionEvent.getX() > ScreenX / 40 && motionEvent.getX() < (ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 3)) {
+                else if (motionEvent.getX() > (float)ScreenX / 100 * 5 && motionEvent.getX() < (float)ScreenX / 100 * 5 + ScreenX/4 && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 60) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 75)) {
                     answer = answer * 10 + 1;
                     //draw();
                 }
-                else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 3)) {
+                else if (motionEvent.getX() > (float) (ScreenX/100 * 40) && motionEvent.getX() < (float) (ScreenX/100 * 40 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 60) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 75)) {
                     answer = answer * 10 + 2;
                     //draw();
                 }
-                else if (motionEvent.getX() > ScreenX /20 + ScreenX/40 + ScreenX/2 && motionEvent.getX() < (ScreenX /20 + ScreenX /2 + ScreenX/4 + ScreenX/40) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 2) && motionEvent.getY() < ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 3) + (ScreenY / 3 * 2 / 45 * 10) * 3)) {
+                else if (motionEvent.getX() > (float)(ScreenX/100 * 72.5) && motionEvent.getX() < (float)(ScreenX/100 * 72.5 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 75) && motionEvent.getY() < (float)(ScreenY - ScreenY / 100 * 60)) {
                     answer = answer * 10 + 3;
                     //draw();
                 }
-                else if (motionEvent.getX() > ScreenX /20 + ScreenX /4 && motionEvent.getX() < (ScreenX /20 + ScreenX /2) && motionEvent.getY() > ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 3) && motionEvent.getY() < ((ScreenY / 3) + ((ScreenY / 3) + ((((ScreenY / 3) * 2) / 45) * 4) + (ScreenY / 3 * 2 / 45 * 10) * 4))) {
+                else if (motionEvent.getX() > (float) (ScreenX/100 * 40) && motionEvent.getX() < (float) (ScreenX/100 * 40 + ScreenX/4) && motionEvent.getY() > (float)(ScreenY - ScreenY / 100 * 15) && motionEvent.getY() < (float)(ScreenY)) {
                     answer = answer * 10;
                     //draw();
                 }
