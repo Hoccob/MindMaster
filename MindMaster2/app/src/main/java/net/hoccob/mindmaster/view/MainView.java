@@ -9,6 +9,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
+import android.view.MotionEvent;
 import android.view.View;
 
 import net.hoccob.mindmaster.R;
@@ -20,7 +22,7 @@ public class MainView extends View {
     public int ScreenX;
     public int ScreenY;
     private Bitmap start;
-    private  Bitmap practice;
+    private Bitmap practice;
     private Bitmap high_score;
     private Bitmap settings;
 
@@ -31,6 +33,9 @@ public class MainView extends View {
     int practice_y;
     int high_y;
     int settings_y;
+
+    private RectF startRect;
+    private RectF practiceRect;
 
 
     public MainView(Context context, int x, int y) {
@@ -46,6 +51,20 @@ public class MainView extends View {
         practice_y = (y / 12) * 4;
         high_y = (y / 12) * 6;
         settings_y = (y / 12) * 8;
+
+        startRect = new RectF();
+
+        startRect.top = start_y;
+        startRect.bottom = start_y + sizeY;
+        startRect.left = positionX;
+        startRect.right = positionX + sizeX;
+
+        practiceRect = new RectF();
+
+        practiceRect.top = practice_y;
+        practiceRect.bottom = practice_y + sizeY;
+        practiceRect.left = positionX;
+        practiceRect.right = positionX + sizeX;
 
         ScreenX = x;
         ScreenY = y;
@@ -80,32 +99,45 @@ public class MainView extends View {
                 sizeY,
                 false);
 
-        start = ChangeColor.makeTransparent(colorCode, start);
-        practice = ChangeColor.makeTransparent(colorCode, practice);
-        high_score = ChangeColor.makeTransparent(colorCode, high_score);
-        settings = ChangeColor.makeTransparent(colorCode, settings);
+        start = ChangeColor.makeTransparent(start);
+        practice = ChangeColor.makeTransparent(practice);
+        high_score = ChangeColor.makeTransparent(high_score);
+        settings = ChangeColor.makeTransparent(settings);
+
+        start = ChangeColor.colorByCode(colorCode, start);
+        practice = ChangeColor.colorByCode(colorCode, practice);
+        high_score = ChangeColor.colorByCode(colorCode, high_score);
+        settings = ChangeColor.colorByCode(colorCode, settings);
 
 
     }
-
-
 
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-
         canvas.drawBitmap(start, positionX,start_y, null);
-
         canvas.drawBitmap(practice, positionX,practice_y, null);
-
         canvas.drawBitmap(high_score, positionX,high_y, null);
-
         canvas.drawBitmap(settings, positionX, settings_y, null);
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent){
+
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+
+                if(practiceRect.contains(motionEvent.getX(), motionEvent.getY())){
+                    practice = ChangeColor.invertColors(practice);
+                }
 
 
+        }
+
+        return true;
     }
 
 }
