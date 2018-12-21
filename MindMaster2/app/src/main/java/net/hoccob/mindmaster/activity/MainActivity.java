@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
@@ -24,7 +23,6 @@ import net.hoccob.mindmaster.Player;
 import net.hoccob.mindmaster.server.LogIn;
 import net.hoccob.mindmaster.server.SendNickname;
 import net.hoccob.mindmaster.view.MainView;
-import android.view.GestureDetector;
 
 public class MainActivity extends Activity {
 
@@ -164,7 +162,7 @@ public class MainActivity extends Activity {
     public void setColor(int colorCode){this.colorCode = colorCode;}
 
     public void swipeLeft(){
-        if(colorCode < 5) {
+        if(colorCode < 4) {
             colorCode++;
             runOnUiThread(new Runnable() {
                 @Override
@@ -186,7 +184,7 @@ public class MainActivity extends Activity {
 
     public void swipeRight(){
 
-        if(colorCode > 0) {
+        if(colorCode > 1) {
             colorCode--;
             runOnUiThread(new Runnable() {
                 @Override
