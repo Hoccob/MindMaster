@@ -168,7 +168,7 @@ public class MainActivity extends Activity {
             mainView.practiceButton.changeColor(colorCode);
             mainView.highScoreButton.changeColor(colorCode);
             mainView.settingsButton.changeColor(colorCode);
-            mainView.setBackgroundColor(colorCode);
+            mainView.setBGColor(colorCode);
             //colorEditor.apply();
         }
     }
@@ -182,7 +182,7 @@ public class MainActivity extends Activity {
             mainView.practiceButton.changeColor(colorCode);
             mainView.highScoreButton.changeColor(colorCode);
             mainView.settingsButton.changeColor(colorCode);
-            mainView.setBackgroundColor(colorCode);
+            mainView.setBGColor(colorCode);
             //colorEditor.apply();
         }
     }
