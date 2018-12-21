@@ -64,6 +64,7 @@ public class MainView extends View {
 
     }
 
+    public void setBGColor(int colorCode){setBackgroundColor(ChangeColor.setBGColor(colorCode));}
 
 
     @Override

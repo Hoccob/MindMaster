@@ -74,19 +74,19 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
         ScreenX = x;
         ScreenY = y;
 
-        button_1 = new Button(context, R.drawable.a1, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 60), 0);
-        button_2 = new Button(context, R.drawable.a2, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 60), 0);
-        button_3 = new Button(context, R.drawable.a3, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 60), 0);
-        button_4 = new Button(context, R.drawable.a4, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 45), 0);
-        button_5 = new Button(context, R.drawable.a5, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 45), 0);
-        button_6 = new Button(context, R.drawable.a6, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 45), 0);
-        button_7 = new Button(context, R.drawable.a7, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 30), 0);
-        button_8 = new Button(context, R.drawable.a8, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 30), 0);
-        button_9 = new Button(context, R.drawable.a9, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 30), 0);
-        button_0 = new Button(context, R.drawable.a0, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 15), 0);
-        button_ent = new Button(context, R.drawable.ent, ScreenX/4, ScreenY/100*15, (ScreenX/100 * 73), (ScreenY - ScreenY / 100 * 15), 0);
-        button_c = new Button(context, R.drawable.c, ScreenX/4 + ScreenX/6, ScreenY/100 * 10, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 70), 0);
-        button_backspace = new Button(context, R.drawable.backspace_x, ScreenX/4 + ScreenX/6, ScreenY/100*10, (ScreenX/4 + ScreenX/6 + ScreenX/11), (ScreenY - ScreenY / 100 * 70), 0);
+        button_1 = new Button(context, R.drawable.a1, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 60), 0,0);
+        button_2 = new Button(context, R.drawable.a2, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 60), 0,0);
+        button_3 = new Button(context, R.drawable.a3, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 60), 0,0);
+        button_4 = new Button(context, R.drawable.a4, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 45), 0,0);
+        button_5 = new Button(context, R.drawable.a5, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 45), 0,0);
+        button_6 = new Button(context, R.drawable.a6, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 45), 0,0);
+        button_7 = new Button(context, R.drawable.a7, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 30), 0,0);
+        button_8 = new Button(context, R.drawable.a8, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 30), 0,0);
+        button_9 = new Button(context, R.drawable.a9, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 30), 0,0);
+        button_0 = new Button(context, R.drawable.a0, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 15), 0,0);
+        button_ent = new Button(context, R.drawable.ent, ScreenX/4, ScreenY/100*15, (ScreenX/100 * 73), (ScreenY - ScreenY / 100 * 15), 0,0);
+        button_c = new Button(context, R.drawable.c, ScreenX/4 + ScreenX/6, ScreenY/100 * 10, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 70), 0,0);
+        button_backspace = new Button(context, R.drawable.backspace_x, ScreenX/4 + ScreenX/6, ScreenY/100*10, (ScreenX/4 + ScreenX/6 + ScreenX/11), (ScreenY - ScreenY / 100 * 70), 0,0);
         play = false;
 
         ourHolder = getHolder();

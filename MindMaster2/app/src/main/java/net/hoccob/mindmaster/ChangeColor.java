@@ -62,41 +62,81 @@ public class ChangeColor {
         bit.getPixels(allpixels, 0, myBitmap.getWidth(), 0, 0, myBitmap.getWidth(), myBitmap.getHeight());
         myBitmap.setPixels(allpixels, 0, width, 0, 0, width, height);
 
-        switch(colorCode) {
+        switch (colorCode) {
             case 1:
                 for (int i = 0; i < myBitmap.getHeight() * myBitmap.getWidth(); i++) {
                     if (allpixels[i] != Color.alpha(Color.TRANSPARENT)) {
                         if (Color.rgb(Color.red(allpixels[i]), Color.green(allpixels[i]), Color.blue(allpixels[i])) == Color.rgb(Color.red(framePixel), Color.green(framePixel), Color.blue(framePixel))) {
-                            allpixels[i] = Color.rgb(12, 0, 50);
-                        } else{
-                            allpixels[i] = Color.rgb(53, 80, 211);
+                            allpixels[i] = Color.parseColor("#05386B");
+                        } else {
+                            allpixels[i] = Color.parseColor("#8EE4AF");
                         }
                     }
                 }
                 break;
             case 2:
                 for (int i = 0; i < myBitmap.getHeight() * myBitmap.getWidth(); i++) {
-                    if(allpixels[i] != Color.alpha(Color.TRANSPARENT)) {
+                    if (allpixels[i] != Color.alpha(Color.TRANSPARENT)) {
                         if (Color.rgb(Color.red(allpixels[i]), Color.green(allpixels[i]), Color.blue(allpixels[i])) == Color.rgb(Color.red(framePixel), Color.green(framePixel), Color.blue(framePixel))) {
-                            allpixels[i] = Color.rgb(12, 50, 0);
+                            allpixels[i] = Color.parseColor("#3500D3");
                         } else {
-                            allpixels[i] = Color.rgb(53, 211, 80);
+                            allpixels[i] = Color.parseColor("#0C0032");
+                        }
+                    }
+                }
+                break;
+            case 3:
+                for (int i = 0; i < myBitmap.getHeight() * myBitmap.getWidth(); i++) {
+                    if (allpixels[i] != Color.alpha(Color.TRANSPARENT)) {
+                        if (Color.rgb(Color.red(allpixels[i]), Color.green(allpixels[i]), Color.blue(allpixels[i])) == Color.rgb(Color.red(framePixel), Color.green(framePixel), Color.blue(framePixel))) {
+                            allpixels[i] = Color.parseColor("#950740");
+                        } else {
+                            allpixels[i] = Color.parseColor("#1A1A1D");
+                        }
+                    }
+                }
+                break;
+            case 4:
+                for (int i = 0; i < myBitmap.getHeight() * myBitmap.getWidth(); i++) {
+                    if (allpixels[i] != Color.alpha(Color.TRANSPARENT)) {
+                        if (Color.rgb(Color.red(allpixels[i]), Color.green(allpixels[i]), Color.blue(allpixels[i])) == Color.rgb(Color.red(framePixel), Color.green(framePixel), Color.blue(framePixel))) {
+                            allpixels[i] = Color.parseColor("#FF652F");
+                        } else {
+                            allpixels[i] = Color.parseColor("#272727");
                         }
                     }
                 }
                 break;
             default:
                 for (int i = 0; i < myBitmap.getHeight() * myBitmap.getWidth(); i++) {
-                    if (allpixels[i] == Color.rgb(255, 255, 255)) {
+                    if (allpixels[i] == Color.parseColor("#FFFFFF")) {
                         allpixels[i] = Color.parseColor("#272727");
-                    } else if (allpixels[i] != Color.rgb(255, 255, 255) && allpixels[i] != Color.alpha(Color.TRANSPARENT)) {
+                    } else if (allpixels[i] != Color.parseColor("#FFFFFF") && allpixels[i] != Color.alpha(Color.TRANSPARENT)) {
                         allpixels[i] = Color.parseColor("#FF652F");
                     }
-                break;
+                    break;
 
+                }
+        }
+                myBitmap.setPixels(allpixels, 0, myBitmap.getWidth(), 0, 0, myBitmap.getWidth(), myBitmap.getHeight());
+                return myBitmap;
         }
 
-        myBitmap.setPixels(allpixels, 0, myBitmap.getWidth(), 0, 0, myBitmap.getWidth(), myBitmap.getHeight());
-        return myBitmap;
-    }
+        public static int setBGColor(int colorCode) {
+
+            switch (colorCode) {
+                case 1:
+                    return Color.parseColor("#8EE4AF");
+                case 2:
+                    return Color.parseColor("#0C0032");
+                case 3:
+                    return Color.parseColor("#1A1A1D");
+                case 4:
+                    return Color.parseColor("#272727");
+                default:
+                    return Color.parseColor("#272727");
+
+            }
+        }
+
 }

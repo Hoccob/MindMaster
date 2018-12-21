@@ -34,7 +34,6 @@ public class MainActivity extends Activity {
     private int colorCode = 0;
 
     SharedPreferences sharedPrefColor;
-    SharedPreferences.Editor colorEditor;
 
     Intent intent4;
     static final int REQUEST_CODE_PICK_ACCOUNT = 1;
@@ -69,10 +68,8 @@ public class MainActivity extends Activity {
         sharedPrefColor = getSharedPreferences("ColorCode",
                 Context.MODE_PRIVATE);
         colorCode = sharedPrefColor.getInt("code", 0);
-        colorEditor = sharedPrefColor.edit();
 
 
-        colorEditor.apply();
 
         SendNickname sendNickname = new SendNickname(player, new SendNickname.AsyncResponse(){
 
@@ -164,17 +161,42 @@ public class MainActivity extends Activity {
     public void setColor(int colorCode){this.colorCode = colorCode;}
 
     public void swipeLeft(){
-        colorCode = 1;
-        colorEditor.putInt("code",1);
-        mainView.settingsButton.changeColor(1);
-        colorEditor.commit();
+        if(colorCode < 5) {
+            colorCode++;
+            //colorEditor.putInt("code",colorCode);
+            mainView.startButton.changeColor(colorCode);
+            mainView.practiceButton.changeColor(colorCode);
+            mainView.highScoreButton.changeColor(colorCode);
+            mainView.settingsButton.changeColor(colorCode);
+            mainView.setBackgroundColor(colorCode);
+            //colorEditor.apply();
+        }
     }
 
     public void swipeRight(){
-        colorCode = 2;
-        colorEditor.putInt("code",2);
-        mainView.settingsButton.changeColor(2);
-        colorEditor.commit();
+
+        if(colorCode > 0) {
+            colorCode--;
+            //colorEditor.putInt("code",colorCode);
+            mainView.startButton.changeColor(colorCode);
+            mainView.practiceButton.changeColor(colorCode);
+            mainView.highScoreButton.changeColor(colorCode);
+            mainView.settingsButton.changeColor(colorCode);
+            mainView.setBackgroundColor(colorCode);
+            //colorEditor.apply();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+
+        SharedPreferences.Editor colorEditor;
+        colorEditor = sharedPrefColor.edit();
+
+        colorEditor.putInt("code",colorCode);
+        colorEditor.apply();
     }
 
     @Override
