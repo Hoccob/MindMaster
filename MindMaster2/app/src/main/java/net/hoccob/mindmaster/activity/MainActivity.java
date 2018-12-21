@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import net.hoccob.mindmaster.ASyncTasks.ChangeView;
+import net.hoccob.mindmaster.ChangeColor;
 import net.hoccob.mindmaster.DetectSwipeGestureListener;
 import net.hoccob.mindmaster.Player;
 import net.hoccob.mindmaster.server.LogIn;
@@ -170,8 +171,9 @@ public class MainActivity extends Activity {
                     new ChangeView(mainView, colorCode, new ChangeView.AsyncResponse(){
                         @Override
                         public void processFinish(){
-                            mainView.invalidate();
-                            finish();
+                            invView();
+                            //mainView.invalidate();
+                            //finish();
                         }
                     }).execute();
                     //mainView.setColors(colorCode);
@@ -193,8 +195,9 @@ public class MainActivity extends Activity {
                     new ChangeView(mainView, colorCode, new ChangeView.AsyncResponse(){
                         @Override
                         public void processFinish(){
-                            mainView.invalidate();
-                            finish();
+                            invView();
+                            //mainView.invalidate();
+                            //finish();
                         }
                     }).execute();
                     //mainView.setColors(colorCode);
@@ -204,6 +207,10 @@ public class MainActivity extends Activity {
             //mainView.setColors(colorCode);
         }
     }
+
+    private void invView(){
+        mainView.setBackgroundColor(ChangeColor.setBGColor(colorCode));
+        mainView.invalidate();}
 
     @Override
     public void onDestroy() {

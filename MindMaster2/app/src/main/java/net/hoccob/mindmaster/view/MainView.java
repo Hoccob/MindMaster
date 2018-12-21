@@ -64,7 +64,7 @@ public class MainView extends View {
         //invalidate();
         settingsButton.changeColor(colorCode);
         //invalidate();
-        setBackgroundColor(ChangeColor.setBGColor(colorCode));
+//        setBackgroundColor(ChangeColor.setBGColor(colorCode));
         //invalidate();
     }
 
