@@ -169,11 +169,17 @@ public class MainActivity extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    new ChangeView(mainView, colorCode).execute();
-                    mainView.invalidate();
+                    new ChangeView(mainView, colorCode, new ChangeView.AsyncResponse(){
+                        @Override
+                        public void processFinish(){
+                            mainView.invalidate();
+                            finish();
+                        }
+                    }).execute();
+                    //mainView.setColors(colorCode);
+                    //mainView.invalidate();
                 }
             });
-
             //mainView.setColors(colorCode);
         }
     }
@@ -185,8 +191,15 @@ public class MainActivity extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    new ChangeView(mainView, colorCode).execute();
-                    mainView.invalidate();
+                    new ChangeView(mainView, colorCode, new ChangeView.AsyncResponse(){
+                        @Override
+                        public void processFinish(){
+                            mainView.invalidate();
+                            finish();
+                        }
+                    }).execute();
+                    //mainView.setColors(colorCode);
+                    //mainView.invalidate();
                 }
             });
             //mainView.setColors(colorCode);
