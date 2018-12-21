@@ -50,6 +50,12 @@ public class PracticeView extends View {
         pink_paint_fill_1.setStyle(Paint.Style.FILL);
 
 
+        canvas.drawBitmap(button_pluss.getBitmap(), button_pluss.getPosX(),button_pluss.getPosY(), null);
+        canvas.drawBitmap(button_miinus.getBitmap(), button_miinus.getPosX(),button_miinus.getPosY(), null);
+        canvas.drawBitmap(button_korrutamine.getBitmap(), button_korrutamine.getPosX(),button_korrutamine.getPosY(), null);
+        canvas.drawBitmap(button_jagamine.getBitmap(), button_jagamine.getPosX(),button_jagamine.getPosY(), null);
+        canvas.drawBitmap(button_mix.getBitmap(), button_mix.getPosX(),button_mix.getPosY(), null);
+
 
 
     }

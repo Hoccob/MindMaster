@@ -270,7 +270,7 @@ public class MainActivity extends Activity {
                     startActivity(intent3);
                 }else if(mainView.settingsButton.getRectF().contains(motionEvent.getX(),motionEvent.getY()))
                 {
-                    Intent intent2 = new Intent(this, SettingsActivity.class);
+                    Intent intent2 = new Intent(this, PracticeActivity.class);
                     startActivity(intent2);
                 }
                 break;

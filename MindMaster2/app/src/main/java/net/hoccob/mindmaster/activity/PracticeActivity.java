@@ -1,6 +1,7 @@
 package net.hoccob.mindmaster.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import net.hoccob.mindmaster.view.PracticeView;
 public class PracticeActivity extends Activity {
 
     PracticeView practiceView;
+
 
 
     @Override
