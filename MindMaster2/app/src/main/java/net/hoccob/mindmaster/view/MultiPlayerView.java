@@ -11,6 +11,7 @@ import android.graphics.RectF;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import net.hoccob.mindmaster.Button;
 import net.hoccob.mindmaster.R;
 
 
@@ -49,8 +50,23 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
 
     private String currentOperation;
 
+    public Button button_1;
+    public Button button_2;
+    public Button button_3;
+    public Button button_4;
+    public Button button_5;
+    public Button button_6;
+    public Button button_7;
+    public Button button_8;
+    public Button button_9;
+    public Button button_0;
+    public Button button_ent;
+    public Button button_c;
+    public Button button_backspace;
 
-    public MultiPlayerView(Context context, int x, int y) {
+
+
+    public MultiPlayerView(Context context, int x, int y, int colorCode) {
         super(context);
 
         play = false;
@@ -60,12 +76,20 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         ScreenX = x;
         ScreenY = y;
 
-        background = BitmapFactory.decodeResource(getResources(), R.drawable.gameplay);
+        button_1 = new Button(context, R.drawable.a1, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 60), 0,colorCode);
+        button_2 = new Button(context, R.drawable.a2, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 60), 0,colorCode);
+        button_3 = new Button(context, R.drawable.a3, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 60), 0,colorCode);
+        button_4 = new Button(context, R.drawable.a4, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 45), 0,colorCode);
+        button_5 = new Button(context, R.drawable.a5, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 45), 0,colorCode);
+        button_6 = new Button(context, R.drawable.a6, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 45), 0,colorCode);
+        button_7 = new Button(context, R.drawable.a7, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 30), 0,colorCode);
+        button_8 = new Button(context, R.drawable.a8, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 30), 0,colorCode);
+        button_9 = new Button(context, R.drawable.a9, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 30), 0,colorCode);
+        button_0 = new Button(context, R.drawable.a0, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 15), 0,colorCode);
+        button_ent = new Button(context, R.drawable.ent, ScreenX/4, ScreenY/100*15, (ScreenX/100 * 73), (ScreenY - ScreenY / 100 * 15), 0,colorCode);
+        button_c = new Button(context, R.drawable.c, ScreenX/4 + ScreenX/6, ScreenY/100 * 10, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 70), 0,colorCode);
+        button_backspace = new Button(context, R.drawable.backspace_x, ScreenX/4 + ScreenX/6, ScreenY/100*10, (ScreenX/4 + ScreenX/6 + ScreenX/11), (ScreenY - ScreenY / 100 * 70), 0,colorCode);
 
-        background = Bitmap.createScaledBitmap(background,
-                ScreenX,
-                ScreenY,
-                false);
 
         playerBar = BitmapFactory.decodeResource(getResources(), R.drawable.playertimerbar);
 
@@ -175,11 +199,21 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
             }
             canvas = ourHolder.lockCanvas();
             canvas.drawColor(Color.argb(255,0,0,0));
-            black_paint_fill = new Paint();
-            black_paint_fill.setColor(0xFF9F9FB5);
-            black_paint_fill.setStyle(Paint.Style.FILL);
 
-            canvas.drawBitmap(background,0,0,null);
+            canvas.drawBitmap(button_1.getBitmap(), button_1.getPosX(),button_1.getPosY(), null);
+            canvas.drawBitmap(button_2.getBitmap(), button_2.getPosX(),button_2.getPosY(), null);
+            canvas.drawBitmap(button_3.getBitmap(), button_3.getPosX(),button_3.getPosY(), null);
+            canvas.drawBitmap(button_4.getBitmap(), button_4.getPosX(),button_4.getPosY(), null);
+            canvas.drawBitmap(button_5.getBitmap(), button_5.getPosX(),button_5.getPosY(), null);
+            canvas.drawBitmap(button_6.getBitmap(), button_6.getPosX(),button_6.getPosY(), null);
+            canvas.drawBitmap(button_7.getBitmap(), button_7.getPosX(),button_7.getPosY(), null);
+            canvas.drawBitmap(button_8.getBitmap(), button_8.getPosX(),button_8.getPosY(), null);
+            canvas.drawBitmap(button_9.getBitmap(), button_9.getPosX(),button_9.getPosY(), null);
+            canvas.drawBitmap(button_0.getBitmap(), button_0.getPosX(),button_0.getPosY(), null);
+            canvas.drawBitmap(button_ent.getBitmap(), button_ent.getPosX(),button_ent.getPosY(), null);
+            canvas.drawBitmap(button_c.getBitmap(), button_c.getPosX(),button_c.getPosY(), null);
+            canvas.drawBitmap(button_backspace.getBitmap(), button_backspace.getPosX(),button_backspace.getPosY(), null);
+
             canvas.drawBitmap(playerBar, ScreenX/2 - playerBar.getWidth(), ScreenY / 21 ,null);
             canvas.drawBitmap(opponentBar, ScreenX/2, ScreenY / 21, null);
             canvas.drawBitmap(playerBarCover, playerBarX, ScreenY / 21, null);

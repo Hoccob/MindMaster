@@ -42,7 +42,7 @@ public class LoadingActivity extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        multiPlayerView = new MultiPlayerView(this, size.x, size.y);
+        //multiPlayerView = new MultiPlayerView(this, size.x, size.y);
         loadingView = new LoadingView(this, size.x, size.y);
         loadingView.setText("LOADOING!!");
 
