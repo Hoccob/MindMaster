@@ -10,7 +10,13 @@ public class ChangeView extends AsyncTask<Void, Void, Void> {
     MainView view;
     int colorCode;
 
-    public ChangeView(MainView view, int colorCode){
+    public interface AsyncResponse {
+        void processFinish();
+    }
+
+    public ChangeView.AsyncResponse delegate;
+
+    public ChangeView(MainView view, int colorCode, AsyncResponse asyncResponse){
         this.view = view;
         this.colorCode = colorCode;
         System.out.println("TEEN CHANGEVIEW");
@@ -20,7 +26,7 @@ public class ChangeView extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params){
         view.setColors(colorCode);
-        view.invalidate();
+        //view.invalidate();
         return null;
 
     }
