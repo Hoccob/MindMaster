@@ -63,10 +63,16 @@ public class MainView extends View {
         highScoreButton.changeColor(colorCode);
       //  invalidate();
         settingsButton.changeColor(colorCode);
+<<<<<<< HEAD
       //  invalidate();
         setBackgroundColor(ChangeColor.setBGColor(colorCode));
        // invalidate();
 
+=======
+        //invalidate();
+//        setBackgroundColor(ChangeColor.setBGColor(colorCode));
+        //invalidate();
+>>>>>>> 29042f89914db7712c9912a2111e0e9d511448dd
     }
 
 
