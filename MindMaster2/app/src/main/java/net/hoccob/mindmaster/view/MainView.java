@@ -1,16 +1,8 @@
 package net.hoccob.mindmaster.view;
 
 
-import android.accounts.Account;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.view.MotionEvent;
 import android.view.View;
 
 import net.hoccob.mindmaster.Button;
@@ -19,7 +11,6 @@ import net.hoccob.mindmaster.ChangeColor;
 
 public class MainView extends View {
 
-    Paint black_paint_fill, pink_paint_fill;
     public int ScreenX;
     public int ScreenY;
 
@@ -40,7 +31,7 @@ public class MainView extends View {
 
     public MainView(Context context, int x, int y, int colorCode) {
         super(context);
-        setBackgroundColor(Color.parseColor("#272727"));
+        setBackgroundColor(ChangeColor.setBGColor(colorCode));
 
         positionX = x / 12;
 
@@ -64,7 +55,18 @@ public class MainView extends View {
 
     }
 
-    public void setBGColor(int colorCode){setBackgroundColor(ChangeColor.setBGColor(colorCode));}
+    public void setColors(int colorCode){
+        startButton.changeColor(colorCode);
+        invalidate();
+        practiceButton.changeColor(colorCode);
+        invalidate();
+        highScoreButton.changeColor(colorCode);
+        invalidate();
+        settingsButton.changeColor(colorCode);
+        invalidate();
+        setBackgroundColor(ChangeColor.setBGColor(colorCode));
+        invalidate();
+    }
 
 
     @Override

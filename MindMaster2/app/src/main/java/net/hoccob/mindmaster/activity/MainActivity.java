@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import net.hoccob.mindmaster.ASyncTasks.ChangeView;
 import net.hoccob.mindmaster.DetectSwipeGestureListener;
 import net.hoccob.mindmaster.Player;
 import net.hoccob.mindmaster.server.LogIn;
@@ -163,13 +164,8 @@ public class MainActivity extends Activity {
     public void swipeLeft(){
         if(colorCode < 5) {
             colorCode++;
-            //colorEditor.putInt("code",colorCode);
-            mainView.startButton.changeColor(colorCode);
-            mainView.practiceButton.changeColor(colorCode);
-            mainView.highScoreButton.changeColor(colorCode);
-            mainView.settingsButton.changeColor(colorCode);
-            mainView.setBGColor(colorCode);
-            //colorEditor.apply();
+            new ChangeView(mainView, colorCode).execute();
+            //mainView.setColors(colorCode);
         }
     }
 
@@ -177,26 +173,20 @@ public class MainActivity extends Activity {
 
         if(colorCode > 0) {
             colorCode--;
-            //colorEditor.putInt("code",colorCode);
-            mainView.startButton.changeColor(colorCode);
-            mainView.practiceButton.changeColor(colorCode);
-            mainView.highScoreButton.changeColor(colorCode);
-            mainView.settingsButton.changeColor(colorCode);
-            mainView.setBGColor(colorCode);
-            //colorEditor.apply();
+            new ChangeView(mainView, colorCode).execute();
+            //mainView.setColors(colorCode);
         }
     }
 
     @Override
     public void onDestroy() {
-
-        super.onDestroy();
-
         SharedPreferences.Editor colorEditor;
         colorEditor = sharedPrefColor.edit();
 
         colorEditor.putInt("code",colorCode);
         colorEditor.apply();
+        super.onDestroy();
+
     }
 
     @Override

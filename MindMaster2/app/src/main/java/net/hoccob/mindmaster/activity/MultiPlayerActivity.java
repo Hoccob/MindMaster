@@ -58,6 +58,10 @@ public class MultiPlayerActivity extends Activity {
     JSONObject jsonOpponent;
     String opponentNickname;
 
+
+    SharedPreferences sharedPrefColor;
+    int colorCode;
+
     private void SaveScore(){
 
         int x;
@@ -143,7 +147,12 @@ public class MultiPlayerActivity extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        multiPlayerView = new MultiPlayerView(this, size.x, size.y);
+
+        sharedPrefColor = getSharedPreferences("ColorCode",
+                Context.MODE_PRIVATE);
+        colorCode = sharedPrefColor.getInt("code", 0);
+
+        multiPlayerView = new MultiPlayerView(this, size.x, size.y, colorCode);
         loadingView = new LoadingView(this, size.x, size.y);
         loadingView.setText("LOADOING!!");
 
@@ -351,33 +360,49 @@ public class MultiPlayerActivity extends Activity {
 
                 case MotionEvent.ACTION_DOWN:
                     if(answer < 10000000) {
-                        if (motionEvent.getX() > 0 && motionEvent.getX() < ScreenX / 3 && motionEvent.getY() > (ScreenY / 7) * 3 + (ScreenY / 64) && motionEvent.getY() < (ScreenY / 7) * 4 + (ScreenY / 64)) {
+                        if (multiPlayerView.button_7.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 7;
-                        } else if (motionEvent.getX() > ScreenX / 3 && motionEvent.getX() < ScreenX / 1.5 && motionEvent.getY() > (ScreenY / 7) * 3 + (ScreenY / 64) && motionEvent.getY() < (ScreenY / 7) * 4 + (ScreenY / 64)) {
+                        }
+                        else if (multiPlayerView.button_8.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 8;
-                        } else if (motionEvent.getX() > ScreenX / 1.5 && motionEvent.getX() < ScreenX && motionEvent.getY() > (ScreenY / 7) * 3 + (ScreenY / 64) && motionEvent.getY() < (ScreenY / 7) * 4 + (ScreenY / 64)) {
+                        }
+                        else if (multiPlayerView.button_9.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 9;
-                        } else if (motionEvent.getX() > 0 && motionEvent.getX() < ScreenX / 3 && motionEvent.getY() > (ScreenY / 7) * 4 + (ScreenY / 64) && motionEvent.getY() < (ScreenY / 7) * 5 + (ScreenY / 64)) {
+                        }
+                        else if (multiPlayerView.button_4.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 4;
-                        } else if (motionEvent.getX() > ScreenX / 3 && motionEvent.getX() < ScreenX / 1.5 && motionEvent.getY() > (ScreenY / 7) * 4 + (ScreenY / 64) && motionEvent.getY() < (ScreenY / 7) * 5 + (ScreenY / 64)) {
+                        }
+                        else if (multiPlayerView.button_5.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 5;
-                        } else if (motionEvent.getX() > ScreenX / 1.5 && motionEvent.getX() < ScreenX && motionEvent.getY() > (ScreenY / 7) * 4 + (ScreenY / 64) && motionEvent.getY() < (ScreenY / 7) * 5 + (ScreenY / 64)) {
+                        }
+                        else if (multiPlayerView.button_6.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 6;
-                        } else if (motionEvent.getX() > 0 && motionEvent.getX() < ScreenX / 3 && motionEvent.getY() > (ScreenY / 7) * 5 + (ScreenY / 64) && motionEvent.getY() < (ScreenY / 7) * 6 + (ScreenY / 64)) {
+                        }
+                        else if (multiPlayerView.button_1.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 1;
-                        } else if (motionEvent.getX() > ScreenX / 3 && motionEvent.getX() < ScreenX / 1.5 && motionEvent.getY() > (ScreenY / 7) * 5 + (ScreenY / 64) && motionEvent.getY() < (ScreenY / 7) * 6 + (ScreenY / 64)) {
+                        }
+                        else if (multiPlayerView.button_2.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 2;
-                        } else if (motionEvent.getX() > ScreenX / 1.5 && motionEvent.getX() < ScreenX && motionEvent.getY() > (ScreenY / 7) * 5 + (ScreenY / 64) && motionEvent.getY() < (ScreenY / 7) * 6 + (ScreenY / 64)) {
+                        }
+                        else if (multiPlayerView.button_3.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 3;
-                        } else if (motionEvent.getX() > ScreenX / 3 && motionEvent.getX() < ScreenX / 1.5 && motionEvent.getY() > (ScreenY / 7) * 6 + (ScreenY / 64) && motionEvent.getY() < ScreenY) {
+                        }
+                        else if (multiPlayerView.button_0.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10;
-                        } else if (motionEvent.getX() < ScreenX / 2 && motionEvent.getY() > (ScreenY / 7) * 2 + (ScreenY / 32) && motionEvent.getY() < (ScreenY / 7) * 3 + (ScreenY / 64)) {
+                        }
+                        else if (multiPlayerView.button_c.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = 0;
                         }
+                        else if (multiPlayerView.button_backspace.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                            answer = (answer - answer % 10) / 10;
+                        }
+                        else if (multiPlayerView.button_ent.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                            checkAnswer();
+                        }
                     }
-                    if (motionEvent.getX() > ScreenX / 2 && motionEvent.getY() > (ScreenY / 7) * 2 + (ScreenY / 32) && motionEvent.getY() < (ScreenY / 7) * 3 + (ScreenY / 64)) {
+                    if (multiPlayerView.button_backspace.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                         answer = (answer - answer % 10) / 10;
-                    } else if (motionEvent.getX() > ScreenX / 1.5 && motionEvent.getX() < ScreenX && motionEvent.getY() > (ScreenY / 7) * 6 + (ScreenY / 64) && motionEvent.getY() < ScreenY) {
+                    } else if (multiPlayerView.button_ent.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                         checkAnswer();
                     }
 
