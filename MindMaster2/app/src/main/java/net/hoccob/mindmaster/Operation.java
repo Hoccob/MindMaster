@@ -199,30 +199,32 @@ public class Operation {
                     answerPools[5][i] = first - second;
                     equationPools[5][i] = first + " - " + second;
                 }
-
-                //123 + 12
-                first = generator.nextInt(900) + 100;
-                second = generator.nextInt(90) + 10;
-                answerPools[6][i] = first + second;
-                equationPools[6][i] = first + " + " + second;
-
-                //123 - 12
-                first = generator.nextInt(900) + 100;
-                second = generator.nextInt(90) + 10;
-                answerPools[7][i] = first - second;
-                equationPools[7][i] = first + " - " + second;
-
                 //1 * 1
+
                 first = generator.nextInt(9) + 1;
                 second = generator.nextInt(9) + 1;
-                answerPools[8][i] = first * second;
-                equationPools[8][i] = first + " x " + second;
+                answerPools[6][i] = first * second;
+                equationPools[6][i] = first + " x " + second;
+
 
                 //12 / 1 == 1
                 first = generator.nextInt(9) + 1;
                 second = generator.nextInt(9) + 1;
-                answerPools[9][i] = first;
-                equationPools[9][i] = (first*second) + " / " + second;
+                answerPools[7][i] = first;
+                equationPools[7][i] = (first*second) + " / " + second;
+
+                //123 + 12
+                first = generator.nextInt(900) + 100;
+                second = generator.nextInt(90) + 10;
+                answerPools[8][i] = first + second;
+                equationPools[8][i] = first + " + " + second;
+
+                //123 - 12
+                first = generator.nextInt(900) + 100;
+                second = generator.nextInt(90) + 10;
+                answerPools[9][i] = first - second;
+                equationPools[9][i] = first + " - " + second;
+
 
                 //133 + 122
                 first = generator.nextInt(900) + 100;
@@ -240,6 +242,59 @@ public class Operation {
                     answerPools[11][i] = first - second;
                     equationPools[11][i] = first + " - " + second;
                 }
+                 //12 * 1
+                first = generator.nextInt(90) + 10;
+                second = generator.nextInt(9) + 1;
+                answerPools[12][i] = first * second;
+                equationPools[12][i] = first + " x " + second;
+
+                //123 / 2
+                first = generator.nextInt(90) + 10;
+                second = generator.nextInt(9) + 1;
+                answerPools[13][i] = first;
+                equationPools[13][i] = (first*second) + " / " + second;
+
+                //1333 + 122
+                first = generator.nextInt(9000) + 1000;
+                second = generator.nextInt(900) + 100;
+                answerPools[14][i] = first + second;
+                equationPools[14][i] = first + " + " + second;
+
+                //1333 - 122
+                first = generator.nextInt(9000) + 1000;
+                second = generator.nextInt(900) + 100;
+                answerPools[15][i] = first - second;
+                equationPools[15][i] = first + " - " + second;
+
+                //1333 + 1223
+                first = generator.nextInt(9000) + 1000;
+                second = generator.nextInt(9000) + 1000;
+                answerPools[16][i] = first + second;
+                equationPools[16][i] = first + " + " + second;
+
+                //1334 - 1224
+                first = generator.nextInt(9000) + 1000;
+                second = generator.nextInt(9000) + 1000;
+                if(first < second){
+                    answerPools[17][i] = second - first;
+                    equationPools[17][i] = second + " - " + first;
+                }else{
+                    answerPools[17][i] = first - second;
+                    equationPools[17][i] = first + " - " + second;
+                }
+                //13335 + 1223
+                first = generator.nextInt(90000) + 10000;
+                second = generator.nextInt(9000) + 1000;
+                answerPools[18][i] = first + second;
+                equationPools[18][i] = first + " + " + second;
+
+                //13335 - 1224
+                first = generator.nextInt(90000) + 10000;
+                second = generator.nextInt(9000) + 1000;
+                answerPools[19][i] = first - second;
+                equationPools[19][i] = first + " - " + second;
+
+
 
                 //23 / 12 = 1
                 //23 / 1 = 12

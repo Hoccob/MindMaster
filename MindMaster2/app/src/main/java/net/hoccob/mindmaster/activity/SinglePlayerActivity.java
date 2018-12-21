@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Display;
@@ -27,7 +28,9 @@ public class SinglePlayerActivity extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        singlePlayerView = new SinglePlayerView(this, size.x, size.y);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
+        singlePlayerView = new SinglePlayerView(this, size.x, size.y, tf);
+
 
     }
 

@@ -2,12 +2,14 @@ package net.hoccob.mindmaster.view;
 
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -17,8 +19,12 @@ import android.view.SurfaceHolder;
 import net.hoccob.mindmaster.Button;
 import net.hoccob.mindmaster.Operation;
 import net.hoccob.mindmaster.R;
+import net.hoccob.mindmaster.activity.MainActivity;
+
 
 import java.util.Random;
+
+import static java.lang.Integer.parseInt;
 
 public class SinglePlayerView extends SurfaceView implements Runnable {
 
@@ -45,6 +51,7 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
     private long timer = 0;
     private String timerSec;
     private String timerMilli;
+    private String timerMinute;
     private long endTime;
     private boolean gameOver = false;
 
@@ -65,25 +72,28 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
     private Button button_ent;
     private Button button_c;
     private Button button_backspace;
+    public Typeface pristina;
 
 
 
-    public SinglePlayerView(Context context, int x, int y) {
+
+    public SinglePlayerView(Context context, int x, int y, Typeface tf) {
         super(context);
 
         ScreenX = x;
         ScreenY = y;
+        this.pristina = tf;
 
-        button_1 = new Button(context, R.drawable.a1, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 60), 0,0);
-        button_2 = new Button(context, R.drawable.a2, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 60), 0,0);
-        button_3 = new Button(context, R.drawable.a3, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 60), 0,0);
-        button_4 = new Button(context, R.drawable.a4, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 45), 0,0);
-        button_5 = new Button(context, R.drawable.a5, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 45), 0,0);
-        button_6 = new Button(context, R.drawable.a6, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 45), 0,0);
-        button_7 = new Button(context, R.drawable.a7, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 30), 0,0);
-        button_8 = new Button(context, R.drawable.a8, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 30), 0,0);
-        button_9 = new Button(context, R.drawable.a9, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 30), 0,0);
-        button_0 = new Button(context, R.drawable.a0, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 15), 0,0);
+        button_1 = new Button(context, R.drawable.a1, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 60), 0,0);
+        button_2 = new Button(context, R.drawable.a2, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 60), 0,0);
+        button_3 = new Button(context, R.drawable.a3, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 60), 0,0);
+        button_4 = new Button(context, R.drawable.a4, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 45), 0,0);
+        button_5 = new Button(context, R.drawable.a5, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 45), 0,0);
+        button_6 = new Button(context, R.drawable.a6, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 45), 0,0);
+        button_7 = new Button(context, R.drawable.a7, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 30), 0,0);
+        button_8 = new Button(context, R.drawable.a8, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 30), 0,0);
+        button_9 = new Button(context, R.drawable.a9, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 30), 0,0);
+        button_0 = new Button(context, R.drawable.a0, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 15), 0,0);
         button_ent = new Button(context, R.drawable.ent, ScreenX/4, ScreenY/100*15, (ScreenX/100 * 73), (ScreenY - ScreenY / 100 * 15), 0,0);
         button_c = new Button(context, R.drawable.c, ScreenX/4 + ScreenX/6, ScreenY/100 * 10, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 70), 0,0);
         button_backspace = new Button(context, R.drawable.backspace_x, ScreenX/4 + ScreenX/6, ScreenY/100*10, (ScreenX/4 + ScreenX/6 + ScreenX/11), (ScreenY - ScreenY / 100 * 70), 0,0);
@@ -103,7 +113,8 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
         while(play) {
             if(timer > 130) {
                 timer = endTime - System.currentTimeMillis();
-                timerSec = String.valueOf(timer / 1000);
+                timerMinute = String.valueOf(timer / 60000);
+                timerSec = String.valueOf(timer / 1000 % 60);
                 timerMilli = String.valueOf(timer / 100).substring(String.valueOf(timer /10).length() - 2);
             }else{
                 gameOver = true;
@@ -116,6 +127,9 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             }
         }
     }
+
+    public void timerPlus(long add){this.endTime += add;}
+    public void timerMinus(long take){this.endTime -= take;}
 
     public void newEquation(){
         pool = generator.nextInt(2);
@@ -170,7 +184,7 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
         gameOver = false;
         gameThread = new Thread(this);
         gameThread.start();
-        endTime = System.currentTimeMillis() + 20000;
+        endTime = System.currentTimeMillis() + 180000;
         timer = endTime - System.currentTimeMillis();
         newEquation();
     }
@@ -226,17 +240,20 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             canvas.drawBitmap(button_c.getBitmap(), button_c.getPosX(),button_c.getPosY(), null);
             canvas.drawBitmap(button_backspace.getBitmap(), button_backspace.getPosX(),button_backspace.getPosY(), null);
 
+
             Paint answer_text;
             answer_text = new Paint();
+            answer_text.setTypeface(pristina);
             answer_text.setColor(Color.parseColor("#FF652F"));
             answer_text.setTextSize(70);
 
             Paint operation_text;
             operation_text = new Paint();
+            operation_text.setTypeface(pristina);
             operation_text.setColor(Color.parseColor("#FF652F"));
-            operation_text.setTextSize(130);
-            canvas.drawText(currentOperation + " = ", 0, ScreenY / 4, operation_text);
-            canvas.drawText(answer_str, 0, ScreenY/4 + 130, operation_text);
+            operation_text.setTextSize(150);
+            canvas.drawText(currentOperation + " = ", 20, ScreenY / 4 - 100, operation_text);
+            canvas.drawText(answer_str, 20, ScreenY/4 + 50, operation_text);
 
             canvas.drawText("Score: " + String.valueOf(score), 0, 70, answer_text);
 
@@ -244,7 +261,10 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             if(gameOver){
              canvas.drawText("Game over", ScreenX/3, ScreenY/10, answer_text);
             }else {
-                canvas.drawText(timerSec + ":" +  timerMilli, ScreenX / 2, ScreenY / 10, answer_text);
+                //int minute = 0;
+                //if (parseInt(timerSec) / 60 > 1)
+
+                canvas.drawText(timerMinute + ":" + timerSec + ":" +  timerMilli, ScreenX / 2 - 80, 100, answer_text);
             }
             ourHolder.unlockCanvasAndPost(canvas);
             //answer++;

@@ -74,7 +74,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
             while (!gotGame) {
                 System.out.println("LOOKING FOR GAME!!");
                 if (isCancelled()) {
-                    System.out.println("LOADING CANCELLED!");
+                    System.out.println("LOADoING CANCELLED!");
                     return null;
                 }
                     try {
