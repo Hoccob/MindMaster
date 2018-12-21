@@ -20,7 +20,7 @@ public class ChangeView extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params){
         view.setColors(colorCode);
-        view.invalidate();
+        //view.invalidate();
         return null;
 
     }

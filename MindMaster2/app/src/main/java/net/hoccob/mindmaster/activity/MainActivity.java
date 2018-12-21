@@ -170,6 +170,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
                     new ChangeView(mainView, colorCode).execute();
+                    mainView.invalidate();
                 }
             });
 
@@ -185,6 +186,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
                     new ChangeView(mainView, colorCode).execute();
+                    mainView.invalidate();
                 }
             });
             //mainView.setColors(colorCode);

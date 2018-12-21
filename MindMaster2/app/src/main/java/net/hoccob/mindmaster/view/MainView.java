@@ -57,15 +57,15 @@ public class MainView extends View {
 
     public void setColors(int colorCode){
         startButton.changeColor(colorCode);
-        invalidate();
+      //  invalidate();
         practiceButton.changeColor(colorCode);
-        invalidate();
+     //   invalidate();
         highScoreButton.changeColor(colorCode);
-        invalidate();
+      //  invalidate();
         settingsButton.changeColor(colorCode);
-        invalidate();
-        setBackgroundColor(ChangeColor.setBGColor(colorCode));
-        invalidate();
+      //  invalidate();
+       // setBackgroundColor(ChangeColor.setBGColor(colorCode));
+       // invalidate();
     }
 
 

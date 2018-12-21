@@ -8,11 +8,19 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.View;
 
+import net.hoccob.mindmaster.Button;
+import net.hoccob.mindmaster.R;
+
 public class PracticeView extends View {
 
     Paint black_paint_fill_1, pink_paint_fill_1;
     public int ScreenX;
     public int ScreenY;
+    Button button_pluss;
+    Button button_miinus;
+    Button button_jagamine;
+    Button button_korrutamine;
+    Button button_mix;
 
 
 
@@ -23,7 +31,11 @@ public class PracticeView extends View {
         ScreenX = x;
         ScreenY = y;
 
-
+        button_pluss = new Button (context, R.drawable.pluss, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY / 2), 0, 0 );
+        button_miinus = new Button(context, R.drawable.miinus, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 30, (ScreenY /2), 0, 0 );
+        button_jagamine = new Button (context, R.drawable.jagamine, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY / 2 + ScreenY/100*15), 0, 0 );
+        button_korrutamine = new Button (context, R.drawable.iks, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 30, (ScreenY / 2 + ScreenY/100*15), 0, 0 );
+        button_mix = new Button (context, R.drawable.mix, ScreenX/100 * 25, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY / 2 + ScreenY/100*30), 0, 0 );
     }
     @Override
     protected void onDraw(Canvas canvas) {
@@ -37,13 +49,6 @@ public class PracticeView extends View {
         pink_paint_fill_1.setColor(0xFFFF00FF);
         pink_paint_fill_1.setStyle(Paint.Style.FILL);
 
-        Rect rectangle1 = new Rect();
-        rectangle1.set(0, ScreenY/15, ScreenX/2, (ScreenY/20) * 3);
-        canvas.drawRect(rectangle1, black_paint_fill_1);
-
-        Rect rectangle2 = new Rect();
-        rectangle2.set(500, 500, 600, 600);
-        canvas.drawRect(rectangle2, pink_paint_fill_1);
 
 
 

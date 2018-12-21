@@ -150,7 +150,7 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
     }
 
     public void checkAnswer(){
-        if(answer == correctAnswer){
+        if(answer == 2){
             score = score + 10 * level;
             endTime = endTime + 1000;
             progress++;
