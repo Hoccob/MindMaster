@@ -171,9 +171,19 @@ public class SinglePlayerView extends SurfaceView implements Runnable {
             level = 4;
         }else if(progress < 15){
             level = 5;
-        }else{
+        }else if (progress < 18){
             level = 6;
+        }else if (progress < 21){
+            level = 7;
+        }else if (progress < 24){
+            level = 8;
+        }else if (progress < 27){
+            level = 9;
         }
+        else{
+            level = 10;
+        }
+
 
         newEquation();
     }
