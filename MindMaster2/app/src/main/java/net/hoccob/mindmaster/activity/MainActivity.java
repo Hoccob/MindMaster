@@ -155,6 +155,7 @@ public class MainActivity extends Activity {
         intent4 = new Intent(this, LoadingActivity.class);
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -165,7 +166,13 @@ public class MainActivity extends Activity {
     public void swipeLeft(){
         if(colorCode < 5) {
             colorCode++;
-            new ChangeView(mainView, colorCode).execute();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    new ChangeView(mainView, colorCode).execute();
+                }
+            });
+
             //mainView.setColors(colorCode);
         }
     }
@@ -174,7 +181,12 @@ public class MainActivity extends Activity {
 
         if(colorCode > 0) {
             colorCode--;
-            new ChangeView(mainView, colorCode).execute();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    new ChangeView(mainView, colorCode).execute();
+                }
+            });
             //mainView.setColors(colorCode);
         }
     }
