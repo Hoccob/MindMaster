@@ -36,5 +36,6 @@
         <activity android:name=".activity.LoadingActivity"
             android:noHistory="true">
         </activity>
+        <activity android:name=".activity.StartActivity"></activity>
     </application>
 </manifest>

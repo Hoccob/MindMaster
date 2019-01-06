@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
@@ -18,12 +20,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import net.hoccob.mindmaster.ASyncTasks.ChangeView;
+import net.hoccob.mindmaster.Button2;
 import net.hoccob.mindmaster.ChangeColor;
 import net.hoccob.mindmaster.DetectSwipeGestureListener;
 import net.hoccob.mindmaster.Player;
+import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.server.LogIn;
 import net.hoccob.mindmaster.server.SendNickname;
 import net.hoccob.mindmaster.view.MainView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
@@ -33,6 +39,11 @@ public class MainActivity extends Activity {
     Player player;
 
     private int colorCode = 0;
+
+    private ArrayList<Button2> startButtons = new ArrayList<>();
+    private ArrayList<Button2> practiceButtons = new ArrayList<>();
+    private ArrayList<Button2> highScoreButtons = new ArrayList<>();
+    private ArrayList<Button2> settingsButtons = new ArrayList<>();
 
     SharedPreferences sharedPrefColor;
 
@@ -76,12 +87,8 @@ public class MainActivity extends Activity {
 
             @Override
             public void processFinish(String output){
-                //Here you will receive the result fired from async class
-                //of onPostExecute(result) method.
                 System.out.println("player id:" + player.getId());
                 System.out.println(player.getUserName());
-                //intent4.removeExtra("player");
-                //intent4.putExtra("player", player);
             }
         });
         sendNickname.execute();
@@ -104,9 +111,49 @@ public class MainActivity extends Activity {
         // Create the gesture detector with the gesture listener.
         gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
 
+        Bitmap bitmap;
+        int buttonSizeX = x - (x / 6);
+        int buttonSizeY = y / 10;
 
+        for(int i = 1; i < 5; i++){
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.start_game_ver_2);
 
+            bitmap = Bitmap.createScaledBitmap(bitmap,
+                    buttonSizeX,
+                    buttonSizeY,
+                    false);
 
+            startButtons.add(new Button2(this, bitmap, buttonSizeX, buttonSizeY, buttonSizeX / 12, (y / 12) * 2, 0, i));
+
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.practice_ver_2);
+
+            bitmap = Bitmap.createScaledBitmap(bitmap,
+                    buttonSizeX,
+                    buttonSizeY,
+                    false);
+
+            practiceButtons.add(new Button2(this, bitmap, buttonSizeX, buttonSizeY, buttonSizeX / 12, (y / 12) * 4, 0, i));
+
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.high_score_ver_2);
+
+            bitmap = Bitmap.createScaledBitmap(bitmap,
+                    buttonSizeX,
+                    buttonSizeY,
+                    false);
+
+            highScoreButtons.add(new Button2(this, bitmap, buttonSizeX, buttonSizeY, buttonSizeX / 12, (y / 12) * 6, 0, i));
+
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.settings_ver_2);
+
+            bitmap = Bitmap.createScaledBitmap(bitmap,
+                    buttonSizeX,
+                    buttonSizeY,
+                    false);
+
+            settingsButtons.add(new Button2(this, bitmap, buttonSizeX, buttonSizeY, buttonSizeX / 12, (y / 12) * 8, 0, i));
+        }
+
+        setViewButtons(colorCode);
 
     }
     @Override
@@ -162,8 +209,17 @@ public class MainActivity extends Activity {
 
     public void setColor(int colorCode){this.colorCode = colorCode;}
 
+    public void setViewButtons(int i){
+        mainView.setButtons(startButtons.get(i-1), practiceButtons.get(i-1), highScoreButtons.get(i-1), settingsButtons.get(i-1));
+        mainView.invalidate();
+    }
+
     public void swipeLeft(){
-        if(colorCode < 4) {
+        if(colorCode < 4){
+            colorCode++;
+            setViewButtons(colorCode);
+        }
+      /*  if(colorCode < 4) {
             colorCode++;
             runOnUiThread(new Runnable() {
                 @Override
@@ -181,12 +237,16 @@ public class MainActivity extends Activity {
                 }
             });
             //mainView.setColors(colorCode);
-        }
+        }*/
     }
 
     public void swipeRight(){
 
-        if(colorCode > 1) {
+        if(colorCode > 1){
+            colorCode--;
+            setViewButtons(colorCode);
+        }
+        /*if(colorCode > 1) {
             colorCode--;
             runOnUiThread(new Runnable() {
                 @Override
@@ -204,7 +264,7 @@ public class MainActivity extends Activity {
                 }
             });
             //mainView.setColors(colorCode);
-        }
+        }*/
     }
 
     private void invView(){
@@ -277,7 +337,7 @@ public class MainActivity extends Activity {
                     startActivity(intent3);
                 }else if(mainView.settingsButton.getRectF().contains(motionEvent.getX(),motionEvent.getY()))
                 {
-                    Intent intent2 = new Intent(this, PracticeActivity.class);
+                    Intent intent2 = new Intent(this, StartActivity.class);
                     startActivity(intent2);
                 }
                 break;

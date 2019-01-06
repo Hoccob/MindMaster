@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.RectF;
 import android.view.View;
 
-public class Button extends View {
+public class Button2 extends View {
 
     private Bitmap bitmap;
     private int fileName;
@@ -18,9 +18,9 @@ public class Button extends View {
     private RectF rectF;
     private boolean inverted;
 
-    public Button (Context context, int fileName, int sizeX, int sizeY, int posX, int posY, int value, int colorCode){
+    public Button2 (Context context, Bitmap bitMap, int sizeX, int sizeY, int posX, int posY, int value, int colorCode){
         super(context);
-        this.fileName = fileName;
+        this.bitmap = bitMap;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.posX = posX;
@@ -28,13 +28,6 @@ public class Button extends View {
         this.value = value;
 
         inverted = false;
-
-        bitmap = BitmapFactory.decodeResource(getResources(), fileName);
-
-        bitmap = Bitmap.createScaledBitmap(bitmap,
-                sizeX,
-                sizeY,
-                false);
 
         rectF = new RectF();
 
@@ -58,8 +51,11 @@ public class Button extends View {
 
     public void changeColor(int code){bitmap = ChangeColor.colorByCode(code, bitmap);}
 
-    public Button getButton(){return this;}
+    public Button2 getButton(){return this;}
 
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
 
     public void invertBitmap(){
         if(!inverted){

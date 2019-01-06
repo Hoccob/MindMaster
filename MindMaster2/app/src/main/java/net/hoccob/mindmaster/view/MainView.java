@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.view.View;
 
 import net.hoccob.mindmaster.Button;
+import net.hoccob.mindmaster.Button2;
 import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.ChangeColor;
 
@@ -23,10 +24,10 @@ public class MainView extends View {
     int settings_y;
 
 
-    public Button startButton;
-    public Button practiceButton;
-    public Button highScoreButton;
-    public Button settingsButton;
+    public Button2 startButton;
+    public Button2 practiceButton;
+    public Button2 highScoreButton;
+    public Button2 settingsButton;
 
 
     public MainView(Context context, int x, int y, int colorCode) {
@@ -44,35 +45,46 @@ public class MainView extends View {
         settings_y = (y / 12) * 8;
 
 
-        startButton = new Button(context, R.drawable.start_game_ver_2, sizeX, sizeY, positionX, start_y, 0,colorCode);
-        practiceButton = new Button(context, R.drawable.practice_ver_2, sizeX, sizeY, positionX, practice_y, 0,colorCode);
-        highScoreButton = new Button(context, R.drawable.high_score_ver_2, sizeX, sizeY, positionX, high_y, 0,colorCode);
-        settingsButton = new Button(context, R.drawable.settings_ver_2, sizeX, sizeY, positionX, settings_y, 0,colorCode);
-
-
         ScreenX = x;
         ScreenY = y;
 
     }
 
+    public void setButtons(Button2 startButton, Button2 practiceButton, Button2 highScoreButton, Button2 settingsButton){
+        this.startButton = startButton;
+        this.practiceButton = practiceButton;
+        this.highScoreButton = highScoreButton;
+        this.settingsButton = settingsButton;
+    }
+
     public void setColors(int colorCode){
         startButton.changeColor(colorCode);
-      //  invalidate();
+      try {
+          invalidate();
+      }catch (Exception e){
+          e.printStackTrace();
+        }
         practiceButton.changeColor(colorCode);
-     //   invalidate();
+        try {
+            invalidate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         highScoreButton.changeColor(colorCode);
-      //  invalidate();
+        try {
+            invalidate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         settingsButton.changeColor(colorCode);
-<<<<<<< HEAD
-      //  invalidate();
-        setBackgroundColor(ChangeColor.setBGColor(colorCode));
+        try {
+            invalidate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+      //  setBackgroundColor(ChangeColor.setBGColor(colorCode));
        // invalidate();
 
-=======
-        //invalidate();
-//        setBackgroundColor(ChangeColor.setBGColor(colorCode));
-        //invalidate();
->>>>>>> 29042f89914db7712c9912a2111e0e9d511448dd
     }
 
 
