@@ -2,6 +2,7 @@ package net.hoccob.mindmaster.activity;
 
 import android.app.Activity;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
@@ -28,7 +29,8 @@ public class StartActivity extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        startView = new StartView(this, size.x, size.y);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
+        startView = new StartView(this, size.x, size.y, tf);
 
 
 

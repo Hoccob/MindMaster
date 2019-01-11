@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.view.View;
 
 public class StartView extends View {
@@ -17,15 +18,19 @@ public class StartView extends View {
     Path button = new Path();
     public RectF buttonRect = new RectF();
     Paint paint = new Paint();
+    Paint textPaint = new Paint();
     int color = 1;
+    Typeface pristina;
+    String startText = "Start Game";
 
     int colorFrom = Color.parseColor("#8EE4AF");
     int colorTo = Color.parseColor("#3500D3");
     ValueAnimator colorAnimation1 = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
     ValueAnimator colorAnimation2 = ValueAnimator.ofObject(new ArgbEvaluator(), colorTo, colorFrom);
 
-    public StartView(Context context, int x, int y) {
+    public StartView(Context context, int x, int y, Typeface tf) {
         super(context);
+        this.pristina = tf;
         setBackgroundColor(0xFF000000);
 
         screenX = x;
@@ -33,6 +38,10 @@ public class StartView extends View {
         doButton(button, buttonRect, x, y, y / 20);
 
         paint.setColor( Color.parseColor("#8EE4AF"));
+
+        textPaint.setColor(Color.BLACK);
+        textPaint.setTypeface(pristina);
+        textPaint.setTextSize(100);
 
         colorAnimation1.setDuration(500); // milliseconds
         colorAnimation1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -42,12 +51,10 @@ public class StartView extends View {
                 paint.setColor((int) animator.getAnimatedValue());
                 invalidate();
             }
-
         });
 
         colorAnimation2.setDuration(500); // milliseconds
         colorAnimation2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
             @Override
             public void onAnimationUpdate(ValueAnimator animator) {
                 paint.setColor((int) animator.getAnimatedValue());
@@ -63,15 +70,14 @@ public class StartView extends View {
 
 
     private void doButton(Path path, RectF rect, int x, int y, int posY){
-        path.moveTo(x / 10, posY);
-        path.lineTo(x - (x / 10), posY);
+
+        path.moveTo(x / 2, posY);
         path.lineTo(x - (x / 20), posY + (y / 20));
         path.lineTo(x - (x / 20), posY + (2 * y / 20));
-        path.lineTo(x - (x / 10), posY + (3 * y / 20));
-        path.lineTo(x / 10, posY + (3 * y / 20));
+        path.lineTo(x / 2, posY + (3 * y / 20));
         path.lineTo(x / 20, posY + (2 * y / 20));
         path.lineTo(x / 20, posY + (y / 20));
-        path.lineTo(x / 10, posY);
+        path.lineTo(x / 2, posY);
         path.close();
 
         rect.left = x / 10;
@@ -96,5 +102,7 @@ public class StartView extends View {
         super.onDraw(canvas);
 
         canvas.drawPath(button, paint);
+        canvas.drawText("Start Game", screenX / 4, screenY /7, textPaint);
+
     }
 }
