@@ -46,11 +46,11 @@ public class StartActivity extends Activity {
     }
 
     public void swipeLeft(){
-        startView.changePaint();
+        startView.increaseColor();
     }
 
     public void swipeRight(){
-        startView.changePaint();
+        startView.decreaseColor();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class StartActivity extends Activity {
 
             case MotionEvent.ACTION_DOWN:
 
-                if(startView.buttonRect.contains(motionEvent.getX(),motionEvent.getY()))
+                if(startView.startRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
                     Toast.makeText(this, "Clicked me!", Toast.LENGTH_LONG).show();
                 }

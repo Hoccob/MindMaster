@@ -11,57 +11,56 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.view.View;
 
+import net.hoccob.mindmaster.ColorChange;
+
 public class StartView extends View {
 
     int screenX;
     int screenY;
-    Path button = new Path();
-    public RectF buttonRect = new RectF();
+    Path startButton = new Path();
+    Path practiceButton = new Path();
+    Path highScoreButton = new Path();
+    Path settingsButton = new Path();
+    public RectF startRect = new RectF();
+    public RectF practiceRect = new RectF();
+    public RectF highScoreRect = new RectF();
+    public RectF settingsRect = new RectF();
     Paint paint = new Paint();
+    Paint bgPaint = new Paint();
     Paint textPaint = new Paint();
     int color = 1;
     Typeface pristina;
-    String startText = "Start Game";
-
-    int colorFrom = Color.parseColor("#8EE4AF");
-    int colorTo = Color.parseColor("#3500D3");
-    ValueAnimator colorAnimation1 = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-    ValueAnimator colorAnimation2 = ValueAnimator.ofObject(new ArgbEvaluator(), colorTo, colorFrom);
+    private ColorChange colorChange;
 
     public StartView(Context context, int x, int y, Typeface tf) {
         super(context);
         this.pristina = tf;
-        setBackgroundColor(0xFF000000);
+        //setBackgroundColor(0xFF000000);
 
         screenX = x;
         screenY = y;
-        doButton(button, buttonRect, x, y, y / 20);
+        doButton(startButton, startRect, x, y,  y / 6);
+        doButton(practiceButton, practiceRect,x,y, 2 * y / 6);
+        doButton(highScoreButton, highScoreRect,x,y, 3 * y / 6);
+        doButton(settingsButton, settingsRect, x,y, 4 * y / 6);
 
         paint.setColor( Color.parseColor("#8EE4AF"));
+        paint.setStrokeWidth(10);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setTextSize(100);
+        paint.setTypeface(pristina);
+        paint.setAntiAlias(true);
 
-        textPaint.setColor(Color.BLACK);
-        textPaint.setTypeface(pristina);
+        textPaint.setColor( Color.parseColor("#8EE4AF"));
+        textPaint.setStyle(Paint.Style.STROKE);
         textPaint.setTextSize(100);
+        textPaint.setTypeface(pristina);
+        textPaint.setAntiAlias(true);
 
-        colorAnimation1.setDuration(500); // milliseconds
-        colorAnimation1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        bgPaint.setColor(Color.parseColor("#05386B"));
+        setBackgroundColor(bgPaint.getColor());
 
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                paint.setColor((int) animator.getAnimatedValue());
-                invalidate();
-            }
-        });
-
-        colorAnimation2.setDuration(500); // milliseconds
-        colorAnimation2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                paint.setColor((int) animator.getAnimatedValue());
-                invalidate();
-            }
-
-        });
+        colorChange = new ColorChange(paint, textPaint, this);
 
     }
 
@@ -86,13 +85,20 @@ public class StartView extends View {
         rect.bottom = posY + (3 * y / 20);
     }
 
-    public void changePaint(){
-        if(color == 1) {
-            colorAnimation1.start();
-            color = 2;
-        }else{
-            colorAnimation2.start();
-            color = 1;
+
+    public void increaseColor(){
+        if(color < 4){
+            colorChange.borderAnimatorAsc.get(color - 1).start();
+            colorChange.bgAnimatorAsc.get(color - 1).start();
+            color++;
+        }
+    }
+
+    public void decreaseColor(){
+        if(color > 1){
+            colorChange.borderAnimatorDesc.get(color - 1).start();
+            colorChange.bgAnimatorDesc.get(color - 1).start();
+            color--;
         }
     }
 
@@ -101,8 +107,14 @@ public class StartView extends View {
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-        canvas.drawPath(button, paint);
-        canvas.drawText("Start Game", screenX / 4, screenY /7, textPaint);
+        canvas.drawPath(startButton, paint);
+        canvas.drawPath(practiceButton, paint);
+        canvas.drawPath(highScoreButton, paint);
+        canvas.drawPath(settingsButton, paint);
+        canvas.drawText("Start Game", screenX / 4,  3 * screenY / 12, textPaint);
+        canvas.drawText("Practice", screenX / 3, 5 * screenY / 12, textPaint);
+        canvas.drawText("High Score", screenX / 4, 7 * screenY / 12, textPaint);
+        canvas.drawText("Settings", screenX / 3, 9 * screenY / 12, textPaint);
 
     }
 }
