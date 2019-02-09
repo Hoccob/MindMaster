@@ -5,13 +5,18 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.drawable.PaintDrawable;
 import android.view.View;
 
+import net.hoccob.mindmaster.ChangeColor;
 import net.hoccob.mindmaster.ColorChange;
+
+import static android.graphics.Paint.Style.FILL;
 
 public class StartView extends View {
 
@@ -28,9 +33,15 @@ public class StartView extends View {
     Paint paint = new Paint();
     Paint bgPaint = new Paint();
     Paint textPaint = new Paint();
+    Paint fillPaint = new Paint();
     int color = 1;
     Typeface pristina;
     private ColorChange colorChange;
+
+    private boolean startClicked = false;
+    private boolean practiceClicked = false;
+    private boolean highScoreClicked = false;
+    private boolean settingsClicked = false;
 
     public StartView(Context context, int x, int y, Typeface tf) {
         super(context);
@@ -45,7 +56,7 @@ public class StartView extends View {
         doButton(settingsButton, settingsRect, x,y, 4 * y / 6);
 
         paint.setColor( Color.parseColor("#8EE4AF"));
-        paint.setStrokeWidth(10);
+        paint.setStrokeWidth(2);
         paint.setStyle(Paint.Style.STROKE);
         paint.setTextSize(100);
         paint.setTypeface(pristina);
@@ -58,9 +69,18 @@ public class StartView extends View {
         textPaint.setAntiAlias(true);
 
         bgPaint.setColor(Color.parseColor("#05386B"));
+        bgPaint.setStyle(Paint.Style.STROKE);
+        bgPaint.setTextSize(100);
+        bgPaint.setTypeface(pristina);
+        bgPaint.setAntiAlias(true);
         setBackgroundColor(bgPaint.getColor());
 
-        colorChange = new ColorChange(paint, textPaint, this);
+        fillPaint.setColor(paint.getColor());
+        fillPaint.setStyle(FILL);
+        fillPaint.setAntiAlias(true);
+
+        colorChange = new ColorChange(paint, textPaint, fillPaint, bgPaint, this);
+
 
     }
 
@@ -71,18 +91,18 @@ public class StartView extends View {
     private void doButton(Path path, RectF rect, int x, int y, int posY){
 
         path.moveTo(x / 2, posY);
-        path.lineTo(x - (x / 20), posY + (y / 20));
-        path.lineTo(x - (x / 20), posY + (2 * y / 20));
-        path.lineTo(x / 2, posY + (3 * y / 20));
-        path.lineTo(x / 20, posY + (2 * y / 20));
-        path.lineTo(x / 20, posY + (y / 20));
+        path.lineTo(x - (x / 20), posY + (y / 25));
+        path.lineTo(x - (x / 20), posY + (2 * y / 25));
+        path.lineTo(x / 2, posY + (3 * y / 25));
+        path.lineTo(x / 20, posY + (2 * y / 25));
+        path.lineTo(x / 20, posY + (y / 25));
         path.lineTo(x / 2, posY);
         path.close();
 
         rect.left = x / 10;
         rect.top = posY;
         rect.right = x - (x / 20);
-        rect.bottom = posY + (3 * y / 20);
+        rect.bottom = posY + (3 * y / 30);
     }
 
 
@@ -102,19 +122,46 @@ public class StartView extends View {
         }
     }
 
+    public void setStartClicked(boolean clicked){startClicked = clicked;}
+    public void setPracticeClicked(boolean clicked){practiceClicked = clicked;}
+    public void setHighScoreClicked(boolean clicked){highScoreClicked = clicked;}
+    public void setSettingsClicked(boolean clicked){settingsClicked = clicked;}
+
 
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-        canvas.drawPath(startButton, paint);
-        canvas.drawPath(practiceButton, paint);
-        canvas.drawPath(highScoreButton, paint);
-        canvas.drawPath(settingsButton, paint);
-        canvas.drawText("Start Game", screenX / 4,  3 * screenY / 12, textPaint);
-        canvas.drawText("Practice", screenX / 3, 5 * screenY / 12, textPaint);
-        canvas.drawText("High Score", screenX / 4, 7 * screenY / 12, textPaint);
-        canvas.drawText("Settings", screenX / 3, 9 * screenY / 12, textPaint);
-
+        if(!startClicked) {
+            canvas.drawPath(startButton, paint);
+            canvas.drawText("Start Game", screenX / 4,  3 * screenY / 12, textPaint);
+        }else{
+            canvas.drawPath(startButton, fillPaint);
+            canvas.drawText("Start Game", screenX / 4,  3 * screenY / 12, bgPaint);
+        }
+        if(!practiceClicked) {
+            canvas.drawPath(practiceButton, paint);
+            canvas.drawText("Practice", screenX / 3, 5 * screenY / 12, textPaint);
+        }else{
+            //canvas.drawPath(startButton, bgPaint);
+            canvas.drawPath(practiceButton, fillPaint);
+            canvas.drawText("Practice", screenX / 3, 5 * screenY / 12, bgPaint);
+        }
+        if(!highScoreClicked) {
+            canvas.drawPath(highScoreButton, paint);
+            canvas.drawText("High Score", screenX / 4, 7 * screenY / 12, textPaint);
+        }else{
+            //canvas.drawPath(startButton, bgPaint);
+            canvas.drawPath(highScoreButton, fillPaint);
+            canvas.drawText("High Score", screenX / 4, 7 * screenY / 12, bgPaint);
+        }
+        if(!settingsClicked) {
+            canvas.drawPath(settingsButton, paint);
+            canvas.drawText("Settings", screenX / 3, 9 * screenY / 12, textPaint);
+        }else{
+            //canvas.drawPath(startButton, bgPaint);
+            canvas.drawPath(settingsButton, fillPaint);
+            canvas.drawText("Settings", screenX / 3, 9 * screenY / 12, bgPaint);
+        }
     }
 }

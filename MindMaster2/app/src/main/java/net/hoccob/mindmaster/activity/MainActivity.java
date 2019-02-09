@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
@@ -28,6 +29,7 @@ import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.server.LogIn;
 import net.hoccob.mindmaster.server.SendNickname;
 import net.hoccob.mindmaster.view.MainView;
+import net.hoccob.mindmaster.view.StartView;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,7 @@ public class MainActivity extends Activity {
 
     public int y;
     public int x;
-    MainView mainView;
+    StartView mainView;
     Player player;
 
     private int colorCode = 0;
@@ -93,7 +95,10 @@ public class MainActivity extends Activity {
         });
         sendNickname.execute();
 
-        mainView = new MainView(this, size.x, size.y, colorCode);
+
+        Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
+
+        mainView = new StartView(this, size.x, size.y, tf);
         y = size.y;
         x = size.x;
 
@@ -153,7 +158,7 @@ public class MainActivity extends Activity {
             settingsButtons.add(new Button2(this, bitmap, buttonSizeX, buttonSizeY, buttonSizeX / 12, (y / 12) * 8, 0, i));
         }
 
-        setViewButtons(colorCode);
+        //setViewButtons(colorCode);
 
     }
     @Override
@@ -209,63 +214,63 @@ public class MainActivity extends Activity {
 
     public void setColor(int colorCode){this.colorCode = colorCode;}
 
-    public void setViewButtons(int i){
-        mainView.setButtons(startButtons.get(i-1), practiceButtons.get(i-1), highScoreButtons.get(i-1), settingsButtons.get(i-1));
-        mainView.invalidate();
-    }
+    //public void setViewButtons(int i){
+    //    mainView.setButtons(startButtons.get(i-1), practiceButtons.get(i-1), highScoreButtons.get(i-1), settingsButtons.get(i-1));
+    //    mainView.invalidate();
+    //}
 
-    public void swipeLeft(){
-        if(colorCode < 4){
-            colorCode++;
-            setViewButtons(colorCode);
-        }
-      /*  if(colorCode < 4) {
-            colorCode++;
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    new ChangeView(mainView, colorCode, new ChangeView.AsyncResponse(){
-                        @Override
-                        public void processFinish(){
-                            invView();
-                            //mainView.invalidate();
-                            //finish();
-                        }
-                    }).execute();
-                    //mainView.setColors(colorCode);
-                    //mainView.invalidate();
-                }
-            });
-            //mainView.setColors(colorCode);
-        }*/
-    }
-
-    public void swipeRight(){
-
-        if(colorCode > 1){
-            colorCode--;
-            setViewButtons(colorCode);
-        }
-        /*if(colorCode > 1) {
-            colorCode--;
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    new ChangeView(mainView, colorCode, new ChangeView.AsyncResponse(){
-                        @Override
-                        public void processFinish(){
-                            invView();
-                            //mainView.invalidate();
-                            //finish();
-                        }
-                    }).execute();
-                    //mainView.setColors(colorCode);
-                    //mainView.invalidate();
-                }
-            });
-            //mainView.setColors(colorCode);
-        }*/
-    }
+    //public void swipeLeft(){
+    //    if(colorCode < 4){
+    //        colorCode++;
+    //        setViewButtons(colorCode);
+    //    }
+    //  /*  if(colorCode < 4) {
+    //        colorCode++;
+    //        runOnUiThread(new Runnable() {
+    //            @Override
+    //            public void run() {
+    //                new ChangeView(mainView, colorCode, new ChangeView.AsyncResponse(){
+    //                    @Override
+    //                    public void processFinish(){
+    //                        invView();
+    //                        //mainView.invalidate();
+    //                        //finish();
+    //                    }
+    //                }).execute();
+    //                //mainView.setColors(colorCode);
+    //                //mainView.invalidate();
+    //            }
+    //        });
+    //        //mainView.setColors(colorCode);
+    //    }*/
+    //}
+//
+    //public void swipeRight(){
+//
+    //    if(colorCode > 1){
+    //        colorCode--;
+    //        setViewButtons(colorCode);
+    //    }
+    //    /*if(colorCode > 1) {
+    //        colorCode--;
+    //        runOnUiThread(new Runnable() {
+    //            @Override
+    //            public void run() {
+    //                new ChangeView(mainView, colorCode, new ChangeView.AsyncResponse(){
+    //                    @Override
+    //                    public void processFinish(){
+    //                        invView();
+    //                        //mainView.invalidate();
+    //                        //finish();
+    //                    }
+    //                }).execute();
+    //                //mainView.setColors(colorCode);
+    //                //mainView.invalidate();
+    //            }
+    //        });
+    //        //mainView.setColors(colorCode);
+    //    }*/
+    //}
 
     private void invView(){
         mainView.setBackgroundColor(ChangeColor.setBGColor(colorCode));
@@ -291,33 +296,33 @@ public class MainActivity extends Activity {
 
             case MotionEvent.ACTION_DOWN:
 
-                if(mainView.startButton.getRectF().contains(motionEvent.getX(),motionEvent.getY()))
+                if(mainView.startRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
-                    mainView.startButton.invertBitmap();
-                }else if (mainView.practiceButton.getRectF().contains(motionEvent.getX(), motionEvent.getY()))
+                    mainView.setStartClicked(true);
+                }else if (mainView.practiceRect.contains(motionEvent.getX(), motionEvent.getY()))
                 {
-                    mainView.practiceButton.invertBitmap();
+                    mainView.setPracticeClicked(true);
                 }
-                else if(mainView.highScoreButton.getRectF().contains(motionEvent.getX(), motionEvent.getY()))
+                else if(mainView.highScoreRect.contains(motionEvent.getX(), motionEvent.getY()))
                 {
-                    mainView.highScoreButton.invertBitmap();
+                    mainView.setHighScoreClicked(true);
                 }
-                else if(mainView.settingsButton.getRectF().contains(motionEvent.getX(),motionEvent.getY()))
+                else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
-                    mainView.settingsButton.invertBitmap();
+                   mainView.setSettingsClicked(true);
                 }
                 mainView.invalidate();
                 break;
 
             case MotionEvent.ACTION_UP:
 
-                mainView.practiceButton.resetBitmap();
-                mainView.startButton.resetBitmap();
-                mainView.highScoreButton.resetBitmap();
-                mainView.settingsButton.resetBitmap();
+                mainView.setStartClicked(false);
+                mainView.setPracticeClicked(false);
+                mainView.setHighScoreClicked(false);
+                mainView.setSettingsClicked(false);
                 mainView.invalidate();
 
-                if(mainView.startButton.getRectF().contains(motionEvent.getX(),motionEvent.getY()))
+                if(mainView.startRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
                     if(player.getId() > 0 && player.getNickname() != null) {
                         //Intent intent4 = new Intent(this, LoadingActivity.class);
@@ -327,15 +332,15 @@ public class MainActivity extends Activity {
                     }else{
                         Toast.makeText(this, "Not logged in!", Toast.LENGTH_LONG).show();
                     }
-                }else if(mainView.practiceButton.getRectF().contains(motionEvent.getX(), motionEvent.getY()))
+                }else if(mainView.practiceRect.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     Intent intent = new Intent(this, SinglePlayerActivity.class);
                     startActivity(intent);
-                }else if(mainView.highScoreButton.getRectF().contains(motionEvent.getX(), motionEvent.getY()))
+                }else if(mainView.highScoreRect.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     Intent intent3 = new Intent(this, HighScoreActivity2.class);
                     startActivity(intent3);
-                }else if(mainView.settingsButton.getRectF().contains(motionEvent.getX(),motionEvent.getY()))
+                }else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
                     Intent intent2 = new Intent(this, StartActivity.class);
                     startActivity(intent2);
@@ -387,6 +392,14 @@ public class MainActivity extends Activity {
         });*/
 
         alert.show();
+    }
+
+    public void swipeLeft(){
+        mainView.increaseColor();
+    }
+
+    public void swipeRight(){
+        mainView.decreaseColor();
     }
 
     private void hideSystemUI() {

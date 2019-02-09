@@ -18,7 +18,7 @@ public class ColorChange {
     public ArrayList<ValueAnimator> bgAnimatorDesc = new ArrayList<>();
 
 
-    public ColorChange(final Paint borderPaint, final Paint textPaint, final View view){
+    public ColorChange(final Paint borderPaint, final Paint textPaint, final Paint fillPaint, final Paint bgPaint, final View view){
 
         populateColors();
 
@@ -50,6 +50,7 @@ public class ColorChange {
                 public void onAnimationUpdate(ValueAnimator animator) {
                     borderPaint.setColor((int) animator.getAnimatedValue());
                     textPaint.setColor((int) animator.getAnimatedValue());
+                    fillPaint.setColor(textPaint.getColor());
                     view.invalidate();
                 }
             });
@@ -59,7 +60,7 @@ public class ColorChange {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animator) {
                     view.setBackgroundColor((int) animator.getAnimatedValue());
-                    //bgPaint.setColor((int) animator.getAnimatedValue());
+                    bgPaint.setColor((int) animator.getAnimatedValue());
                     view.invalidate();
                 }
             });
@@ -70,6 +71,7 @@ public class ColorChange {
                 public void onAnimationUpdate(ValueAnimator animator) {
                     borderPaint.setColor((int) animator.getAnimatedValue());
                     textPaint.setColor((int) animator.getAnimatedValue());
+                    fillPaint.setColor(textPaint.getColor());
                     view.invalidate();
                 }
             });
@@ -79,7 +81,7 @@ public class ColorChange {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animator) {
                     view.setBackgroundColor((int) animator.getAnimatedValue());
-                    //bgPaint.setColor((int) animator.getAnimatedValue());
+                    bgPaint.setColor((int) animator.getAnimatedValue());
                     view.invalidate();
                 }
             });
