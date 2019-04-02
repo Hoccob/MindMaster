@@ -2,22 +2,32 @@ package net.hoccob.mindmaster.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
+import net.hoccob.mindmaster.StartSwipeListener;
+import net.hoccob.mindmaster.StartSwipeListener2;
 import net.hoccob.mindmaster.view.SinglePlayerView;
+//import net.hoccob.mindmaster.view.SingleplayerView2;
 
 
 public class SinglePlayerActivity extends Activity {
 
     SinglePlayerView singlePlayerView;
     String answer;
+    private int colorCode = 0;
+    private GestureDetectorCompat gestureDetectorCompat = null;
 
+    SharedPreferences sharedPrefColor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +41,27 @@ public class SinglePlayerActivity extends Activity {
         Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
         singlePlayerView = new SinglePlayerView(this, size.x, size.y, tf);
 
+        sharedPrefColor = getSharedPreferences("ColorCode",
+                Context.MODE_PRIVATE);
+        colorCode = sharedPrefColor.getInt("code", 0);
 
+        // Create a common gesture listener object.
+        StartSwipeListener2 gestureListener = new StartSwipeListener2();
+
+        // Set activity in the listener.
+        gestureListener.setActivity(this);
+
+        // Create the gesture detector with the gesture listener.
+        gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
+
+    }
+
+    public void swipeLeft(){
+        singlePlayerView.increaseColor();
+    }
+
+    public void swipeRight(){
+        singlePlayerView.decreaseColor();
     }
 
     @Override
@@ -45,7 +75,7 @@ public class SinglePlayerActivity extends Activity {
     protected void onResume() {
         super.onResume();
         //singlePlayerView.draw();
-        singlePlayerView.startGame();
+        //singlePlayerView.startGame();
         setContentView(singlePlayerView);
         hideSystemUI();
     }
@@ -53,14 +83,19 @@ public class SinglePlayerActivity extends Activity {
     @Override
     protected void onPause(){
         super.onPause();
-        singlePlayerView.pause();
+        //singlePlayerView.pause();
     }
 
     @Override
     protected void onDestroy(){
+        SharedPreferences.Editor colorEditor;
+        colorEditor = sharedPrefColor.edit();
+
+        colorEditor.putInt("code",colorCode);
+        colorEditor.apply();
         super.onDestroy();
 
-        int x;
+       /* int x;
         int y;
         int z = singlePlayerView.getScore();
 
@@ -130,9 +165,63 @@ public class SinglePlayerActivity extends Activity {
 
                     }
             editor.commit();
-        }
+        }*/
     }
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
 
+        gestureDetectorCompat.onTouchEvent(motionEvent);
+
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+
+            case MotionEvent.ACTION_DOWN:
+
+                if(singlePlayerView.rect_1.contains(motionEvent.getX(),motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_1Clicked(true);
+                }else if (singlePlayerView.rect_4.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_4Clicked(true);
+                }
+                else if(singlePlayerView.rect_7.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_7Clicked(true);
+                }/*
+                else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
+                {
+                    mainView.setSettingsClicked(true);
+                }*/
+                singlePlayerView.invalidate();
+                break;
+
+            case MotionEvent.ACTION_UP:
+
+                singlePlayerView.setButton_1Clicked(false);
+                singlePlayerView.setButton_4Clicked(false);
+                singlePlayerView.setButton_7Clicked(false);
+                //singlePlayerView.setSettingsClicked(false);
+                singlePlayerView.invalidate();
+
+              /*  if(mainView.startRect.contains(motionEvent.getX(),motionEvent.getY()))
+                {
+                    if(player.getId() > 0 && player.getNickname() != null) {
+                        //Intent intent4 = new Intent(this, LoadingActivity.class);
+                        System.gc();
+                        intent4.putExtra("player", player);
+                        startActivity(intent4);
+                    }else{
+                        Toast.makeText(this, "Not logged in!", Toast.LENGTH_LONG).show();
+                    }
+                }else if(mainView.practiceRect.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    Intent intent = new Intent(this, SinglePlayerActivity.class);
+                    startActivity(intent);
+               */
+                break;
+
+        }
+        return true;
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

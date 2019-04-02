@@ -12,8 +12,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import net.hoccob.mindmaster.Button;
-import net.hoccob.mindmaster.R;
+//import net.hoccob.mindmaster.R;
 
+
+// View ymber kirjutada, mehhaanika activitysse!!
 
 public class MultiPlayerView extends SurfaceView implements Runnable {
 
@@ -76,7 +78,7 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         ScreenX = x;
         ScreenY = y;
 
-        button_1 = new Button(context, R.drawable.a1, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 60), 0,colorCode);
+       /* button_1 = new Button(context, R.drawable.a1, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 60), 0,colorCode);
         button_2 = new Button(context, R.drawable.a2, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 40, (ScreenY - ScreenY / 100 * 60), 0,colorCode);
         button_3 = new Button(context, R.drawable.a3, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 73, (ScreenY - ScreenY / 100 * 60), 0,colorCode);
         button_4 = new Button(context, R.drawable.a4, ScreenX/4, ScreenY/100*15, ScreenX / 100 * 5, (ScreenY - ScreenY / 100 * 45), 0,colorCode);
@@ -124,7 +126,7 @@ public class MultiPlayerView extends SurfaceView implements Runnable {
         //operation.createPools();
 
         startGame();
-
+*/
     }
 
 

@@ -296,6 +296,9 @@ public class MultiPlayerActivity extends Activity {
         answer = 0;
         multiPlayerView.setAnswer(0);
 
+        // Kaotame progressi 2ra !!11one
+
+
         if(progress < 3){
             level = 1;
         }else if(progress < 6){
@@ -396,9 +399,7 @@ public class MultiPlayerActivity extends Activity {
                         else if (multiPlayerView.button_backspace.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = (answer - answer % 10) / 10;
                         }
-                        else if (multiPlayerView.button_ent.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
-                            checkAnswer();
-                        }
+
                     }
                     if (multiPlayerView.button_backspace.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                         answer = (answer - answer % 10) / 10;

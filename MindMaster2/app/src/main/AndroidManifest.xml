@@ -18,20 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.HighScoreActivity">
-
-
-        </activity>
         <activity android:name=".activity.SinglePlayerActivity">
         </activity>
 
 
-    <activity android:name=".activity.HighScoreActivity2">
-    </activity>
-
-        <activity android:name=".activity.PracticeActivity">
-
-        </activity>
         <activity android:name=".activity.MultiPlayerActivity"></activity>
         <activity android:name=".activity.LoadingActivity"
             android:noHistory="true">
