@@ -43,7 +43,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
     @Override
     protected String doInBackground(String... params){
         //this.body = params[0];
-        //url =  "http://mindmaster.ee:8080/api/users/{userId}";
+        //url =  "https://mindmaster.ee:8443/api/users/{userId}";
         String result = "";
         Boolean gotGame = false;
         String output;
@@ -65,12 +65,12 @@ public class RequestGame extends AsyncTask<String, String, String>{
             HttpEntity<String> entity = new HttpEntity<>(jsonWaitlist.toString(), headers);
 
             //POST for waitlist
-            url = "http://mindmaster.ee:8080/api/waitlist";
+            url = "https://mindmaster.ee:8443/api/waitlist";
             restTemplate.postForEntity(url, entity, String.class);
 
             //game.setId(0);
 
-            url = "http://mindmaster.ee:8080/api/waitlist/{userId}";
+            url = "https://mindmaster.ee:8443/api/waitlist/{userId}";
             while (!gotGame) {
                 System.out.println("LOOKING FOR GAME!!");
                 if (isCancelled()) {
@@ -91,7 +91,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
                 }
             }
 
-            url = "http://mindmaster.ee:8080/api/waitlist/{gameId}/{userId}";
+            url = "https://mindmaster.ee:8443/api/waitlist/{gameId}/{userId}";
             try {
                 output = restTemplate.getForObject(url, String.class, game.getId(), player.getId());
                 JSONObject jsonOpponent = new JSONObject(output);
@@ -100,7 +100,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
                 e.printStackTrace();
             }
 
-            url = "http://mindmaster.ee:8080/api/equations/{gameId}";
+            url = "https://mindmaster.ee:8443/api/equations/{gameId}";
 
             result = restTemplate.getForObject(url, String.class, game.getId());
                 JSONArray jsonEquations = new JSONArray(result);

@@ -1,6 +1,7 @@
 package net.hoccob.mindmaster.server;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 
 import net.hoccob.mindmaster.Equation;
 import net.hoccob.mindmaster.Player;
@@ -28,7 +29,7 @@ public class LogIn extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) throws RuntimeException{
         this.player.setUserName(params[0]);
-        url =  "http://mindmaster.ee:8080/api/users/{userName}";
+        url =  "https://mindmaster.ee:8443/api/users/{userName}";
         String result = "";
 
         //Create template
