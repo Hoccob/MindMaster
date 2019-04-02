@@ -85,15 +85,6 @@ public class MainActivity extends Activity {
 
 
 
-        SendNickname sendNickname = new SendNickname(player, new SendNickname.AsyncResponse(){
-
-            @Override
-            public void processFinish(String output){
-                System.out.println("player id:" + player.getId());
-                System.out.println(player.getUserName());
-            }
-        });
-        sendNickname.execute();
 
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
@@ -104,8 +95,6 @@ public class MainActivity extends Activity {
 
 
         intent4 = new Intent(this, LoadingActivity.class);
-
-
 
         // Create a common gesture listener object.
         DetectSwipeGestureListener gestureListener = new DetectSwipeGestureListener();
@@ -155,6 +144,17 @@ public class MainActivity extends Activity {
             }
         });
         logIn.execute(sharedPrefStart.getString("acc", null));
+
+
+        SendNickname sendNickname = new SendNickname(player, new SendNickname.AsyncResponse(){
+
+            @Override
+            public void processFinish(String output){
+                System.out.println("player id:" + player.getId());
+                System.out.println(player.getUserName());
+            }
+        });
+        sendNickname.execute();
     }
 
     @Override

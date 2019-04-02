@@ -31,7 +31,7 @@ public class GetOpponentScore extends AsyncTask<Integer, String, String> {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-            url = "http://mindmaster.ee:8080/api/lastScore/{gameId}/{userId}";
+            url = "https://mindmaster.ee:8443/api/lastScore/{gameId}/{userId}";
 
             output = restTemplate.getForObject(url, String.class, params[0], params[1]);
             //JSONObject jsonOpponentScore = new JSONObject(output);

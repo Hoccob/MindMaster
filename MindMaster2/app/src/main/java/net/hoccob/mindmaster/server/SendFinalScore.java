@@ -15,7 +15,7 @@ public class SendFinalScore extends AsyncTask<Integer, String, String> {
     @Override
     protected String doInBackground(Integer... params){
         String result = "";
-        String url =  "http://mindmaster.ee:8080/api/score";
+        String url =  "https://mindmaster.ee:8443/api/score";
 
         try {
             RestTemplate restTemplate = new RestTemplate();

@@ -16,7 +16,7 @@ public class SendAnswer extends AsyncTask<Integer, String, String> {
     @Override
     protected String doInBackground(Integer... params){
         String result = "";
-        String url =  "http://mindmaster.ee:8080/api/gameplay";
+        String url =  "https://mindmaster.ee:8443/api/gameplay";
 
         try {
             RestTemplate restTemplate = new RestTemplate();
@@ -36,7 +36,7 @@ public class SendAnswer extends AsyncTask<Integer, String, String> {
 
             restTemplate.postForEntity(url, entity, String.class);
 
-            url = "http://mindmaster.ee:8080/api/lastScore";
+            url = "https://mindmaster.ee:8443/api/lastScore";
 
             JSONObject jsonLastScore = new JSONObject();
             jsonLastScore.put("gameId", params[2]);
