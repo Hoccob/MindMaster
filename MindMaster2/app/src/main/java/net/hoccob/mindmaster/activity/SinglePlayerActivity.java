@@ -186,6 +186,30 @@ public class SinglePlayerActivity extends Activity {
                 else if(singlePlayerView.rect_7.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_7Clicked(true);
+                }
+                else if(singlePlayerView.rect_2.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_2Clicked(true);
+                }
+                else if(singlePlayerView.rect_3.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_3Clicked(true);
+                }
+                else if(singlePlayerView.rect_5.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_5Clicked(true);
+                }
+                else if(singlePlayerView.rect_6.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_6Clicked(true);
+                }
+                else if(singlePlayerView.rect_8.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_8Clicked(true);
+                }
+                else if(singlePlayerView.rect_9.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_9Clicked(true);
                 }/*
                 else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
@@ -199,6 +223,13 @@ public class SinglePlayerActivity extends Activity {
                 singlePlayerView.setButton_1Clicked(false);
                 singlePlayerView.setButton_4Clicked(false);
                 singlePlayerView.setButton_7Clicked(false);
+                singlePlayerView.setButton_2Clicked(false);
+                singlePlayerView.setButton_3Clicked(false);
+                singlePlayerView.setButton_5Clicked(false);
+                singlePlayerView.setButton_6Clicked(false);
+                singlePlayerView.setButton_8Clicked(false);
+                singlePlayerView.setButton_9Clicked(false);
+
                 //singlePlayerView.setSettingsClicked(false);
                 singlePlayerView.invalidate();
 

@@ -94,9 +94,15 @@ public class SinglePlayerView extends View {
         screenX = x;
         screenY = y;
         this.pristina = tf;
-        doButton(button_1, rect_1, x, y, y / 2, (int)(screenX*0.14), "1");
-        doButton(button_4, rect_4, x, y, y / 2 + (int)(screenY * 0.1), (int)(screenX*0.14), "4");
-        doButton(button_7, rect_7, x, y, y / 2 + (int)(screenY * 0.2), (int)(screenX*0.14), "7");
+        doButton(button_7, rect_7, x, y, y / 2 , (int)(screenX*0.14));
+        doButton(button_8, rect_8, x, y, y / 2 , (int)(screenX*0.38));
+        doButton(button_9, rect_9, x, y, y / 2 , (int)(screenX*0.62));
+        doButton(button_4, rect_4, x, y, y / 2 + (int)(screenY * 0.1), (int)(screenX*0.14));
+        doButton(button_1, rect_1, x, y, y / 2 + (int)(screenY * 0.2), (int)(screenX*0.14));
+        doButton(button_2, rect_2, x, y, y /2 + (int)(screenY * 0.2), (int) (screenX*0.38));
+        doButton(button_3, rect_3, x, y, y /2 + (int)(screenY * 0.2), (int) (screenX*0.62));
+        doButton(button_5, rect_5, x, y, y /2 + (int)(screenY * 0.1), (int) (screenX*0.38));
+        doButton(button_6, rect_6, x, y, y /2 + (int)(screenY * 0.1), (int) (screenX*0.62));
 
         paint.setColor(Color.parseColor("#8EE4AF"));
         paint.setStrokeWidth(2);
@@ -169,7 +175,7 @@ public class SinglePlayerView extends View {
         return height;
     }
 
-    private void doButton(Path path, RectF rect, int x, int y, int posY, int posX, String value) {
+    private void doButton(Path path, RectF rect, int x, int y, int posY, int posX) {
 
         path.moveTo(posX, posY);
         path.lineTo((posX + x * (float) 0.1), posY + (float) 0.025 * y);
@@ -211,17 +217,42 @@ public class SinglePlayerView extends View {
     public void setButton_7Clicked(boolean clicked) {
         clicked_7 = clicked;
     }
+    public void setButton_2Clicked(boolean clicked) {clicked_2 = clicked;  }
+    public void setButton_3Clicked(boolean clicked) {clicked_3 = clicked;  }
+    public void setButton_5Clicked(boolean clicked) {clicked_5 = clicked;  }
+    public void setButton_6Clicked(boolean clicked) {clicked_6 = clicked;  }
+    public void setButton_8Clicked(boolean clicked) {clicked_8 = clicked;  }
+    public void setButton_9Clicked(boolean clicked) {clicked_9 = clicked;  }
+    public void setButton_0Clicked(boolean clicked) {clicked_0 = clicked;  }
+
+
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (!clicked_1) {
-            canvas.drawPath(button_1, paint);
-            canvas.drawText("1", calcXposition((int) ( screenX * 0.14), textWidth_8), calcYposition( screenY /2, (int)(screenY * 0.1), textHeight), textPaint);
+        if (!clicked_7) {
+            canvas.drawPath(button_7, paint);
+            canvas.drawText("7", calcXposition((int) ( screenX * 0.14), textWidth_8), calcYposition( screenY /2, (int)(screenY * 0.1), textHeight), textPaint);
 
         } else {
-            canvas.drawPath(button_1, fillPaint);
-            canvas.drawText("1", calcXposition( (int) ( screenX * 0.14), textWidth_8), calcYposition( screenY /2 , (int)(screenY * 0.1), textHeight), bgPaint);
+            canvas.drawPath(button_7, fillPaint);
+            canvas.drawText("7", calcXposition( (int) ( screenX * 0.14), textWidth_8), calcYposition( screenY /2 , (int)(screenY * 0.1), textHeight), bgPaint);
+        }
+        if (!clicked_8) {
+            canvas.drawPath(button_8, paint);
+            canvas.drawText("8", calcXposition((int) ( screenX * 0.38), textWidth_8), calcYposition( screenY /2, (int)(screenY * 0.1), textHeight), textPaint);
+
+        } else {
+            canvas.drawPath(button_8, fillPaint);
+            canvas.drawText("8", calcXposition( (int) ( screenX * 0.38), textWidth_8), calcYposition( screenY /2 , (int)(screenY * 0.1), textHeight), bgPaint);
+        }
+        if (!clicked_9) {
+            canvas.drawPath(button_9, paint);
+            canvas.drawText("9", calcXposition((int) ( screenX * 0.62), textWidth_8), calcYposition( screenY /2, (int)(screenY * 0.1), textHeight), textPaint);
+
+        } else {
+            canvas.drawPath(button_9, fillPaint);
+            canvas.drawText("9", calcXposition( (int) ( screenX * 0.62), textWidth_8), calcYposition( screenY /2 , (int)(screenY * 0.1), textHeight), bgPaint);
         }
         if (!clicked_4) {
             canvas.drawPath(button_4, paint);
@@ -231,14 +262,47 @@ public class SinglePlayerView extends View {
             canvas.drawPath(button_4, fillPaint);
             canvas.drawText("4", calcXposition( (int) ( screenX * 0.14), textWidth_8), calcYposition( screenY /2 + (int) (screenY*0.1), (int)(screenY * 0.1), textHeight), bgPaint);
         }
-        if (!clicked_7) {
-            canvas.drawPath(button_7, paint);
-            canvas.drawText("7", calcXposition((int) ( screenX * 0.14), textWidth_8), calcYposition( screenY /2+ (int) (screenY*0.2), (int)(screenY * 0.1), textHeight), textPaint);
+        if (!clicked_1) {
+            canvas.drawPath(button_1, paint);
+            canvas.drawText("1", calcXposition((int) ( screenX * 0.14), textWidth_8), calcYposition( screenY /2+ (int) (screenY*0.2), (int)(screenY * 0.1), textHeight), textPaint);
 
         } else {
-            canvas.drawPath(button_7, fillPaint);
-            canvas.drawText("7", calcXposition((int) ( screenX * 0.14), textWidth_8), calcYposition( screenY /2+ (int) (screenY*0.2), (int)(screenY * 0.1), textHeight), bgPaint);
+            canvas.drawPath(button_1, fillPaint);
+            canvas.drawText("1", calcXposition((int) ( screenX * 0.14), textWidth_8), calcYposition( screenY /2+ (int) (screenY*0.2), (int)(screenY * 0.1), textHeight), bgPaint);
+        }
+        if (!clicked_2) {
+            canvas.drawPath(button_2, paint);
+            canvas.drawText("2", calcXposition((int) ( screenX * 0.38), textWidth_8), calcYposition( screenY /2 + (int) (screenY*0.2), (int)(screenY * 0.1), textHeight), textPaint);
+
+        } else {
+            canvas.drawPath(button_2, fillPaint);
+            canvas.drawText("2", calcXposition( (int) ( screenX * 0.38), textWidth_8), calcYposition( screenY /2 + (int) (screenY*0.2), (int)(screenY * 0.1), textHeight), bgPaint);
+        }
+        if (!clicked_3) {
+            canvas.drawPath(button_3, paint);
+            canvas.drawText("3", calcXposition((int) ( screenX * 0.62), textWidth_8), calcYposition( screenY /2 + (int) (screenY*0.2), (int)(screenY * 0.1), textHeight), textPaint);
+
+        } else {
+            canvas.drawPath(button_3, fillPaint);
+            canvas.drawText("3", calcXposition( (int) ( screenX * 0.62), textWidth_8), calcYposition( screenY /2 + (int) (screenY*0.2), (int)(screenY * 0.1), textHeight), bgPaint);
+        }
+        if (!clicked_5) {
+            canvas.drawPath(button_5, paint);
+            canvas.drawText("5", calcXposition((int) ( screenX * 0.38), textWidth_8), calcYposition( screenY /2 + (int) (screenY*0.1), (int)(screenY * 0.1), textHeight), textPaint);
+
+        } else {
+            canvas.drawPath(button_5, fillPaint);
+            canvas.drawText("5", calcXposition( (int) ( screenX * 0.38), textWidth_8), calcYposition( screenY /2 + (int) (screenY*0.1), (int)(screenY * 0.1), textHeight), bgPaint);
+        }
+        if (!clicked_6) {
+            canvas.drawPath(button_6, paint);
+            canvas.drawText("6", calcXposition((int) ( screenX * 0.62), textWidth_8), calcYposition( screenY /2 + (int) (screenY*0.1), (int)(screenY * 0.1), textHeight), textPaint);
+
+        } else {
+            canvas.drawPath(button_6, fillPaint);
+            canvas.drawText("6", calcXposition( (int) ( screenX * 0.62), textWidth_8), calcYposition( screenY /2 + (int) (screenY*0.1), (int)(screenY * 0.1), textHeight), bgPaint);
         }
     }
 }
 
+//        doButton(button_2, rect_2, x, y, y /2, (int) (screenX*0.28));
