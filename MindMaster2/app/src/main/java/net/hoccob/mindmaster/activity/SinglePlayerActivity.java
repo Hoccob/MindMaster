@@ -210,6 +210,10 @@ public class SinglePlayerActivity extends Activity {
                 else if(singlePlayerView.rect_9.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_9Clicked(true);
+                }
+                else if(singlePlayerView.rect_0.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_0Clicked(true);
                 }/*
                 else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
@@ -229,6 +233,7 @@ public class SinglePlayerActivity extends Activity {
                 singlePlayerView.setButton_6Clicked(false);
                 singlePlayerView.setButton_8Clicked(false);
                 singlePlayerView.setButton_9Clicked(false);
+                singlePlayerView.setButton_0Clicked(false);
 
                 //singlePlayerView.setSettingsClicked(false);
                 singlePlayerView.invalidate();
