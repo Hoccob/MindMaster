@@ -1,5 +1,5 @@
 package net.hoccob.mindmaster.activity;
-
+/*
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -218,9 +218,9 @@ public class SinglePlayerActivity2 extends Activity {
                 });
             }
         };
-    }*/
+    }
 
-    public void newEquation(){
+    public newEquation(){
         currentOperation = equations.get(level-1).get(0).getStrOperation();
         correctAnswer = equations.get(level-1).get(0).getAnswer();
 
@@ -230,7 +230,7 @@ public class SinglePlayerActivity2 extends Activity {
 
 
 
-    public void checkAnswer(){
+    public checkAnswer(){
 
         if(answer == correctAnswer){
             score = score + 10 * level;
@@ -374,4 +374,4 @@ public class SinglePlayerActivity2 extends Activity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
-}
+}*/

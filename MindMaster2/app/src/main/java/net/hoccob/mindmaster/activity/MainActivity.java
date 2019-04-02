@@ -25,7 +25,7 @@ import net.hoccob.mindmaster.Button2;
 import net.hoccob.mindmaster.ChangeColor;
 import net.hoccob.mindmaster.DetectSwipeGestureListener;
 import net.hoccob.mindmaster.Player;
-import net.hoccob.mindmaster.R;
+//import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.server.LogIn;
 import net.hoccob.mindmaster.server.SendNickname;
 import net.hoccob.mindmaster.view.MainView;
@@ -105,49 +105,6 @@ public class MainActivity extends Activity {
         // Create the gesture detector with the gesture listener.
         gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
 
-        Bitmap bitmap;
-        int buttonSizeX = x - (x / 6);
-        int buttonSizeY = y / 10;
-
-        for(int i = 1; i < 5; i++){
-            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.start_game_ver_2);
-
-            bitmap = Bitmap.createScaledBitmap(bitmap,
-                    buttonSizeX,
-                    buttonSizeY,
-                    false);
-
-            startButtons.add(new Button2(this, bitmap, buttonSizeX, buttonSizeY, buttonSizeX / 12, (y / 12) * 2, 0, i));
-
-            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.practice_ver_2);
-
-            bitmap = Bitmap.createScaledBitmap(bitmap,
-                    buttonSizeX,
-                    buttonSizeY,
-                    false);
-
-            practiceButtons.add(new Button2(this, bitmap, buttonSizeX, buttonSizeY, buttonSizeX / 12, (y / 12) * 4, 0, i));
-
-            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.high_score_ver_2);
-
-            bitmap = Bitmap.createScaledBitmap(bitmap,
-                    buttonSizeX,
-                    buttonSizeY,
-                    false);
-
-            highScoreButtons.add(new Button2(this, bitmap, buttonSizeX, buttonSizeY, buttonSizeX / 12, (y / 12) * 6, 0, i));
-
-            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.settings_ver_2);
-
-            bitmap = Bitmap.createScaledBitmap(bitmap,
-                    buttonSizeX,
-                    buttonSizeY,
-                    false);
-
-            settingsButtons.add(new Button2(this, bitmap, buttonSizeX, buttonSizeY, buttonSizeX / 12, (y / 12) * 8, 0, i));
-        }
-
-        //setViewButtons(colorCode);
 
     }
     @Override
@@ -212,69 +169,7 @@ public class MainActivity extends Activity {
         super.onPause();
     }
 
-    public void setColor(int colorCode){this.colorCode = colorCode;}
 
-    //public void setViewButtons(int i){
-    //    mainView.setButtons(startButtons.get(i-1), practiceButtons.get(i-1), highScoreButtons.get(i-1), settingsButtons.get(i-1));
-    //    mainView.invalidate();
-    //}
-
-    //public void swipeLeft(){
-    //    if(colorCode < 4){
-    //        colorCode++;
-    //        setViewButtons(colorCode);
-    //    }
-    //  /*  if(colorCode < 4) {
-    //        colorCode++;
-    //        runOnUiThread(new Runnable() {
-    //            @Override
-    //            public void run() {
-    //                new ChangeView(mainView, colorCode, new ChangeView.AsyncResponse(){
-    //                    @Override
-    //                    public void processFinish(){
-    //                        invView();
-    //                        //mainView.invalidate();
-    //                        //finish();
-    //                    }
-    //                }).execute();
-    //                //mainView.setColors(colorCode);
-    //                //mainView.invalidate();
-    //            }
-    //        });
-    //        //mainView.setColors(colorCode);
-    //    }*/
-    //}
-//
-    //public void swipeRight(){
-//
-    //    if(colorCode > 1){
-    //        colorCode--;
-    //        setViewButtons(colorCode);
-    //    }
-    //    /*if(colorCode > 1) {
-    //        colorCode--;
-    //        runOnUiThread(new Runnable() {
-    //            @Override
-    //            public void run() {
-    //                new ChangeView(mainView, colorCode, new ChangeView.AsyncResponse(){
-    //                    @Override
-    //                    public void processFinish(){
-    //                        invView();
-    //                        //mainView.invalidate();
-    //                        //finish();
-    //                    }
-    //                }).execute();
-    //                //mainView.setColors(colorCode);
-    //                //mainView.invalidate();
-    //            }
-    //        });
-    //        //mainView.setColors(colorCode);
-    //    }*/
-    //}
-
-    private void invView(){
-        mainView.setBackgroundColor(ChangeColor.setBGColor(colorCode));
-        mainView.invalidate();}
 
     @Override
     public void onDestroy() {
@@ -338,8 +233,8 @@ public class MainActivity extends Activity {
                     startActivity(intent);
                 }else if(mainView.highScoreRect.contains(motionEvent.getX(), motionEvent.getY()))
                 {
-                    Intent intent3 = new Intent(this, HighScoreActivity2.class);
-                    startActivity(intent3);
+                   // Intent intent3 = new Intent(this, HighScoreActivity2.class);
+                   // startActivity(intent3);
                 }else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
                     Intent intent2 = new Intent(this, StartActivity.class);

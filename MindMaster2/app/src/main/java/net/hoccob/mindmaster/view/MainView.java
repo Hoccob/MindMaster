@@ -7,7 +7,7 @@ import android.view.View;
 
 import net.hoccob.mindmaster.Button;
 import net.hoccob.mindmaster.Button2;
-import net.hoccob.mindmaster.R;
+//import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.ChangeColor;
 
 public class MainView extends View {
