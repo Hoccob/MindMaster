@@ -4,16 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.graphics.Typeface;
+import android.net.TrafficStats;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 
+import net.hoccob.mindmaster.BuildConfig;
 import net.hoccob.mindmaster.Equation;
 import net.hoccob.mindmaster.Game;
+import net.hoccob.mindmaster.MultiPlayerStartSwipeListener2;
+import net.hoccob.mindmaster.StartSwipeListener2;
 import net.hoccob.mindmaster.server.GetOpponentScore;
 import net.hoccob.mindmaster.server.SendAnswer;
 import net.hoccob.mindmaster.server.SendFinalScore;
@@ -32,6 +38,9 @@ import java.util.concurrent.ExecutionException;
 
 
 public class MultiPlayerActivity extends Activity {
+
+
+    private static final int THREAD_ID = 10000;
 
     MultiPlayerView multiPlayerView;
     LoadingView loadingView;
@@ -58,6 +67,7 @@ public class MultiPlayerActivity extends Activity {
     JSONObject jsonOpponent;
     String opponentNickname;
 
+    private GestureDetectorCompat gestureDetectorCompat = null;
 
     SharedPreferences sharedPrefColor;
     int colorCode;
@@ -135,6 +145,8 @@ public class MultiPlayerActivity extends Activity {
 
 
     public MultiPlayerActivity(){
+
+        TrafficStats.setThreadStatsTag(THREAD_ID);
     }
 
 
@@ -152,7 +164,8 @@ public class MultiPlayerActivity extends Activity {
                 Context.MODE_PRIVATE);
         colorCode = sharedPrefColor.getInt("code", 0);
 
-        multiPlayerView = new MultiPlayerView(this, size.x, size.y, colorCode);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
+        multiPlayerView = new MultiPlayerView(this, size.x, size.y, colorCode, tf);
         loadingView = new LoadingView(this, size.x, size.y);
         loadingView.setText("LOADOING!!");
 
@@ -169,6 +182,15 @@ public class MultiPlayerActivity extends Activity {
         ScreenY = size.y;
 
         jsonOpponent = new JSONObject();
+
+
+        // Create a common gesture listener object.
+        MultiPlayerStartSwipeListener2 gestureListener = new MultiPlayerStartSwipeListener2();
+
+        // Set activity in the listener.
+        gestureListener.setActivity(this);
+
+        gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
 
 
     }
@@ -202,6 +224,14 @@ public class MultiPlayerActivity extends Activity {
         checkTime();
 
         gameTimeTimer.schedule(checkGameTime, 0, 500);
+    }
+
+    public void swipeLeft(){
+        multiPlayerView.increaseColor();
+    }
+
+    public void swipeRight(){
+        multiPlayerView.decreaseColor();
     }
 
     private void checkTime(){
@@ -358,60 +388,89 @@ public class MultiPlayerActivity extends Activity {
     @Override
     public boolean onTouchEvent (MotionEvent motionEvent) {
 
-        if(!multiPlayerView.getGameOver()) {
+        gestureDetectorCompat.onTouchEvent(motionEvent);
+
+        //if(!multiPlayerView.getGameOver()) {
             switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
 
                 case MotionEvent.ACTION_DOWN:
                     if(answer < 10000000) {
-                        if (multiPlayerView.button_7.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        if (multiPlayerView.rect_7.contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 7;
+                            multiPlayerView.setButton_7Clicked(true);
                         }
-                        else if (multiPlayerView.button_8.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        else if (multiPlayerView.rect_8.contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 8;
+                            multiPlayerView.setButton_8Clicked(true);
                         }
-                        else if (multiPlayerView.button_9.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        else if (multiPlayerView.rect_9.contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 9;
+                            multiPlayerView.setButton_9Clicked(true);
                         }
-                        else if (multiPlayerView.button_4.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        else if (multiPlayerView.rect_4.contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 4;
+                            multiPlayerView.setButton_4Clicked(true);
                         }
-                        else if (multiPlayerView.button_5.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        else if (multiPlayerView.rect_5.contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 5;
+                            multiPlayerView.setButton_5Clicked(true);
                         }
-                        else if (multiPlayerView.button_6.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        else if (multiPlayerView.rect_6.contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 6;
+                            multiPlayerView.setButton_6Clicked(true);
                         }
-                        else if (multiPlayerView.button_1.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        else if (multiPlayerView.rect_1.contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 1;
+                            multiPlayerView.setButton_1Clicked(true);
                         }
-                        else if (multiPlayerView.button_2.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        else if (multiPlayerView.rect_2.contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 2;
+                            multiPlayerView.setButton_2Clicked(true);
                         }
-                        else if (multiPlayerView.button_3.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        else if (multiPlayerView.rect_3.contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10 + 3;
+                            multiPlayerView.setButton_3Clicked(true);
                         }
-                        else if (multiPlayerView.button_0.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        else if (multiPlayerView.rect_0.contains(motionEvent.getX(), motionEvent.getY())){
                             answer = answer * 10;
+                            multiPlayerView.setButton_0Clicked(true);
                         }
-                        else if (multiPlayerView.button_c.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                        /*else if (multiPlayerView.button_c.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = 0;
                         }
                         else if (multiPlayerView.button_backspace.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                             answer = (answer - answer % 10) / 10;
-                        }
+                        }*/
 
                     }
-                    if (multiPlayerView.button_backspace.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
+                   /* if (multiPlayerView.button_backspace.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                         answer = (answer - answer % 10) / 10;
                     } else if (multiPlayerView.button_ent.getRectF().contains(motionEvent.getX(), motionEvent.getY())){
                         checkAnswer();
-                    }
+                    }*/
 
                     multiPlayerView.setAnswer(answer);
+                    multiPlayerView.invalidate();
 
                     break;
+                case MotionEvent.ACTION_UP:
+
+                    multiPlayerView.setButton_1Clicked(false);
+                    multiPlayerView.setButton_4Clicked(false);
+                    multiPlayerView.setButton_7Clicked(false);
+                    multiPlayerView.setButton_2Clicked(false);
+                    multiPlayerView.setButton_3Clicked(false);
+                    multiPlayerView.setButton_5Clicked(false);
+                    multiPlayerView.setButton_6Clicked(false);
+                    multiPlayerView.setButton_8Clicked(false);
+                    multiPlayerView.setButton_9Clicked(false);
+                    multiPlayerView.setButton_0Clicked(false);
+
+                    //singlePlayerView.setSettingsClicked(false);
+                    multiPlayerView.invalidate();
+                    break;
             }
-        }
+        //}
         return true;
     }
 

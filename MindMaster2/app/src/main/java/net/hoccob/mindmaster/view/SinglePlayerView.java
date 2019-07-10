@@ -209,22 +209,16 @@ public class SinglePlayerView extends View {
         }
     }
 
-    public void setButton_1Clicked(boolean clicked) {
-        clicked_1 = clicked;
-    }
-    public void setButton_4Clicked(boolean clicked) {
-        clicked_4 = clicked;
-    }
-    public void setButton_7Clicked(boolean clicked) {
-        clicked_7 = clicked;
-    }
-    public void setButton_2Clicked(boolean clicked) {clicked_2 = clicked;  }
-    public void setButton_3Clicked(boolean clicked) {clicked_3 = clicked;  }
-    public void setButton_5Clicked(boolean clicked) {clicked_5 = clicked;  }
-    public void setButton_6Clicked(boolean clicked) {clicked_6 = clicked;  }
-    public void setButton_8Clicked(boolean clicked) {clicked_8 = clicked;  }
-    public void setButton_9Clicked(boolean clicked) {clicked_9 = clicked;  }
-    public void setButton_0Clicked(boolean clicked) {clicked_0 = clicked;  }
+    public void setButton_1Clicked(boolean clicked) {clicked_1 = clicked;}
+    public void setButton_4Clicked(boolean clicked) {clicked_4 = clicked;}
+    public void setButton_7Clicked(boolean clicked) {clicked_7 = clicked;}
+    public void setButton_2Clicked(boolean clicked) {clicked_2 = clicked;}
+    public void setButton_3Clicked(boolean clicked) {clicked_3 = clicked;}
+    public void setButton_5Clicked(boolean clicked) {clicked_5 = clicked;}
+    public void setButton_6Clicked(boolean clicked) {clicked_6 = clicked;}
+    public void setButton_8Clicked(boolean clicked) {clicked_8 = clicked;}
+    public void setButton_9Clicked(boolean clicked) {clicked_9 = clicked;}
+    public void setButton_0Clicked(boolean clicked) {clicked_0 = clicked;}
 
 
 

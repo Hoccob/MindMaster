@@ -1,30 +1,14 @@
 package net.hoccob.mindmaster.server;
 
-import android.graphics.Bitmap;
+import android.net.TrafficStats;
 import android.os.AsyncTask;
-import android.util.Base64;
 
-import com.google.android.gms.common.util.Hex;
-
-import net.hoccob.mindmaster.Encryption;
-import net.hoccob.mindmaster.Equation;
 import net.hoccob.mindmaster.Player;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.ByteArrayOutputStream;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Arrays;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 
 public class LogIn extends AsyncTask<String, String, String> {
 
@@ -39,6 +23,7 @@ public class LogIn extends AsyncTask<String, String, String> {
     public LogIn(Player player, AsyncResponse delegate){
         this.delegate = delegate;
         this.player = player;
+        TrafficStats.setThreadStatsTag(10000);
     }
 
     @Override
@@ -53,9 +38,7 @@ public class LogIn extends AsyncTask<String, String, String> {
 
         //GET player by userName
         try {
-            Encryption encryption = new Encryption();
-            result = restTemplate.getForObject(url, String.class, encryption.encrypt(player.getUserName()));
-            //result = restTemplate.getForObject(url, String.class, player.getUserName());
+            result = restTemplate.getForObject(url, String.class, player.getUserName());
             JSONObject jsonPlayer = new JSONObject(result);
             player.setId(jsonPlayer.getInt("id"));
             //player.setUserName(jsonPlayer.getString("userName"));

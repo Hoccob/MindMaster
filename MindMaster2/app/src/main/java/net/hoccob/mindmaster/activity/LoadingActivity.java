@@ -3,6 +3,7 @@ package net.hoccob.mindmaster.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
+import android.net.TrafficStats;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 
 public class LoadingActivity extends Activity {
 
+    private static final int THREAD_ID = 10000;
+
     MultiPlayerView multiPlayerView;
     LoadingView loadingView;
     Player player;
@@ -36,6 +39,8 @@ public class LoadingActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TrafficStats.setThreadStatsTag(THREAD_ID);
 
         StrictMode.enableDefaults();
 
