@@ -36,6 +36,9 @@ public class SinglePlayerView extends View {
     public int textWidth_7;
     public int textWidth_8;
     public int textWidth_9;
+    public int textWidth_ent;
+    public int textWidth_c;
+    public int textWidth_back;
 
     public int textHeight;
     public int textAscent;
@@ -53,6 +56,7 @@ public class SinglePlayerView extends View {
     Path button_enter = new Path();
     Path button_c = new Path();
     Path button_backspace = new Path();
+    Path backspace = new Path();
     public RectF rect_1 = new RectF();
     public RectF rect_2 = new RectF();
     public RectF rect_3 = new RectF();
@@ -104,6 +108,9 @@ public class SinglePlayerView extends View {
         doButton(button_5, rect_5, x, y, (int) (screenY*0.6) + (int)(screenY * 0.1), (int) (screenX*0.38));
         doButton(button_6, rect_6, x, y, (int) (screenY*0.6) + (int)(screenY * 0.1), (int) (screenX*0.62));
         doButton(button_0, rect_0, x, y, (int) (screenY*0.6)+ (int)(screenY * 0.3), (int) (screenX*0.38));
+        doBigButton(button_c, rect_c, x, y, (int) (screenY * 0.55), (int)(screenX * 0.04));
+        doBigButton(button_backspace, rect_backspace, x, y, (int)(screenY * 0.55), (int)(screenX * 0.48));
+        doBackSpace(backspace, x, y, (int)(screenY * 0.55), (int)(screenX * 0.58));
 
         paint.setColor(Color.parseColor("#8EE4AF"));
         paint.setStrokeWidth(2);
@@ -132,8 +139,8 @@ public class SinglePlayerView extends View {
         textWidth_8 = (int) calcTextWidth("8", textPaint);
         textWidth_9 = (int) calcTextWidth("9", textPaint);
         //textWidth_0 = (int) calcTextWidth("0", textPaint);
-        int textWidth_ent = (int) TestPaint.measureText("ent");
-        int textWidth_c = (int) TestPaint.measureText("c");
+        textWidth_back = (int) TestPaint.measureText("BACK");
+        textWidth_c = (int) TestPaint.measureText("C");
 
 
 
@@ -156,6 +163,12 @@ public class SinglePlayerView extends View {
 
     private int calcYposition (int posY, int height, int charHeight){
         return posY + ((height + charHeight) / 2);
+    }
+    private int calcYposition2 (int posY, int charHeight){
+        return posY + charHeight/2;
+    }
+    private int calcXposition2 (int posX, int charWidth, int x){
+        return (int) (posX + ( 0.22 *x  - charWidth /2));
     }
 
     private float calcTextWidth(String text, Paint textPaint) {
@@ -192,6 +205,32 @@ public class SinglePlayerView extends View {
         rect.right = posX + (float) 0.125 * x;
         rect.bottom = posY + (float) 0.1 * y;
     }
+    private void doBigButton(Path path, RectF rect, int x, int y, int posY, int posX ){
+        path.moveTo(posX, posY);
+        path.lineTo(posX + x * 0.1f, posY - y * 0.035f);
+        path.lineTo(posX + x * 0.34f, posY - y * 0.035f);
+        path.lineTo(posX + x * 0.44f, posY);
+        path.lineTo(posX + x * 0.34f, posY + y * 0.035f);
+        path.lineTo(posX + x * 0.1f, posY + y * 0.035f);
+        path.lineTo(posX, posY);
+        path.close();
+
+        rect.left = posX;
+        rect.top = posY - 0.1f * y;
+        rect.right = posX + 0.44f *x;
+        rect.bottom = posY + 0.1f *y;
+
+    }
+
+    private void doBackSpace(Path path, int x, int y, int posY, int posX){
+        path.moveTo(posX , posY);
+        path.lineTo(posX + x*0.05f, posY - y*0.020f);
+        path.lineTo(posX + x*0.24f, posY - y*0.020f);
+        path.lineTo(posX+ x*0.24f, posY + y*0.020f);
+        path.lineTo(posX+ x*0.05f, posY + y*0.02f);
+        path.lineTo(posX, posY);
+        path.close();
+    }
 
     public void increaseColor() {
         if (color < 4) {
@@ -209,17 +248,25 @@ public class SinglePlayerView extends View {
         }
     }
 
-    public void setButton_1Clicked(boolean clicked) {clicked_1 = clicked;}
-    public void setButton_4Clicked(boolean clicked) {clicked_4 = clicked;}
-    public void setButton_7Clicked(boolean clicked) {clicked_7 = clicked;}
-    public void setButton_2Clicked(boolean clicked) {clicked_2 = clicked;}
-    public void setButton_3Clicked(boolean clicked) {clicked_3 = clicked;}
-    public void setButton_5Clicked(boolean clicked) {clicked_5 = clicked;}
-    public void setButton_6Clicked(boolean clicked) {clicked_6 = clicked;}
-    public void setButton_8Clicked(boolean clicked) {clicked_8 = clicked;}
-    public void setButton_9Clicked(boolean clicked) {clicked_9 = clicked;}
-    public void setButton_0Clicked(boolean clicked) {clicked_0 = clicked;}
 
+    public void setButton_1Clicked(boolean clicked) {
+        clicked_1 = clicked;
+    }
+    public void setButton_4Clicked(boolean clicked) {
+        clicked_4 = clicked;
+    }
+    public void setButton_7Clicked(boolean clicked) {
+        clicked_7 = clicked;
+    }
+    public void setButton_2Clicked(boolean clicked) {clicked_2 = clicked;  }
+    public void setButton_3Clicked(boolean clicked) {clicked_3 = clicked;  }
+    public void setButton_5Clicked(boolean clicked) {clicked_5 = clicked;  }
+    public void setButton_6Clicked(boolean clicked) {clicked_6 = clicked;  }
+    public void setButton_8Clicked(boolean clicked) {clicked_8 = clicked;  }
+    public void setButton_9Clicked(boolean clicked) {clicked_9 = clicked;  }
+    public void setButton_0Clicked(boolean clicked) {clicked_0 = clicked;  }
+    public void setButton_BackspaceClicked(boolean clicked) {clicked_backspace = clicked;  }
+    public void setButton_cClicked(boolean clicked) {clicked_c = clicked;  }
 
 
     @Override
@@ -304,6 +351,24 @@ public class SinglePlayerView extends View {
         } else {
             canvas.drawPath(button_0, fillPaint);
             canvas.drawText("0", calcXposition( (int) ( screenX * 0.38), textWidth_8), calcYposition( (int) (screenY*0.6) + (int) (screenY*0.3), (int)(screenY * 0.1), textHeight), bgPaint);
+        }
+        if (!clicked_backspace) {
+            canvas.drawPath(button_backspace, paint);
+            canvas.drawPath(backspace, textPaint);
+            //canvas.drawText("BACK", calcXposition2((int) ( screenX * 0.48), textWidth_8, screenX), calcYposition2( (int) (screenY*0.55), textHeight), textPaint);
+
+        } else {
+            canvas.drawPath(button_backspace, fillPaint);
+            //canvas.drawText("BACK", calcXposition2( (int) ( screenX * 0.48), textWidth_8, screenX), calcYposition2( (int) (screenY*0.55), textHeight), bgPaint);
+            canvas.drawPath(backspace, bgPaint);
+        }
+        if (!clicked_c) {
+            canvas.drawPath(button_c, paint);
+            canvas.drawText("C", calcXposition2((int) ( screenX * 0.04), textWidth_8, screenX), calcYposition2( (int) (screenY*0.55), textHeight), textPaint);
+
+        } else {
+            canvas.drawPath(button_c, fillPaint);
+            canvas.drawText("C", calcXposition2( (int) ( screenX * 0.04), textWidth_8, screenX), calcYposition2( (int) (screenY*0.55), textHeight), bgPaint);
         }
     }
 }

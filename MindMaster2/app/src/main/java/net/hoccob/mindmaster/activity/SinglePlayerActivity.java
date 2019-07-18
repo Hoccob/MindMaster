@@ -214,6 +214,14 @@ public class SinglePlayerActivity extends Activity {
                 else if(singlePlayerView.rect_0.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_0Clicked(true);
+                }
+                else if(singlePlayerView.rect_backspace.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_BackspaceClicked(true);
+                }
+                else if(singlePlayerView.rect_c.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_cClicked(true);
                 }/*
                 else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
@@ -234,6 +242,8 @@ public class SinglePlayerActivity extends Activity {
                 singlePlayerView.setButton_8Clicked(false);
                 singlePlayerView.setButton_9Clicked(false);
                 singlePlayerView.setButton_0Clicked(false);
+                singlePlayerView.setButton_BackspaceClicked(false);
+                singlePlayerView.setButton_cClicked(false);
 
                 //singlePlayerView.setSettingsClicked(false);
                 singlePlayerView.invalidate();
