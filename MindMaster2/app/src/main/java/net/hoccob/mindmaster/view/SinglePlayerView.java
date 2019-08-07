@@ -32,6 +32,7 @@ public class SinglePlayerView extends View {
     public int textWidth_back;
     public String currentEquation;
     public int currentAnswer;
+    public String currentAnswerText = "";
 
     public int textHeight;
 
@@ -302,6 +303,8 @@ public class SinglePlayerView extends View {
     public void setButton_EnterClicked(boolean clicked){clicked_enter = clicked;}
 
     public void setAnswer(int answer){this.currentAnswer = answer;}
+    public void setAnswerText(String answerText){this.currentAnswerText = answerText;}
+    public void setCurrentEquation(String equation){this.currentEquation = equation;}
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -412,13 +415,13 @@ public class SinglePlayerView extends View {
             canvas.drawPath(button_enter, fillPaint);
             canvas.drawText("=", calcXposition((int) (screenX * 0.86), textWidth_8), calcYposition((int) (screenY * 0.6), (int) (screenY * 0.3), textHeight), bgPaint);
         }
-        currentEquation = "1123-1225";
-        String currentAnswerText = "599";
+        //currentEquation = "1123-1225";
+        //String currentAnswerText = "599";
         int equationWidth = (int) calcTextWidth(currentEquation,  textPaint) ;
         int answerWidth = (int) calcTextWidth(currentAnswerText, textPaint);
 
         canvas.drawText(currentEquation, screenX / 2 - equationWidth / 2, screenY / 3 , textPaint);
-        canvas.drawText(Integer.toString(currentAnswer),screenX / 2 - answerWidth / 2,  screenY * 0.45f, textPaint);
+        canvas.drawText(currentAnswerText,screenX / 2 - answerWidth / 2,  screenY * 0.45f, textPaint);
 
 
     }

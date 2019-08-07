@@ -12,6 +12,8 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 
+import net.hoccob.mindmaster.CreateEquation;
+import net.hoccob.mindmaster.Equation;
 import net.hoccob.mindmaster.StartSwipeListener2;
 import net.hoccob.mindmaster.view.SinglePlayerView;
 
@@ -23,6 +25,10 @@ public class SinglePlayerActivity extends Activity {
 	String answer;
 	private int colorCode = 0;
 	private GestureDetectorCompat gestureDetectorCompat = null;
+	private Equation equation;
+	private CreateEquation createEquation;
+	private int gameMode;
+	private int level;
 
 	SharedPreferences sharedPrefColor;
 
@@ -50,6 +56,13 @@ public class SinglePlayerActivity extends Activity {
 
 		// Create the gesture detector with the gesture listener.
 		gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
+
+		int gameMode = 1;
+		int level = 0;
+
+		createEquation = new CreateEquation(gameMode);
+		equation = createEquation.getEquation(0);
+		singlePlayerView.setCurrentEquation(equation.getStrOperation());
 
 	}
 
@@ -166,6 +179,21 @@ public class SinglePlayerActivity extends Activity {
             editor.commit();
         }*/
 	}
+
+	public void checkAnswer(){
+
+		if(equation.getAnswer() == currentAnswer){
+			level = level + 1;
+		}
+
+
+		equation = createEquation.getEquation(level);
+		singlePlayerView.setCurrentEquation(equation.getStrOperation());
+		currentAnswer = 0;
+		singlePlayerView.setAnswerText("");
+		//singlePlayerView.setAnswer(0);
+	}
+
 	@Override
 	public boolean onTouchEvent(MotionEvent motionEvent) {
 
@@ -179,72 +207,74 @@ public class SinglePlayerActivity extends Activity {
 				{
 					singlePlayerView.setButton_1Clicked(true);
 					//singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 1));
-					calculateAnswer2(1);
+					calculateAnswer(1);
 				}else if (singlePlayerView.rect_4.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_4Clicked(true);
-					calculateAnswer2(2);
+					calculateAnswer(4);
 				}
 				else if(singlePlayerView.rect_7.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_7Clicked(true);
-					calculateAnswer2(3);
+					calculateAnswer(7);
 				}
 				else if(singlePlayerView.rect_2.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_2Clicked(true);
-					calculateAnswer2(4);
+					calculateAnswer(2);
 				}
 				else if(singlePlayerView.rect_3.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_3Clicked(true);
-					calculateAnswer2(5);
+					calculateAnswer(3);
 				}
 				else if(singlePlayerView.rect_5.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_5Clicked(true);
-					calculateAnswer2(6);
+					calculateAnswer(5);
 				}
 				else if(singlePlayerView.rect_6.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_6Clicked(true);
-					calculateAnswer2(7);
+					calculateAnswer(6);
 				}
 				else if(singlePlayerView.rect_8.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_8Clicked(true);
-					calculateAnswer2(8);
+					calculateAnswer(8);
 				}
 				else if(singlePlayerView.rect_9.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_9Clicked(true);
-					calculateAnswer2(9);
+					calculateAnswer(9);
 				}
 				else if(singlePlayerView.rect_0.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_0Clicked(true);
-					calculateAnswer2(0);
+					calculateAnswer(0);
 				}
 				else if(singlePlayerView.rect_backspace.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_BackspaceClicked(true);
-					calculateAnswer2(11);
+					calculateAnswer(11);
 				}
 				else if(singlePlayerView.rect_c.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_cClicked(true);
-					calculateAnswer2(12);
+					calculateAnswer(12);
 				}
 				else if (singlePlayerView.rect_enter.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_EnterClicked(true);
+					checkAnswer();
 				}
                 /*
                 else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
                     mainView.setSettingsClicked(true);
                 }*/
-                singlePlayerView.setAnswer(currentAnswer);
+                //singlePlayerView.setAnswer(currentAnswer);
+				singlePlayerView.setAnswerText(String.valueOf(currentAnswer));
 				singlePlayerView.invalidate();
 				break;
 
@@ -289,7 +319,7 @@ public class SinglePlayerActivity extends Activity {
 	}
 
 
-	public void calculateAnswer2(int input)
+	public void calculateAnswer(int input)
 	{
 		if (input < 10){
 			currentAnswer = currentAnswer * 10 + input;
