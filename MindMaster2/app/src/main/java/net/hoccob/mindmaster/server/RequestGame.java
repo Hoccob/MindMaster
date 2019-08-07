@@ -1,6 +1,9 @@
 package net.hoccob.mindmaster.server;
 
+import android.net.TrafficStats;
 import android.os.AsyncTask;
+
+import com.google.android.gms.common.api.Response;
 
 import net.hoccob.mindmaster.Equation;
 import net.hoccob.mindmaster.Game;
@@ -13,6 +16,7 @@ import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,6 +42,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
         this.waitlist = waitlist;
         this.equations = equations;
         this.game = game;
+        TrafficStats.setThreadStatsTag(1);
     }
 
     @Override
@@ -48,6 +53,8 @@ public class RequestGame extends AsyncTask<String, String, String>{
         Boolean gotGame = false;
         String output;
         String opponentNickname = "";
+
+        ResponseEntity dummyResult;
 
         try {
 
@@ -64,9 +71,12 @@ public class RequestGame extends AsyncTask<String, String, String>{
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> entity = new HttpEntity<>(jsonWaitlist.toString(), headers);
 
+            TrafficStats.setThreadStatsTag(1);
             //POST for waitlist
             url = "https://mindmaster.ee:8443/api/waitlist";
-            restTemplate.postForEntity(url, entity, String.class);
+            System.out.println("Posting for game");
+            dummyResult = restTemplate.postForEntity(url, entity, String.class);
+            String dummy = dummyResult.toString();
 
             //game.setId(0);
 
@@ -81,7 +91,9 @@ public class RequestGame extends AsyncTask<String, String, String>{
                         Thread.sleep(2000);
                         output = restTemplate.getForObject(url, String.class, player.getId());
                         jsonWaitlist = new JSONObject(output);
-                        game.setId(jsonWaitlist.getInt("gameId"));
+                        if(!jsonWaitlist.isNull("gameId")) {
+                            game.setId(jsonWaitlist.getInt("gameId"));
+                        }
                         System.out.println("WAITLIST GAMEID: " + game.getId());
                     } catch (JSONException e) {
                         e.printStackTrace();

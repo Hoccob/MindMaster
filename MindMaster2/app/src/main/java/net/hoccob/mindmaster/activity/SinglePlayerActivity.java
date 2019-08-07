@@ -70,7 +70,7 @@ public class SinglePlayerActivity extends Activity {
     protected void onStart() {
         super.onStart();
         setContentView(singlePlayerView);
-        
+
 
 
     }

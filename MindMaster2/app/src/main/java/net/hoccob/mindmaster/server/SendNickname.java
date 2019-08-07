@@ -1,5 +1,6 @@
 package net.hoccob.mindmaster.server;
 
+import android.net.TrafficStats;
 import android.os.AsyncTask;
 
 import net.hoccob.mindmaster.Player;
@@ -25,6 +26,7 @@ public class SendNickname extends AsyncTask<String, String, String> {
     public SendNickname(Player player, AsyncResponse delegate){
         this.delegate = delegate;
         this.player = player;
+        TrafficStats.setThreadStatsTag(10000);
     }
 
     @Override
@@ -61,6 +63,5 @@ public class SendNickname extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result){
         delegate.processFinish(result);
-        //System.out.println("ONPOSTEXEC");
     }
 }

@@ -280,6 +280,7 @@ public class SinglePlayerView extends View {
         }
     }
 
+
     public void setButton_1Clicked(boolean clicked) {
         clicked_1 = clicked;
     }

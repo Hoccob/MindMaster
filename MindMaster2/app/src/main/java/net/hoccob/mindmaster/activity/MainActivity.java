@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.net.TrafficStats;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
@@ -34,6 +35,8 @@ import net.hoccob.mindmaster.view.StartView;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
+
+    private static final int THREAD_ID = 10000;
 
     public int y;
     public int x;
@@ -59,6 +62,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TrafficStats.setThreadStatsTag(THREAD_ID);
         player = new Player();
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -82,10 +87,6 @@ public class MainActivity extends Activity {
         sharedPrefColor = getSharedPreferences("ColorCode",
                 Context.MODE_PRIVATE);
         colorCode = sharedPrefColor.getInt("code", 0);
-
-
-
-
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
 
@@ -132,7 +133,7 @@ public class MainActivity extends Activity {
         SharedPreferences sharedPrefStart = getSharedPreferences("AccountName",
                 Context.MODE_PRIVATE);
 
-        LogIn logIn= new LogIn(player, new LogIn.AsyncResponse(){
+        LogIn logIn = new LogIn(player, new LogIn.AsyncResponse(){
 
             @Override
             public void processFinish(String output){
@@ -145,16 +146,18 @@ public class MainActivity extends Activity {
         });
         logIn.execute(sharedPrefStart.getString("acc", null));
 
+        if(player.getNickname() == null) {
 
-        SendNickname sendNickname = new SendNickname(player, new SendNickname.AsyncResponse(){
+            SendNickname sendNickname = new SendNickname(player, new SendNickname.AsyncResponse() {
 
-            @Override
-            public void processFinish(String output){
-                System.out.println("player id:" + player.getId());
-                System.out.println(player.getUserName());
-            }
-        });
-        sendNickname.execute();
+                @Override
+                public void processFinish(String output) {
+                    System.out.println("player id:" + player.getId());
+                    System.out.println(player.getUserName());
+                }
+            });
+            sendNickname.execute();
+        }
     }
 
     @Override
@@ -276,15 +279,8 @@ public class MainActivity extends Activity {
                 editor.commit();
                 player.setNickname(sharedPref.getString("nickname", null));
 
-                // Do something with value!
             }
         });
-
-       /* alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });*/
 
         alert.show();
     }
