@@ -2,7 +2,6 @@ package net.hoccob.mindmaster.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -12,9 +11,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
-import net.hoccob.mindmaster.StartSwipeListener;
 import net.hoccob.mindmaster.StartSwipeListener2;
 import net.hoccob.mindmaster.view.SinglePlayerView;
 
@@ -24,7 +21,6 @@ public class SinglePlayerActivity extends Activity {
 	private static int currentAnswer;
 	SinglePlayerView singlePlayerView;
 	String answer;
-	// public int currentAnswer = 0;
 	private int colorCode = 0;
 	private GestureDetectorCompat gestureDetectorCompat = null;
 
