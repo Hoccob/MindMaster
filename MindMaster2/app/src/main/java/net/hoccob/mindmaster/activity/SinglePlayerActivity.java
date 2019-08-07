@@ -17,87 +17,86 @@ import android.widget.Toast;
 import net.hoccob.mindmaster.StartSwipeListener;
 import net.hoccob.mindmaster.StartSwipeListener2;
 import net.hoccob.mindmaster.view.SinglePlayerView;
-//import net.hoccob.mindmaster.view.SingleplayerView2;
 
 
 public class SinglePlayerActivity extends Activity {
 
-    private static int currentAnswer;
-    SinglePlayerView singlePlayerView;
-    String answer;
-   // public int currentAnswer = 0;
-    private int colorCode = 0;
-    private GestureDetectorCompat gestureDetectorCompat = null;
+	private static int currentAnswer;
+	SinglePlayerView singlePlayerView;
+	String answer;
+	// public int currentAnswer = 0;
+	private int colorCode = 0;
+	private GestureDetectorCompat gestureDetectorCompat = null;
 
-    SharedPreferences sharedPrefColor;
+	SharedPreferences sharedPrefColor;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
-        singlePlayerView = new SinglePlayerView(this, size.x, size.y, tf);
-
-        sharedPrefColor = getSharedPreferences("ColorCode",
-                Context.MODE_PRIVATE);
-        colorCode = sharedPrefColor.getInt("code", 0);
-
-        // Create a common gesture listener object.
-        StartSwipeListener2 gestureListener = new StartSwipeListener2();
-
-        // Set activity in the listener.
-        gestureListener.setActivity(this);
-
-        // Create the gesture detector with the gesture listener.
-        gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
-
-    }
-
-    public void swipeLeft(){
-        singlePlayerView.increaseColor();
-    }
-
-    public void swipeRight(){
-        singlePlayerView.decreaseColor();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setContentView(singlePlayerView);
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
 
 
-    }
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
+		singlePlayerView = new SinglePlayerView(this, size.x, size.y, tf);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //singlePlayerView.draw();
-        //singlePlayerView.startGame();
-        setContentView(singlePlayerView);
-        hideSystemUI();
-    }
+		sharedPrefColor = getSharedPreferences("ColorCode",
+				Context.MODE_PRIVATE);
+		colorCode = sharedPrefColor.getInt("code", 0);
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-        //singlePlayerView.pause();
-    }
+		// Create a common gesture listener object.
+		StartSwipeListener2 gestureListener = new StartSwipeListener2();
 
-    @Override
-    protected void onDestroy(){
-        SharedPreferences.Editor colorEditor;
-        colorEditor = sharedPrefColor.edit();
+		// Set activity in the listener.
+		gestureListener.setActivity(this);
 
-        colorEditor.putInt("code",colorCode);
-        colorEditor.apply();
-        super.onDestroy();
+		// Create the gesture detector with the gesture listener.
+		gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
+
+	}
+
+	public void swipeLeft(){
+		singlePlayerView.increaseColor();
+	}
+
+	public void swipeRight(){
+		singlePlayerView.decreaseColor();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		setContentView(singlePlayerView);
+
+
+
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		//singlePlayerView.draw();
+		//singlePlayerView.startGame();
+		setContentView(singlePlayerView);
+		hideSystemUI();
+	}
+
+	@Override
+	protected void onPause(){
+		super.onPause();
+		//singlePlayerView.pause();
+	}
+
+	@Override
+	protected void onDestroy(){
+		SharedPreferences.Editor colorEditor;
+		colorEditor = sharedPrefColor.edit();
+
+		colorEditor.putInt("code",colorCode);
+		colorEditor.apply();
+		super.onDestroy();
 
        /* int x;
         int y;
@@ -170,105 +169,105 @@ public class SinglePlayerActivity extends Activity {
                     }
             editor.commit();
         }*/
-    }
-    @Override
-    public boolean onTouchEvent(MotionEvent motionEvent) {
+	}
+	@Override
+	public boolean onTouchEvent(MotionEvent motionEvent) {
 
-        gestureDetectorCompat.onTouchEvent(motionEvent);
+		gestureDetectorCompat.onTouchEvent(motionEvent);
 
-        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+		switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
 
-            case MotionEvent.ACTION_DOWN:
+			case MotionEvent.ACTION_DOWN:
 
-                if(singlePlayerView.rect_1.contains(motionEvent.getX(),motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_1Clicked(true);
-                    singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 1));
-                }else if (singlePlayerView.rect_4.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_4Clicked(true);
-                    singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 4));
-                }
-                else if(singlePlayerView.rect_7.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_7Clicked(true);
-                    calculateAnswer(currentAnswer, 7);
-                }
-                else if(singlePlayerView.rect_2.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_2Clicked(true);
-                    calculateAnswer(currentAnswer, 2);
-                }
-                else if(singlePlayerView.rect_3.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_3Clicked(true);
-                    calculateAnswer(currentAnswer, 3);
-                }
-                else if(singlePlayerView.rect_5.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_5Clicked(true);
-                    calculateAnswer(currentAnswer, 5);
-                }
-                else if(singlePlayerView.rect_6.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_6Clicked(true);
-                    calculateAnswer(currentAnswer, 6);
-                }
-                else if(singlePlayerView.rect_8.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_8Clicked(true);
-                    calculateAnswer(currentAnswer, 8);
-                }
-                else if(singlePlayerView.rect_9.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_9Clicked(true);
-                    calculateAnswer(currentAnswer, 9);
-                }
-                else if(singlePlayerView.rect_0.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_0Clicked(true);
-                    calculateAnswer(currentAnswer, 0);
-                }
-                else if(singlePlayerView.rect_backspace.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_BackspaceClicked(true);
-                    calculateAnswer(currentAnswer, 11);
-                }
-                else if(singlePlayerView.rect_c.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_cClicked(true);
-                    calculateAnswer(currentAnswer, 12);
-                }
-                else if (singlePlayerView.rect_enter.contains(motionEvent.getX(), motionEvent.getY()))
-                {
-                    singlePlayerView.setButton_EnterClicked(true);
-                }
+				if(singlePlayerView.rect_1.contains(motionEvent.getX(),motionEvent.getY()))
+				{
+					singlePlayerView.setButton_1Clicked(true);
+					singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 1));
+				}else if (singlePlayerView.rect_4.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_4Clicked(true);
+					singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 4));
+				}
+				else if(singlePlayerView.rect_7.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_7Clicked(true);
+					calculateAnswer(currentAnswer, 7);
+				}
+				else if(singlePlayerView.rect_2.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_2Clicked(true);
+					calculateAnswer(currentAnswer, 2);
+				}
+				else if(singlePlayerView.rect_3.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_3Clicked(true);
+					calculateAnswer(currentAnswer, 3);
+				}
+				else if(singlePlayerView.rect_5.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_5Clicked(true);
+					calculateAnswer(currentAnswer, 5);
+				}
+				else if(singlePlayerView.rect_6.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_6Clicked(true);
+					calculateAnswer(currentAnswer, 6);
+				}
+				else if(singlePlayerView.rect_8.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_8Clicked(true);
+					calculateAnswer(currentAnswer, 8);
+				}
+				else if(singlePlayerView.rect_9.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_9Clicked(true);
+					calculateAnswer(currentAnswer, 9);
+				}
+				else if(singlePlayerView.rect_0.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_0Clicked(true);
+					calculateAnswer(currentAnswer, 0);
+				}
+				else if(singlePlayerView.rect_backspace.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_BackspaceClicked(true);
+					calculateAnswer(currentAnswer, 11);
+				}
+				else if(singlePlayerView.rect_c.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_cClicked(true);
+					calculateAnswer(currentAnswer, 12);
+				}
+				else if (singlePlayerView.rect_enter.contains(motionEvent.getX(), motionEvent.getY()))
+				{
+					singlePlayerView.setButton_EnterClicked(true);
+				}
                 /*
                 else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
                     mainView.setSettingsClicked(true);
                 }*/
-                singlePlayerView.invalidate();
-                break;
+				singlePlayerView.invalidate();
+				break;
 
-            case MotionEvent.ACTION_UP:
+			case MotionEvent.ACTION_UP:
 
-                singlePlayerView.setButton_1Clicked(false);
-                singlePlayerView.setButton_4Clicked(false);
-                singlePlayerView.setButton_7Clicked(false);
-                singlePlayerView.setButton_2Clicked(false);
-                singlePlayerView.setButton_3Clicked(false);
-                singlePlayerView.setButton_5Clicked(false);
-                singlePlayerView.setButton_6Clicked(false);
-                singlePlayerView.setButton_8Clicked(false);
-                singlePlayerView.setButton_9Clicked(false);
-                singlePlayerView.setButton_0Clicked(false);
-                singlePlayerView.setButton_BackspaceClicked(false);
-                singlePlayerView.setButton_cClicked(false);
-                singlePlayerView.setButton_EnterClicked(false);
+				singlePlayerView.setButton_1Clicked(false);
+				singlePlayerView.setButton_4Clicked(false);
+				singlePlayerView.setButton_7Clicked(false);
+				singlePlayerView.setButton_2Clicked(false);
+				singlePlayerView.setButton_3Clicked(false);
+				singlePlayerView.setButton_5Clicked(false);
+				singlePlayerView.setButton_6Clicked(false);
+				singlePlayerView.setButton_8Clicked(false);
+				singlePlayerView.setButton_9Clicked(false);
+				singlePlayerView.setButton_0Clicked(false);
+				singlePlayerView.setButton_BackspaceClicked(false);
+				singlePlayerView.setButton_cClicked(false);
+				singlePlayerView.setButton_EnterClicked(false);
 
-                //singlePlayerView.setSettingsClicked(false);
-                singlePlayerView.invalidate();
+				//singlePlayerView.setSettingsClicked(false);
+				singlePlayerView.invalidate();
 
               /*  if(mainView.startRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
@@ -285,57 +284,57 @@ public class SinglePlayerActivity extends Activity {
                     Intent intent = new Intent(this, SinglePlayerActivity.class);
                     startActivity(intent);
                */
-                break;
+				break;
 
-        }
-        return true;
-    }
-    public int calculateAnswer(int answer, int input)
-    {
-        if (input < 10){
-            return answer * 10 + input;
-        }
-        else if (input == 11){
-            return answer / 10;
-        }
-        else
-            return 0;
-    }
+		}
+		return true;
+	}
+	public int calculateAnswer(int answer, int input)
+	{
+		if (input < 10){
+			return answer * 10 + input;
+		}
+		else if (input == 11){
+			return answer / 10;
+		}
+		else
+			return 0;
+	}
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            hideSystemUI();
-        }
-    }
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		if (hasFocus) {
+			hideSystemUI();
+		}
+	}
 
-    private void hideSystemUI() {
-        // Enables regular immersive mode.
-        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE
-                        // Set the content to appear under the system bars so that the
-                        // content doesn't resize when the system bars hide and show.
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        // Hide the nav bar and status bar
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
+	private void hideSystemUI() {
+		// Enables regular immersive mode.
+		// For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+		// Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+		View decorView = getWindow().getDecorView();
+		decorView.setSystemUiVisibility(
+				View.SYSTEM_UI_FLAG_IMMERSIVE
+						// Set the content to appear under the system bars so that the
+						// content doesn't resize when the system bars hide and show.
+						| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+						| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+						| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+						// Hide the nav bar and status bar
+						| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+						| View.SYSTEM_UI_FLAG_FULLSCREEN);
+	}
 
-    // Shows the system bars by removing all the flags
+	// Shows the system bars by removing all the flags
 // except for the ones that make the content appear under the system bars.
-    private void showSystemUI() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    }
+	private void showSystemUI() {
+		View decorView = getWindow().getDecorView();
+		decorView.setSystemUiVisibility(
+				View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+						| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+						| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+	}
 
 
 
