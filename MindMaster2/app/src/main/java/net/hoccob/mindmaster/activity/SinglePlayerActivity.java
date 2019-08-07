@@ -182,61 +182,62 @@ public class SinglePlayerActivity extends Activity {
 				if(singlePlayerView.rect_1.contains(motionEvent.getX(),motionEvent.getY()))
 				{
 					singlePlayerView.setButton_1Clicked(true);
-					singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 1));
+					//singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 1));
+					calculateAnswer2(1);
 				}else if (singlePlayerView.rect_4.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_4Clicked(true);
-					singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 4));
+					calculateAnswer2(2);
 				}
 				else if(singlePlayerView.rect_7.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_7Clicked(true);
-					calculateAnswer(currentAnswer, 7);
+					calculateAnswer2(3);
 				}
 				else if(singlePlayerView.rect_2.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_2Clicked(true);
-					calculateAnswer(currentAnswer, 2);
+					calculateAnswer2(4);
 				}
 				else if(singlePlayerView.rect_3.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_3Clicked(true);
-					calculateAnswer(currentAnswer, 3);
+					calculateAnswer2(5);
 				}
 				else if(singlePlayerView.rect_5.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_5Clicked(true);
-					calculateAnswer(currentAnswer, 5);
+					calculateAnswer2(6);
 				}
 				else if(singlePlayerView.rect_6.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_6Clicked(true);
-					calculateAnswer(currentAnswer, 6);
+					calculateAnswer2(7);
 				}
 				else if(singlePlayerView.rect_8.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_8Clicked(true);
-					calculateAnswer(currentAnswer, 8);
+					calculateAnswer2(8);
 				}
 				else if(singlePlayerView.rect_9.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_9Clicked(true);
-					calculateAnswer(currentAnswer, 9);
+					calculateAnswer2(9);
 				}
 				else if(singlePlayerView.rect_0.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_0Clicked(true);
-					calculateAnswer(currentAnswer, 0);
+					calculateAnswer2(0);
 				}
 				else if(singlePlayerView.rect_backspace.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_BackspaceClicked(true);
-					calculateAnswer(currentAnswer, 11);
+					calculateAnswer2(11);
 				}
 				else if(singlePlayerView.rect_c.contains(motionEvent.getX(), motionEvent.getY()))
 				{
 					singlePlayerView.setButton_cClicked(true);
-					calculateAnswer(currentAnswer, 12);
+					calculateAnswer2(12);
 				}
 				else if (singlePlayerView.rect_enter.contains(motionEvent.getX(), motionEvent.getY()))
 				{
@@ -247,6 +248,7 @@ public class SinglePlayerActivity extends Activity {
                 {
                     mainView.setSettingsClicked(true);
                 }*/
+                singlePlayerView.setAnswer(currentAnswer);
 				singlePlayerView.invalidate();
 				break;
 
@@ -289,16 +291,16 @@ public class SinglePlayerActivity extends Activity {
 		}
 		return true;
 	}
-	public int calculateAnswer(int answer, int input)
+
+
+	public void calculateAnswer2(int input)
 	{
 		if (input < 10){
-			return answer * 10 + input;
+			currentAnswer = currentAnswer * 10 + input;
 		}
 		else if (input == 11){
-			return answer / 10;
+			currentAnswer = currentAnswer / 10;
 		}
-		else
-			return 0;
 	}
 
 	@Override
