@@ -260,6 +260,7 @@ public class MultiPlayerActivity extends Activity {
         };
     }
 
+
     private void setOpponent(String output){
         if(output == "0"){
          multiPlayerView.setOpponentScore(0);

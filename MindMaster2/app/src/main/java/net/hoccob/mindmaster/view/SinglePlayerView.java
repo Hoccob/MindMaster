@@ -33,6 +33,10 @@ public class SinglePlayerView extends View {
     public String currentEquation;
     public int currentAnswer;
     public String currentAnswerText = "";
+    public String currentScoreText = "0";
+    public String currentTimeText = "";
+    public int i = 1;
+    public float currentTime;
 
     public int textHeight;
 
@@ -50,6 +54,7 @@ public class SinglePlayerView extends View {
     Path button_c = new Path();
     Path button_backspace = new Path();
     Path backspace = new Path();
+    Path bar = new Path();
     public RectF rect_1 = new RectF();
     public RectF rect_2 = new RectF();
     public RectF rect_3 = new RectF();
@@ -70,9 +75,12 @@ public class SinglePlayerView extends View {
     Paint arrowPaint = new Paint();
     Paint arrowPaintInverted = new Paint();
     Paint calculationPaint = new Paint();
+    Paint barPaint = new Paint();
+    Paint barPaintInverted = new Paint();
     int color = 1;
     private ColorChange colorChange;
     int height = 0;
+
 
 
     private boolean clicked_1 = false;
@@ -110,6 +118,7 @@ public class SinglePlayerView extends View {
         doBigButton(button_backspace, rect_backspace, x, y, (int)(screenY * 0.55), (int)(screenX * 0.50));
         doBackSpace(backspace, x, y, (int)(screenY * 0.55), (int)(screenX * 0.60));
         doEnterButton(button_enter,rect_enter, x, y,(int) (screenY*0.6) ,(int) (screenX*0.86));
+        doBar(bar, y, textHeight +10,0);
 
 
         paint.setColor(Color.parseColor("#8EE4AF"));
@@ -118,6 +127,16 @@ public class SinglePlayerView extends View {
         paint.setStrokeWidth(4);
         //paint.setTypeface(pristina);
         paint.setAntiAlias(true);
+
+        barPaint.setColor(Color.parseColor("#8EE4AF"));
+        barPaint.setStyle(Paint.Style.STROKE);
+        barPaint.setStrokeWidth(screenX/55);
+        barPaint.setAntiAlias(true);
+
+        barPaintInverted.setColor(Color.parseColor("#05386B"));
+        barPaintInverted.setStyle(Paint.Style.STROKE);
+        barPaintInverted.setStrokeWidth(screenX/15);
+        barPaintInverted.setAntiAlias(true);
 
         arrowPaint.setColor(Color.parseColor("#8EE4AF"));
         arrowPaint.setStrokeWidth(10);
@@ -264,6 +283,11 @@ public class SinglePlayerView extends View {
         rect.bottom = posY + (float) 0.3 * y;
 
     }
+    private void doBar(Path path, int y, int posY, int posX){
+        path.moveTo(posX, posY);
+        path.lineTo(posX, posY + y * 0.04f);
+        path.close();
+    }
 
     public void increaseColor() {
         if (color < 4) {
@@ -305,6 +329,10 @@ public class SinglePlayerView extends View {
     public void setAnswer(int answer){this.currentAnswer = answer;}
     public void setAnswerText(String answerText){this.currentAnswerText = answerText;}
     public void setCurrentEquation(String equation){this.currentEquation = equation;}
+    public void setCurrentScoreText(String scoreText){this.currentScoreText = scoreText;}
+    public void setCurrentTimeText(long currentTime){this.currentTimeText = Long.toString(currentTime);}
+    public void setCurrentTime(long currentTime){this.currentTime = (currentTime)/ 1000;}
+    public void addToCurrentTime(){this.currentTime = currentTime + 3;}
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -419,9 +447,22 @@ public class SinglePlayerView extends View {
         //String currentAnswerText = "599";
         int equationWidth = (int) calcTextWidth(currentEquation,  textPaint) ;
         int answerWidth = (int) calcTextWidth(currentAnswerText, textPaint);
-
+        int scoreWidth = (int) calcTextWidth(currentScoreText, textPaint);
         canvas.drawText(currentEquation, screenX / 2 - equationWidth / 2, screenY / 3 , textPaint);
         canvas.drawText(currentAnswerText,screenX / 2 - answerWidth / 2,  screenY * 0.45f, textPaint);
+        canvas.drawText(currentScoreText, screenX / 2 - scoreWidth / 2  , textHeight *3, textPaint);
+        //canvas.drawText(currentTimeText, screenX / 2 , textHeight *3, textPaint);
+        i = 1;
+        int vahe = screenX / 50;
+        while (i < 51) {
+            canvas.drawLine(vahe * i, textHeight + 10, vahe * i, (screenY * 0.04f), barPaint);
+            i++;
+            //invalidate();
+        }
+            canvas.drawLine(screenX , screenY/20 , vahe * (currentTime + 1.5f), screenY/20 , barPaintInverted);
+
+
+
 
 
     }

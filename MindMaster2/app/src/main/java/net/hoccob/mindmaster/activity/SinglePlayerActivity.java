@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
@@ -16,6 +18,9 @@ import net.hoccob.mindmaster.CreateEquation;
 import net.hoccob.mindmaster.Equation;
 import net.hoccob.mindmaster.StartSwipeListener2;
 import net.hoccob.mindmaster.view.SinglePlayerView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class SinglePlayerActivity extends Activity {
@@ -29,6 +34,16 @@ public class SinglePlayerActivity extends Activity {
 	private CreateEquation createEquation;
 	private int gameMode;
 	private int level;
+	private int score;
+	private boolean gameOver;
+	//private long gameTimeTimer;
+	private long endTime = 0;
+	private TimerTask gameTimer;
+	private long timeLeft;
+	Handler gameTimeHandler = new Handler();
+	Timer gameTimeTimer;
+
+
 
 	SharedPreferences sharedPrefColor;
 
@@ -43,7 +58,7 @@ public class SinglePlayerActivity extends Activity {
 		display.getSize(size);
 		Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
 		singlePlayerView = new SinglePlayerView(this, size.x, size.y, tf);
-
+		endTime = System.currentTimeMillis() + 50000;
 		sharedPrefColor = getSharedPreferences("ColorCode",
 				Context.MODE_PRIVATE);
 		colorCode = sharedPrefColor.getInt("code", 0);
@@ -78,7 +93,8 @@ public class SinglePlayerActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		setContentView(singlePlayerView);
-
+		//startGameTimeTimer();
+		timerHandler.postDelayed(timerRunnable, 0);
 
 
 	}
@@ -184,6 +200,17 @@ public class SinglePlayerActivity extends Activity {
 
 		if(equation.getAnswer() == currentAnswer){
 			level = level + 1;
+			score += 50 * level;
+			singlePlayerView.setCurrentScoreText(Integer.toString(score));
+			endTime += 3000;
+			singlePlayerView.addToCurrentTime();
+			//singlePlayerView.invalidate();
+		}
+		else if (equation.getAnswer() != currentAnswer){
+			if (level > 0) {level = level - 1;}
+			else if (level == 0){score -= 25;}
+			score -= 25 * level;
+			singlePlayerView.setCurrentScoreText(Integer.toString(score));
 		}
 
 
@@ -191,8 +218,76 @@ public class SinglePlayerActivity extends Activity {
 		singlePlayerView.setCurrentEquation(equation.getStrOperation());
 		currentAnswer = 0;
 		singlePlayerView.setAnswerText("");
-		//singlePlayerView.setAnswer(0);
+		singlePlayerView.setAnswer(0);
 	}
+	//private void startGameTimeTimer(){
+		//gameTimeTimer = new Timer();
+
+	//	gameTimeTimer = endTime - System.currentTimeMillis();
+
+	//}
+	/*public void startGame() {
+		new CountDownTimer(50000, 1000) {
+
+			public void onTick(long millisUntilFinished) {
+				//mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+				singlePlayerView.setCurrentTimeText(millisUntilFinished);
+				singlePlayerView.setCurrentTime(millisUntilFinished);
+				singlePlayerView.invalidate();
+			}
+
+			public void onFinish() {
+				singlePlayerView.setCurrentTimeText(0);
+				singlePlayerView.invalidate();
+			}
+		}.start();
+
+	}*/
+	public void startGame2() {
+
+		timeLeft = endTime - System.currentTimeMillis();
+		gameTimer = new TimerTask() {
+			public void run() {
+				gameTimeHandler.post(new Runnable() {
+					public void run() {
+						//singlePlayerView.setCurrentTime(timeLeft);
+						//singlePlayerView.invalidate();
+
+							singlePlayerView.setCurrentTimeText(timeLeft);
+							singlePlayerView.setCurrentTime(timeLeft);
+							singlePlayerView.invalidate();
+
+					}
+
+				});
+			}
+		};
+	}
+
+
+	Handler timerHandler = new Handler();
+	Runnable timerRunnable = new Runnable() {
+
+		@Override
+		public void run() {
+
+			timeLeft = endTime - System.currentTimeMillis();
+
+			singlePlayerView.setCurrentTimeText(timeLeft);
+			singlePlayerView.setCurrentTime(timeLeft);
+			singlePlayerView.invalidate();
+timerHandler.post(this);
+			//timerHandler.postDelayed(this, 1000);
+		}
+	};
+
+	private void startGameTimeTimer(){
+		gameTimeTimer = new Timer();
+		startGame2();
+
+		gameTimeTimer.schedule(gameTimer, 0, 1);
+	}
+
 
 	@Override
 	public boolean onTouchEvent(MotionEvent motionEvent) {
@@ -206,7 +301,6 @@ public class SinglePlayerActivity extends Activity {
 				if(singlePlayerView.rect_1.contains(motionEvent.getX(),motionEvent.getY()))
 				{
 					singlePlayerView.setButton_1Clicked(true);
-					//singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 1));
 					calculateAnswer(1);
 				}else if (singlePlayerView.rect_4.contains(motionEvent.getX(), motionEvent.getY()))
 				{
@@ -275,7 +369,8 @@ public class SinglePlayerActivity extends Activity {
                 }*/
                 //singlePlayerView.setAnswer(currentAnswer);
 				singlePlayerView.setAnswerText(String.valueOf(currentAnswer));
-				singlePlayerView.invalidate();
+				//singlePlayerView.setCurrentTimeText(getTime());
+				//singlePlayerView.invalidate();
 				break;
 
 			case MotionEvent.ACTION_UP:
@@ -326,6 +421,9 @@ public class SinglePlayerActivity extends Activity {
 		}
 		else if (input == 11){
 			currentAnswer = currentAnswer / 10;
+		}
+		else if (input == 12){
+			currentAnswer = 0;
 		}
 	}
 
