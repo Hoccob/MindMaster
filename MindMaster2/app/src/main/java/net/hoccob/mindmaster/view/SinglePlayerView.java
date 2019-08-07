@@ -31,7 +31,6 @@ public class SinglePlayerView extends View {
     public int textWidth_c;
     public int textWidth_back;
     public String currentEquation;
-    public int currentAnswer;
     public String currentAnswerText = "";
     public String currentScoreText = "0";
     public String currentTimeText = "";
@@ -326,7 +325,6 @@ public class SinglePlayerView extends View {
     public void setButton_cClicked(boolean clicked) {clicked_c = clicked;  }
     public void setButton_EnterClicked(boolean clicked){clicked_enter = clicked;}
 
-    public void setAnswer(int answer){this.currentAnswer = answer;}
     public void setAnswerText(String answerText){this.currentAnswerText = answerText;}
     public void setCurrentEquation(String equation){this.currentEquation = equation;}
     public void setCurrentScoreText(String scoreText){this.currentScoreText = scoreText;}
