@@ -22,8 +22,10 @@ import net.hoccob.mindmaster.view.SinglePlayerView;
 
 public class SinglePlayerActivity extends Activity {
 
+    private static int currentAnswer;
     SinglePlayerView singlePlayerView;
     String answer;
+   // public int currentAnswer = 0;
     private int colorCode = 0;
     private GestureDetectorCompat gestureDetectorCompat = null;
 
@@ -68,6 +70,8 @@ public class SinglePlayerActivity extends Activity {
     protected void onStart() {
         super.onStart();
         setContentView(singlePlayerView);
+        
+
 
     }
 
@@ -179,50 +183,67 @@ public class SinglePlayerActivity extends Activity {
                 if(singlePlayerView.rect_1.contains(motionEvent.getX(),motionEvent.getY()))
                 {
                     singlePlayerView.setButton_1Clicked(true);
+                    singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 1));
                 }else if (singlePlayerView.rect_4.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_4Clicked(true);
+                    singlePlayerView.setAnswer(calculateAnswer(currentAnswer, 4));
                 }
                 else if(singlePlayerView.rect_7.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_7Clicked(true);
+                    calculateAnswer(currentAnswer, 7);
                 }
                 else if(singlePlayerView.rect_2.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_2Clicked(true);
+                    calculateAnswer(currentAnswer, 2);
                 }
                 else if(singlePlayerView.rect_3.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_3Clicked(true);
+                    calculateAnswer(currentAnswer, 3);
                 }
                 else if(singlePlayerView.rect_5.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_5Clicked(true);
+                    calculateAnswer(currentAnswer, 5);
                 }
                 else if(singlePlayerView.rect_6.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_6Clicked(true);
+                    calculateAnswer(currentAnswer, 6);
                 }
                 else if(singlePlayerView.rect_8.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_8Clicked(true);
+                    calculateAnswer(currentAnswer, 8);
                 }
                 else if(singlePlayerView.rect_9.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_9Clicked(true);
+                    calculateAnswer(currentAnswer, 9);
                 }
                 else if(singlePlayerView.rect_0.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_0Clicked(true);
+                    calculateAnswer(currentAnswer, 0);
                 }
                 else if(singlePlayerView.rect_backspace.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_BackspaceClicked(true);
+                    calculateAnswer(currentAnswer, 11);
                 }
                 else if(singlePlayerView.rect_c.contains(motionEvent.getX(), motionEvent.getY()))
                 {
                     singlePlayerView.setButton_cClicked(true);
-                }/*
+                    calculateAnswer(currentAnswer, 12);
+                }
+                else if (singlePlayerView.rect_enter.contains(motionEvent.getX(), motionEvent.getY()))
+                {
+                    singlePlayerView.setButton_EnterClicked(true);
+                }
+                /*
                 else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
                 {
                     mainView.setSettingsClicked(true);
@@ -244,6 +265,7 @@ public class SinglePlayerActivity extends Activity {
                 singlePlayerView.setButton_0Clicked(false);
                 singlePlayerView.setButton_BackspaceClicked(false);
                 singlePlayerView.setButton_cClicked(false);
+                singlePlayerView.setButton_EnterClicked(false);
 
                 //singlePlayerView.setSettingsClicked(false);
                 singlePlayerView.invalidate();
@@ -267,6 +289,17 @@ public class SinglePlayerActivity extends Activity {
 
         }
         return true;
+    }
+    public int calculateAnswer(int answer, int input)
+    {
+        if (input < 10){
+            return answer * 10 + input;
+        }
+        else if (input == 11){
+            return answer / 10;
+        }
+        else
+            return 0;
     }
 
     @Override
