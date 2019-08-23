@@ -121,7 +121,7 @@ public class MainActivity extends Activity {
                 editor.commit();
                 System.out.println(sharedPrefStart.getString("acc", null));
             } else if (resultCode == RESULT_CANCELED) {
-                //Toast.makeText(this, R.string.pick_account, Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, R.string.pick_account, Toast.LENGTH_LONG).show();o
             }
         }
     }

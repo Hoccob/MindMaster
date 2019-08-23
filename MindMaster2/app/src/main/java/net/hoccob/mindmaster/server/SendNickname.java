@@ -32,7 +32,7 @@ public class SendNickname extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) throws RuntimeException{
         //this.player.setUserName(params[0]);
-        url =  "https://mindmaster.ee:8443/api/users/{userId}";
+        url =  "http://mindmaster.ee:8080/api/";
         String result = "";
 
         //Create template
@@ -48,7 +48,7 @@ public class SendNickname extends AsyncTask<String, String, String> {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> entity = new HttpEntity<>(jsonPlayer.toString(), headers);
-            restTemplate.put(url, entity, player.getId());
+            restTemplate.put(url + "users/{userId}", entity, player.getId());
             //result = restTemplate.getForObject(url, String.class, player.getUserName());
         }catch(RuntimeException e){
             e.printStackTrace();

@@ -15,7 +15,7 @@ public class SendFinalScore extends AsyncTask<Integer, String, String> {
     @Override
     protected String doInBackground(Integer... params){
         String result = "";
-        String url =  "https://mindmaster.ee:8443/api/score";
+        String url =  "http://mindmaster.ee:8080/api/";
 
         try {
             RestTemplate restTemplate = new RestTemplate();
@@ -31,7 +31,7 @@ public class SendFinalScore extends AsyncTask<Integer, String, String> {
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> entity = new HttpEntity<>(jsonScore.toString(), headers);
 
-            restTemplate.postForEntity(url, entity, String.class);
+            restTemplate.postForEntity(url + "score", entity, String.class);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch(RuntimeException e) {

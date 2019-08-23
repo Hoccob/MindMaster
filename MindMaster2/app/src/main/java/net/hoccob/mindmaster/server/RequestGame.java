@@ -23,7 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 
 public class RequestGame extends AsyncTask<String, String, String>{
-    private String url;
+    private String url = "http://mindmaster.ee:8080/api/";
     private String body;
     private Player player;
     private Waitlist waitlist;
@@ -47,8 +47,6 @@ public class RequestGame extends AsyncTask<String, String, String>{
 
     @Override
     protected String doInBackground(String... params){
-        //this.body = params[0];
-        //url =  "https://mindmaster.ee:8443/api/users/{userId}";
         String result = "";
         Boolean gotGame = false;
         String output;
@@ -73,14 +71,11 @@ public class RequestGame extends AsyncTask<String, String, String>{
 
             TrafficStats.setThreadStatsTag(1);
             //POST for waitlist
-            url = "https://mindmaster.ee:8443/api/waitlist";
             System.out.println("Posting for game");
-            dummyResult = restTemplate.postForEntity(url, entity, String.class);
+            dummyResult = restTemplate.postForEntity(url + "waitlist", entity, String.class);
             String dummy = dummyResult.toString();
 
             //game.setId(0);
-
-            url = "https://mindmaster.ee:8443/api/waitlist/{userId}";
             while (!gotGame) {
                 System.out.println("LOOKING FOR GAME!!");
                 if (isCancelled()) {
@@ -89,7 +84,7 @@ public class RequestGame extends AsyncTask<String, String, String>{
                 }
                     try {
                         Thread.sleep(2000);
-                        output = restTemplate.getForObject(url, String.class, player.getId());
+                        output = restTemplate.getForObject(url + "waitlist/{userId}", String.class, player.getId());
                         jsonWaitlist = new JSONObject(output);
                         if(!jsonWaitlist.isNull("gameId")) {
                             game.setId(jsonWaitlist.getInt("gameId"));
@@ -103,18 +98,16 @@ public class RequestGame extends AsyncTask<String, String, String>{
                 }
             }
 
-            url = "https://mindmaster.ee:8443/api/waitlist/{gameId}/{userId}";
             try {
-                output = restTemplate.getForObject(url, String.class, game.getId(), player.getId());
+                output = restTemplate.getForObject(url + "waitlist/{gameId}/{userId}", String.class, game.getId(), player.getId());
                 JSONObject jsonOpponent = new JSONObject(output);
                 game.setOpponentNickname(jsonOpponent.getString("nickname"));
             }catch (RuntimeException e){
                 e.printStackTrace();
             }
 
-            url = "https://mindmaster.ee:8443/api/equations/{gameId}";
 
-            result = restTemplate.getForObject(url, String.class, game.getId());
+            result = restTemplate.getForObject(url + "equations/{gameId}", String.class, game.getId());
                 JSONArray jsonEquations = new JSONArray(result);
                 for (int i = 0; i < 12; i++) {
                     equations.add(new ArrayList<Equation>());
