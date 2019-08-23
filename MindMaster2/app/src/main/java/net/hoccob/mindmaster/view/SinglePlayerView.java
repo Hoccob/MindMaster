@@ -330,7 +330,8 @@ public class SinglePlayerView extends View {
     public void setCurrentScoreText(String scoreText){this.currentScoreText = scoreText;}
     public void setCurrentTimeText(long currentTime){this.currentTimeText = Long.toString(currentTime);}
     public void setCurrentTime(long currentTime){this.currentTime = (currentTime)/ 1000;}
-    public void addToCurrentTime(){this.currentTime = currentTime + 3;}
+    public void addToCurrentTime(){this.currentTime = currentTime + 2;}
+    public void subtractFromCurrentTime(){this.currentTime = currentTime - 2;}
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);

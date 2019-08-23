@@ -4,6 +4,7 @@ package net.hoccob.mindmaster.activity;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +19,8 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,7 +32,10 @@ import net.hoccob.mindmaster.Player;
 //import net.hoccob.mindmaster.R;
 import net.hoccob.mindmaster.server.LogIn;
 import net.hoccob.mindmaster.server.SendNickname;
+import net.hoccob.mindmaster.view.ChoosingModeView;
 import net.hoccob.mindmaster.view.MainView;
+import net.hoccob.mindmaster.view.PracticeView;
+import net.hoccob.mindmaster.view.SinglePlayerView;
 import net.hoccob.mindmaster.view.StartView;
 
 import java.util.ArrayList;
@@ -42,6 +48,7 @@ public class MainActivity extends Activity {
     public int x;
     StartView mainView;
     Player player;
+    View ChoosingModeView;
 
     private int colorCode = 0;
 
@@ -57,6 +64,8 @@ public class MainActivity extends Activity {
 
 
     private GestureDetectorCompat gestureDetectorCompat = null;
+
+
 
 
     @Override
@@ -91,6 +100,7 @@ public class MainActivity extends Activity {
         Typeface tf = Typeface.createFromAsset(getAssets(), "pristina.ttf");
 
         mainView = new StartView(this, size.x, size.y, tf);
+        ChoosingModeView = new ChoosingModeView(this, size.x, size.y);
         y = size.y;
         x = size.x;
 
@@ -236,6 +246,8 @@ public class MainActivity extends Activity {
                     startActivity(intent);
                 }else if(mainView.highScoreRect.contains(motionEvent.getX(), motionEvent.getY()))
                 {
+                    buildDialog(this, ChoosingModeView);
+                    //setContentView(ChoosingModeView);
                    // Intent intent3 = new Intent(this, HighScoreActivity2.class);
                    // startActivity(intent3);
                 }else if(mainView.settingsRect.contains(motionEvent.getX(),motionEvent.getY()))
@@ -257,6 +269,26 @@ public class MainActivity extends Activity {
         if (hasFocus) {
             hideSystemUI();
         }
+
+    }
+    private void buildDialog(Context context, View view) {
+        Dialog dialog = new Dialog(context);
+        dialog.addContentView(view, new ViewGroup.LayoutParams(x/2, y/2));
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            }
+            });
+        dialog.show();
+
+        
+        /*AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle("This is my new dialog");
+        builder.setMessage("Tahaks APEXit m2ngida");
+        builder.show();*/
     }
 
     private void pickNickname(){

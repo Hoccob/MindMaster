@@ -33,7 +33,7 @@ public class SinglePlayerActivity extends Activity {
 	private Equation equation;
 	private CreateEquation createEquation;
 	private int gameMode;
-	private int level;
+	private int level = 1;
 	private int score;
 	private boolean gameOver;
 	//private long gameTimeTimer;
@@ -42,6 +42,8 @@ public class SinglePlayerActivity extends Activity {
 	private long timeLeft;
 	Handler gameTimeHandler = new Handler();
 	Timer gameTimeTimer;
+	private int wrongAnswers = 0;
+	private int correctAnswers = 0;
 
 
 
@@ -198,19 +200,38 @@ public class SinglePlayerActivity extends Activity {
 
 	public void checkAnswer(){
 
-		if(equation.getAnswer() == currentAnswer){
-			level = level + 1;
+		if(equation.getAnswer() == currentAnswer && correctAnswers == 5){
 			score += 50 * level;
+			level = level + 1;
 			singlePlayerView.setCurrentScoreText(Integer.toString(score));
 			endTime += 3000;
 			singlePlayerView.addToCurrentTime();
 			//singlePlayerView.invalidate();
+			correctAnswers = 0;
+			wrongAnswers = 0;
 		}
-		else if (equation.getAnswer() != currentAnswer){
-			if (level > 0) {level = level - 1;}
-			else if (level == 0){score -= 25;}
+
+		else if (equation.getAnswer() == currentAnswer){
+			score += 50 * level;
+			singlePlayerView.setCurrentScoreText(Integer.toString(score));
+			endTime += 2000;
+			singlePlayerView.addToCurrentTime();
+			correctAnswers++;
+		}
+		else if (equation.getAnswer() != currentAnswer && wrongAnswers == 2){
+			if (level > 1) {level = level - 1;}
 			score -= 25 * level;
 			singlePlayerView.setCurrentScoreText(Integer.toString(score));
+			wrongAnswers = 0;
+			endTime -= 2000;
+			singlePlayerView.subtractFromCurrentTime();
+		}
+		else if (equation.getAnswer() != currentAnswer){
+			score -= level * 25;
+			singlePlayerView.setCurrentScoreText(Integer.toString(score));
+			wrongAnswers++;
+			endTime -= 2000;
+			singlePlayerView.subtractFromCurrentTime();
 		}
 
 
@@ -243,7 +264,7 @@ public class SinglePlayerActivity extends Activity {
 		}.start();
 
 	}*/
-	public void startGame2() {
+	/*public void startGame2() {
 
 		timeLeft = endTime - System.currentTimeMillis();
 		gameTimer = new TimerTask() {
@@ -262,7 +283,7 @@ public class SinglePlayerActivity extends Activity {
 				});
 			}
 		};
-	}
+	}*/
 
 
 	Handler timerHandler = new Handler();
@@ -281,12 +302,12 @@ public class SinglePlayerActivity extends Activity {
 		}
 	};
 
-	private void startGameTimeTimer(){
+	/*private void startGameTimeTimer(){
 		gameTimeTimer = new Timer();
 		startGame2();
 
 		gameTimeTimer.schedule(gameTimer, 0, 1);
-	}
+	}*/
 
 
 	@Override

@@ -37,6 +37,8 @@ public class StartView extends View {
     int color = 1;
     Typeface pristina;
     private ColorChange colorChange;
+    private float startGameLength;
+    private float height;
 
     private boolean startClicked = false;
     private boolean practiceClicked = false;
@@ -56,7 +58,7 @@ public class StartView extends View {
         doButton(settingsButton, settingsRect, x,y, 4 * y / 6);
 
         paint.setColor( Color.parseColor("#8EE4AF"));
-        paint.setStrokeWidth(2);
+        paint.setStrokeWidth(6);
         paint.setStyle(Paint.Style.STROKE);
         paint.setTextSize(100);
         paint.setTypeface(pristina);
@@ -65,13 +67,13 @@ public class StartView extends View {
         textPaint.setColor( Color.parseColor("#8EE4AF"));
         textPaint.setStyle(Paint.Style.STROKE);
         textPaint.setTextSize(100);
-        textPaint.setTypeface(pristina);
+        //textPaint.setTypeface(pristina);
         textPaint.setAntiAlias(true);
 
         bgPaint.setColor(Color.parseColor("#05386B"));
         bgPaint.setStyle(Paint.Style.STROKE);
         bgPaint.setTextSize(100);
-        bgPaint.setTypeface(pristina);
+        //bgPaint.setTypeface(pristina);
         bgPaint.setAntiAlias(true);
         setBackgroundColor(bgPaint.getColor());
 
@@ -80,7 +82,8 @@ public class StartView extends View {
         fillPaint.setAntiAlias(true);
 
         colorChange = new ColorChange(paint, textPaint, fillPaint, bgPaint, this);
-
+        Paint.FontMetrics fm = paint.getFontMetrics();
+        height = fm.descent - fm.ascent;
 
     }
 
@@ -134,34 +137,34 @@ public class StartView extends View {
 
         if(!startClicked) {
             canvas.drawPath(startButton, paint);
-            canvas.drawText("Start Game", screenX / 4,  3 * screenY / 12, textPaint);
+            canvas.drawText("Start Game", (screenX/2 - textPaint.measureText("Start Game")/2),  ((screenY / 6) + (screenY / 20) + (height / 2)) , textPaint);
         }else{
             canvas.drawPath(startButton, fillPaint);
-            canvas.drawText("Start Game", screenX / 4,  3 * screenY / 12, bgPaint);
+            canvas.drawText("Start Game", (screenX/2 - textPaint.measureText("Start Game")/2),  ((screenY / 6) + (screenY / 20) + (height / 2)), bgPaint);
         }
         if(!practiceClicked) {
             canvas.drawPath(practiceButton, paint);
-            canvas.drawText("Practice", screenX / 3, 5 * screenY / 12, textPaint);
+            canvas.drawText("Practice", (screenX/2 - textPaint.measureText("Practice")/2), ((screenY / 3) + (screenY / 20) + (height / 2)), textPaint);
         }else{
             //canvas.drawPath(startButton, bgPaint);
             canvas.drawPath(practiceButton, fillPaint);
-            canvas.drawText("Practice", screenX / 3, 5 * screenY / 12, bgPaint);
+            canvas.drawText("Practice", (screenX/2 - textPaint.measureText("Practice")/2), ((screenY / 3) + (screenY / 20) + (height / 2)), bgPaint);
         }
         if(!highScoreClicked) {
             canvas.drawPath(highScoreButton, paint);
-            canvas.drawText("High Score", screenX / 4, 7 * screenY / 12, textPaint);
+            canvas.drawText("High Score", (screenX/2 - textPaint.measureText("High Score")/2), ((screenY / 2) + (screenY / 20) + (height / 2)), textPaint);
         }else{
             //canvas.drawPath(startButton, bgPaint);
             canvas.drawPath(highScoreButton, fillPaint);
-            canvas.drawText("High Score", screenX / 4, 7 * screenY / 12, bgPaint);
+            canvas.drawText("High Score", (screenX/2 - textPaint.measureText("High Score")/2), ((screenY / 2) + (screenY / 20) + (height / 2)), bgPaint);
         }
         if(!settingsClicked) {
             canvas.drawPath(settingsButton, paint);
-            canvas.drawText("Settings", screenX / 3, 9 * screenY / 12, textPaint);
+            canvas.drawText("Settings", (screenX/2 - textPaint.measureText("Settings")/2), ((int)(screenY / 1.5) + (screenY / 20) + (height / 2)), textPaint);
         }else{
             //canvas.drawPath(startButton, bgPaint);
             canvas.drawPath(settingsButton, fillPaint);
-            canvas.drawText("Settings", screenX / 3, 9 * screenY / 12, bgPaint);
+            canvas.drawText("Settings", (screenX/2 - textPaint.measureText("Settings")/2), ((int)(screenY / 1.5) + (screenY / 20) + (height / 2)), bgPaint);
         }
     }
 }
