@@ -218,7 +218,7 @@ public class SinglePlayerActivity extends Activity {
 		singlePlayerView.setCurrentEquation(equation.getStrOperation());
 		currentAnswer = 0;
 		singlePlayerView.setAnswerText("");
-		singlePlayerView.setAnswer(0);
+		//singlePlayerView.setAnswer(0);
 	}
 	//private void startGameTimeTimer(){
 		//gameTimeTimer = new Timer();
@@ -276,7 +276,7 @@ public class SinglePlayerActivity extends Activity {
 			singlePlayerView.setCurrentTimeText(timeLeft);
 			singlePlayerView.setCurrentTime(timeLeft);
 			singlePlayerView.invalidate();
-timerHandler.post(this);
+			timerHandler.post(this);
 			//timerHandler.postDelayed(this, 1000);
 		}
 	};

@@ -29,7 +29,7 @@ public class LogIn extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) throws RuntimeException{
         this.player.setUserName(params[0]);
-        url =  "https://mindmaster.ee:8443/api/users/{eid}";
+        url =  "https://mindmaster.ee:8443/api/users/{userName}";
         String result = "";
 
         //Create template
