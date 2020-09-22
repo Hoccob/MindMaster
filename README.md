@@ -1,8 +1,5 @@
 # MindMaster
 
-Ad based, tasuta Single ja Multiplayer võimalustega app G Play storest. eesmärk 1000 allalaadimist.	!
-													!				
---------------------------------------------------------------------------------------------------------!
 
 
 Interface : Main screen (Single player, practice, high score) + game screen, High Score screen nuppudele t2hendused
